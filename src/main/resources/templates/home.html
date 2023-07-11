@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Kladionica</title>
+</head>
+<style>
+    /* CSS stilovi za centriranje naslova */
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+     h1 {
+      font-size: 100px;
+      color: green;
+    }
+     .popup {
+      display: none;
+      position: fixed;
+      top: 10%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #f1f1f1;
+      padding: 40px;
+      border: 1px solid #ccc;
+      width: 80%;
+      max-width: 600px;
+      text-align: center;
+      background-color: #f9f9f9;
+      font-size: 40px;
+      }
+  </style>
+<body>
+<h1>KLADIONICA</h1>
+<hr>
+User: <span sec:authentication="principal.username"></span>
+<div id="popup" class="popup">
+    <p>Zahtev je prihvacen. Uskoro ce Vam na e-mail stici trazeni izvestaj! ! !</p>
+    </div>
+<br><br>
+<hr>
+<h2>Linkovi</h2>
+<ul>
+    <li><a th:href="@{/maxbet}">Max Bet Ordinary Matchs</a>
+    <li><a th:href="@{/systems}">Max Bet Bonus Matchs</a>
+    <li><a th:href="@{/systems}">Meridijan</a>
+    <li><a th:href="@{/mozzart}">Mozzart</a>
+
+</ul>
+
+<hr>
+<!-- Add a link to pint to /leaders . . . . this is for the managers -->
+<div sec:authorize="hasRole('ADMIN')">
+    <p>
+        <a th:href="@{/leaders}">Leadership Meeting</a>
+         (Only for Manager peeps)
+     </p>
+
+
+
+</div>
+<p>
+    <a th:href="@{/report}">Reports</a>
+    (Only for Manager peeps)
+</p>
+<hr>
+<div sec:authorize="hasRole('ADMIN')">
+<p>
+    <a th:href="@{/systems}">STATISTIKA KORISNIKA</a>
+
+</p>
+</div>
+
+<hr>
+
+<!-- display user name -->
+
+
+<form action="#" th:action="@{/logout}" method="POST">
+    <input type="submit" value="Logout"/>
+</form>
+
+<script>
+   window.addEventListener('DOMContentLoaded', (event) => {
+      var popup = document.getElementById("popup");
+
+      // Provjerite da li se stranica poziva sa određenog kontrolera
+      var currentUrl = window.location.href;
+      if (currentUrl.includes("/save")) {
+        popup.style.display = "block";
+        setTimeout(function() {
+          popup.style.display = "none";
+        }, 4000);
+      }
+    });
+  </script>
+</body>
+</html>
