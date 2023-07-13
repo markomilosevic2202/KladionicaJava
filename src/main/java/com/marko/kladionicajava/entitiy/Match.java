@@ -3,6 +3,7 @@ package com.marko.kladionicajava.entitiy;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Date;
 import java.util.Set;
@@ -13,12 +14,13 @@ import java.util.Set;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Matches {
+public class Match {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
+    @Column(name = "id", nullable = false)
+    private String id;
     @Column(name = "id_match")
     private String idMatch;
     @Column(name = "betting_shop")
@@ -28,10 +30,10 @@ public class Matches {
     private String linkOrbit;
     @ManyToOne (fetch = FetchType.EAGER )
     @JoinColumn(name = "id_host_club", nullable = true)
-    private ClubNames hostNameClub;
+    private ClubName hostNameClub;
     @ManyToOne(fetch = FetchType.EAGER )
     @JoinColumn(name = "id_guest_club", nullable = true)
-    private ClubNames guestNameClub;
+    private ClubName guestNameClub;
     @Column(name = "odds_one")
     private Float odds_one;
     @Column(name = "odds_two")
@@ -39,7 +41,7 @@ public class Matches {
     @Column(name = "odds_x")
     private Float odds_x;
     @OneToMany(mappedBy = "matches", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Odds> odds;
+    private Set<Quota> odds;
     @Column(nullable = false)
     @JsonIgnore
     private Date createdAt;

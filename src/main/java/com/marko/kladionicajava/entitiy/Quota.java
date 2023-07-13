@@ -6,23 +6,25 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "odds")
+@Table(name = "quotas")
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Odds {
+public class Quota {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
+    @Column(name = "id", nullable = false)
+    private String id;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "matches_id")
     @JsonBackReference
-    private Matches matches;
+    private Match matches;
     @Column(name = "odds_one")
     private Float odds_one;
     @Column(name = "odds_two")

@@ -14,7 +14,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class ClubNames {
+public class ClubName {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
