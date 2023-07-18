@@ -2,6 +2,7 @@ package com.marko.kladionicajava.service;
 
 import com.marko.kladionicajava.entitiy.Match;
 import com.marko.kladionicajava.entitiy.MatchDTO;
+import com.marko.kladionicajava.entitiy.NameBetting;
 import com.marko.kladionicajava.repository.MatchRepository;
 import com.marko.kladionicajava.tools.MaxBetService;
 import lombok.RequiredArgsConstructor;
@@ -38,8 +39,10 @@ public class MatchService {
             MatchDTO matchDTO = listMatch.get(i) ;
             match.setIdMatch(matchDTO.getOne());
             match.setLinkOrbit(matchDTO.getName());
-         //   match.setOdds_one(Float.parseFloat(matchDTO.getOne()));
+            match.setIdMatch(matchDTO.getCode());
             match.setDateMatch(matchDTO.getTime());
+            match.setBettingShop(NameBetting.MAXBET);
+            //   match.setOdds_one(Float.parseFloat(matchDTO.getOne()));
 
                 list.add(match);
             }
