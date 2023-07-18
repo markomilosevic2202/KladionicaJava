@@ -37,14 +37,15 @@ public class MatchService {
         for (int i = 0; i < listMatch.size(); i++) {
             Match match = new Match();
             MatchDTO matchDTO = listMatch.get(i) ;
-            match.setIdMatch(matchDTO.getOne());
+            match.setIdMatch(matchDTO.getCode());
             match.setLinkOrbit(matchDTO.getName());
             match.setIdMatch(matchDTO.getCode());
             match.setDateMatch(matchDTO.getTime());
             match.setBettingShop(NameBetting.MAXBET);
-            //   match.setOdds_one(Float.parseFloat(matchDTO.getOne()));
-
-                list.add(match);
+            match.setOdds_one(Float.parseFloat(matchDTO.getOdds_one()));
+            match.setOdds_two(Float.parseFloat(matchDTO.getOdds_two()));
+            match.setOdds_x(Float.parseFloat(matchDTO.getOdds_x()));
+            list.add(match);
             }
 
         matchRepository.saveAll(list);

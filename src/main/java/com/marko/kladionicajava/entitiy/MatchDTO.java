@@ -13,8 +13,10 @@ import lombok.ToString;
 public class MatchDTO {
 
     private String code;
-    private String one;
     private String name;
     private String time;
+    private String odds_one;
+    private String odds_two;
+    private String odds_x;
 
 }

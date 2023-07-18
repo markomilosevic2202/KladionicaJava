@@ -181,8 +181,10 @@ public class MaxBet {
                 MatchDTO matchDTO = new MatchDTO();
                 matchDTO.setCode((String) matchMap.get("code"));
                 matchDTO.setName((String) matchMap.get("name"));
-                // matchDTO.setOne((String) matchMap.get("one"));
                 matchDTO.setTime(dateTimeString);
+                matchDTO.setOdds_one((String) matchMap.get("one"));
+                matchDTO.setOdds_two((String) matchMap.get("two"));
+                matchDTO.setOdds_x((String) matchMap.get("x"));
                 matches.add(matchDTO);
             }
         }
