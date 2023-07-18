@@ -23,6 +23,8 @@ public class Match {
     private String id;
     @Column(name = "id_match")
     private String idMatch;
+    @Column(name = "date_Match")
+    private String dateMatch;
     @Column(name = "betting_shop")
     @Enumerated
     private NameBetting bettingShop;

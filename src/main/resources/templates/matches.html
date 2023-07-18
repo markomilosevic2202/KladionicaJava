@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <style>
+
+    body {
+      background-image: url("settings.jpg");
+      background-size: cover;
+      background-opacity: 0.1;
+    }
+
+        .padajuca-lista {
+            width: 50%;
+            height: 30px;
+            font-size: 14px;
+            display: inline-block;
+            margin-right: 10px;
+            width: 100px;
+        }
+
+
+        .btn-info {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+            height: 30px;
+            font-size: 14px;
+        }
+
+        .title {
+
+            height: 30px;
+            font-size: 40px;
+            margin-left: 70px;
+           margin-bottom: 65px;
+
+        }
+
+
+        .table {
+            margin-top: 20px;
+        }
+
+
+    </style>
+
+
+    <title>Matches</title>
+</head>
+
+<body>
+
+<h1 class="title">Aktuelni Mecevi</h1>
+
+<div class="container">
+
+    <h3>Email</h3>
+    <hr>
+    <a th:href="@{/matches/refresh}"
+       class="btn btn-primary btn-sm mb-3">
+        Add Email
+    </a>
+
+
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>Sifra</th>
+            <th>Kladionica</th>
+            <th>Datum</th>
+            <th>Vreme</th>
+            <th>Timovi</th>
+            <th>1 Domaca</th>
+            <th>2 Domaca</th>
+            <th>x Domaca</th>
+            <th>1 Strana</th>
+            <th>2 Strana</th>
+            <th>x Strana</th>
+            <th>Ulog</th>
+            <th>Zarada</th>
+
+
+
+
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="email, index : ${emails}">
+            <td th:text="${email.email}"/>
+            <td th:text="${email.email}"/>
+
+            <td>
+                <a th:href="@{/settings/delete(emailId = ${email.id})}" class="btn btn-danger btn-sm" onclick="if (!(confirm('Are you sure you wont to delete this employee?'))) return false ">
+                    Delete
+                </a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+
+    <script>
+    function submitForm() {
+        document.getElementById('myForm').submit();
+    }
+</script>
+
+
+</div>
+
+</body>
+</html>

@@ -23,7 +23,7 @@ public class SettingsController {
 
     private final EmailService emailService;
     @GetMapping()
-    public String showReports(Model model) {
+    public String showSettings(Model model) {
         List<Email> listReports = emailService.getEmails();
         model.addAttribute("emails", listReports);
         return "settings";
