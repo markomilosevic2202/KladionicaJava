@@ -28,8 +28,10 @@ public class Match {
     @Column(name = "betting_shop")
     @Enumerated
     private NameBetting bettingShop;
-    @Column(name = "linkForeign")
-    private String linkOrbit;
+    @Column(name = "link_foreign")
+    private String linkForeign;
+    @Column(name = "name_home")
+    private String nameHome;
     @ManyToOne (fetch = FetchType.EAGER )
     @JoinColumn(name = "id_host_club", nullable = true)
     private ClubName hostNameClub;

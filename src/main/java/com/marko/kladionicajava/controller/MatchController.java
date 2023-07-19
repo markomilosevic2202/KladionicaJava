@@ -28,9 +28,23 @@ public class MatchController {
         return "matches";
     }
 
-    @GetMapping("/refresh")
+    @GetMapping("/refreshMatch")
     public String refreshMatches(){
         matchService.refreshMatches();
+
+        return "redirect:/matches";
+    }
+
+    @GetMapping("/findPairInForeignBettingShop")
+    public String findPairIn(){
+        matchService.findPairInForeignBettingShop();
+
+        return "redirect:/matches";
+    }
+
+    @GetMapping("/refreshQuota")
+    public String refreshQuota(){
+        matchService.refreshQuots();
 
         return "redirect:/matches";
     }

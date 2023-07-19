@@ -64,10 +64,16 @@
 
     <h3>Email</h3>
     <hr>
-    <a th:href="@{/matches/refresh}"
+    <a th:href="@{/matches/refreshMatch}"
        class="btn btn-primary btn-sm mb-3">
-        Add Email
+        1 Hours
     </a>
+    <a th:href="@{/matches/findPairInForeignBettingShop}"
+       class="btn btn-primary btn-sm mb-3">
+        After 1Hours
+    </a>
+
+
 
 
 
@@ -87,6 +93,7 @@
             <th>x Strana</th>
             <th>Ulog</th>
             <th>Zarada</th>
+            <th>Link</th>
 
 
 
@@ -96,15 +103,30 @@
         </thead>
 
         <tbody>
-        <tr th:each="email, index : ${emails}">
-            <td th:text="${email.email}"/>
-            <td th:text="${email.email}"/>
+        <tr th:each="match, index : ${matches}">
+            <td th:text="${match.idMatch}"/>
+            <td th:text="${match.bettingShop.name().substring(0)}"/>
+            <td th:text="${match.dateMatch}"/>
+            <td th:text="${match.dateMatch}"/>
+            <td th:text="${match.nameHome}"/>
+            <td th:text="${match.odds_one}"/>
+            <td th:text="${match.odds_two}"/>
+            <td th:text="${match.odds_x}"/>
+            <td />
+            <td />
+            <td />
+            <td />
+            <td />
+            <td><a th:href="${match.linkForeign}" target="_blank">Link</a></td>
 
-            <td>
-                <a th:href="@{/settings/delete(emailId = ${email.id})}" class="btn btn-danger btn-sm" onclick="if (!(confirm('Are you sure you wont to delete this employee?'))) return false ">
-                    Delete
-                </a>
-            </td>
+
+
+
+<!--            <td>-->
+<!--                <a th:href="@{/settings/delete(emailId = ${email.id})}" class="btn btn-danger btn-sm" onclick="if (!(confirm('Are you sure you wont to delete this employee?'))) return false ">-->
+<!--                    Delete-->
+<!--                </a>-->
+<!--            </td>-->
 
         </tr>
         </tbody>
