@@ -8,19 +8,23 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "quotas")
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Quota {
+public class Adds {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     @Column(name = "id", nullable = false)
     private String id;
+    @Column(name = "number_of_view", nullable = false)
+    private int numberOfView;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "matches_id")
     @JsonBackReference
@@ -39,6 +43,25 @@ public class Quota {
     private Float difference_x;
     @Column(name = "bet")
     private Float bet;
+    @Column(nullable = false)
+    private Date createdAt;
+    @Column(nullable = false)
+    private Date updatedAt;
+
+
+
+    @PrePersist
+    private void prePersist() {
+        Date date = new Date();
+        this.createdAt = date;
+        this.updatedAt = date;
+    }
+
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = new Date();
+    }
 
 
 }

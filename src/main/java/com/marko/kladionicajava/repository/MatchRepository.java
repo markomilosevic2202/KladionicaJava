@@ -32,4 +32,9 @@ public interface MatchRepository extends JpaRepository<Match, String> {
 
     @Query("select m from Match m where m.idMatch = ?1")
     Optional<Match> findMatchByIdMatch(String IdMatch);
+
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM Match m WHERE m.dateMatch < CURRENT_TIMESTAMP")
+    void deleteMatchStarted();
 }

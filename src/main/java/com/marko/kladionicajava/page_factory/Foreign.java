@@ -42,6 +42,8 @@ public class Foreign {
     }
 
     public void inputSearch(String nameClub) {
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        inpSearch.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
         inpSearch.sendKeys(nameClub);
     }
 
@@ -55,6 +57,7 @@ public class Foreign {
         btnDoubleChance.click();
     }
     public String getAddress(){
+        this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         return driver.getCurrentUrl();
 
     }

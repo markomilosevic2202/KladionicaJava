@@ -1,6 +1,5 @@
 package com.marko.kladionicajava.entitiy;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -24,7 +23,7 @@ public class Match {
     @Column(name = "id_match")
     private String idMatch;
     @Column(name = "date_Match")
-    private String dateMatch;
+    private Date dateMatch;
     @Column(name = "betting_shop")
     @Enumerated
     private NameBetting bettingShop;
@@ -45,12 +44,10 @@ public class Match {
     @Column(name = "odds_x")
     private Float odds_x;
     @OneToMany(mappedBy = "matches", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Quota> odds;
+    private Set<Adds> odds;
     @Column(nullable = false)
-    @JsonIgnore
     private Date createdAt;
     @Column(nullable = false)
-    @JsonIgnore
     private Date updatedAt;
 
     @PrePersist

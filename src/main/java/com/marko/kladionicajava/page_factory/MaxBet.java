@@ -10,6 +10,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -41,6 +44,9 @@ public class MaxBet {
     @FindBy(xpath = "//*[contains(@class, 'ui-slider-handle ui-state-default ui-corner-all')]")
     private WebElement slider;
 
+    @FindBy(xpath = "//*[contains(@class,'ngdialog-close ng-scope')]")
+    private WebElement btnClosePopup;
+
     private final WebDriver driver;
 
     public MaxBet(WebDriver driver) {
@@ -60,6 +66,10 @@ public class MaxBet {
 
     public void clickMaxBonus() {
         this.btnMaxBonus.click();
+
+    }
+    public void clickClosePopup() {
+        this.btnClosePopup.click();
 
     }
 
@@ -181,7 +191,13 @@ public class MaxBet {
                 MatchDTO matchDTO = new MatchDTO();
                 matchDTO.setCode((String) matchMap.get("code"));
                 matchDTO.setName((String) matchMap.get("name"));
-                matchDTO.setTime(dateTimeString);
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+                try {
+                    matchDTO.setTime(dateFormat.parse(dateTimeString));
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
                 matchDTO.setOdds_one((String) matchMap.get("one"));
                 matchDTO.setOdds_two((String) matchMap.get("two"));
                 matchDTO.setOdds_x((String) matchMap.get("x"));

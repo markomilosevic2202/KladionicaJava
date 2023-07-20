@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @ToString
@@ -14,7 +16,7 @@ public class MatchDTO {
 
     private String code;
     private String name;
-    private String time;
+    private Date time;
     private String odds_one;
     private String odds_two;
     private String odds_x;

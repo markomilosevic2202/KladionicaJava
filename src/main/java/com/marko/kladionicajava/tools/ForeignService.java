@@ -6,6 +6,8 @@ import com.marko.kladionicajava.page_factory.MaxBet;
 import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.WebDriver;
 import org.springframework.stereotype.Service;
+
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class ForeignService {
         try {
 
            Foreign foreign = new Foreign(driver);
+           // this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
 
             this.driver = WebDriverService.getWebdriver();
             MaxBet maxBet = new MaxBet(driver);
@@ -30,6 +33,7 @@ public class ForeignService {
             foreign.inputSearch(nameClub);
             foreign.clickFirstMatchOnFindList();
             foreign.clickButtonDoubleChance();
+          //  this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
             return foreign.getAddress();
 
 
