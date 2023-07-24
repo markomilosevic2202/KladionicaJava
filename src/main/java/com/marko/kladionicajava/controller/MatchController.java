@@ -22,15 +22,18 @@ public class MatchController {
 
     @GetMapping()
     public String showMatches(Model model){
+        List<String> optionalView = matchService.getOptionalView();
         List<Match> listMatch = matchService.getMatches();
         model.addAttribute("matches", listMatch);
+        model.addAttribute("optionalViews", optionalView);
 
         return "matches";
     }
 
     @GetMapping("/refreshMatch")
     public String refreshMatches(){
-        matchService.refreshMatches();
+        matchService.refreshShow();
+
 
         return "redirect:/matches";
     }

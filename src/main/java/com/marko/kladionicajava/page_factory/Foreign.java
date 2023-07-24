@@ -40,9 +40,12 @@ public class Foreign {
         PageFactory.initElements(driver, this);
 
     }
+    public void goAddress(String address) {
+        this.driver.get(address);
+    }
 
     public void inputSearch(String nameClub) {
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         inpSearch.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
         inpSearch.sendKeys(nameClub);
     }

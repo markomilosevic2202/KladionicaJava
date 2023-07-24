@@ -16,15 +16,15 @@ import java.util.Date;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Adds {
+public class Quotas {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     @Column(name = "id", nullable = false)
     private String id;
-    @Column(name = "number_of_view", nullable = false)
-    private int numberOfView;
+    @Column(name = "number", nullable = false)
+    private String number;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "matches_id")
     @JsonBackReference

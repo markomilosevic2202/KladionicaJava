@@ -19,9 +19,11 @@ import java.util.List;
 public class MaxBetService {
 
 
-    private WebDriver webDriver;
+    private WebDriver driver;
 
-
+    public MaxBetService(WebDriver driver) {
+        this.driver = driver;
+    }
 
     public List<MatchDTO> getAllMatchesMaxBetBonus(String address, String hoursOfReview) {
         List<MatchDTO> listMaxbetBonusMatch = new ArrayList<>();
@@ -29,7 +31,7 @@ public class MaxBetService {
         try {
 
              listMaxbetBonusMatch = getListMaxbetOrdinaryMatch(address, hoursOfReview);
-             quit();
+
 //
         } catch (Exception e) {
             e.printStackTrace();
@@ -46,10 +48,10 @@ public class MaxBetService {
 //
 
            // this.webDriver = WebDriverService.getWebdriver();
-            webDriver = open();
-            MaxBet maxBet = new MaxBet(webDriver);
+
+            MaxBet maxBet = new MaxBet(driver);
             maxBet.goAddress(address);
-            Thread.sleep(10000);
+            Thread.sleep(6000);
             maxBet.clickSlider(hoursOfReview);
             Thread.sleep(1000);
             maxBet.clickFootball();
@@ -67,37 +69,7 @@ public class MaxBetService {
 
 
     }
-    public  WebDriver open() {
-        try {
-            System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
-            ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.addArguments("--remote-allow-origins=*");
-            chromeOptions.addArguments("start-maximized"); // open Browser in maximized mode
-            chromeOptions.addArguments("disable-infobars"); // disabling infobars
-            chromeOptions.addArguments("--disable-extensions"); // disabling extensions
-            chromeOptions.addArguments("--disable-gpu"); // applicable to windows os only
-            chromeOptions.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
-            chromeOptions.addArguments("--no-sandbox"); // Bypass OS security model
-            this.webDriver = new ChromeDriver(chromeOptions);
-            this.webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
-            this.webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-            this.webDriver.manage().window().maximize();
-            return webDriver;
-        } catch (Exception e) {
-            e.printStackTrace();
-            this.webDriver.close();
-        }
-        return null;
-    }
-    public  void quit(){
-       try {
-           this.webDriver.quit();
-       }
-       catch (Exception e){
-           System.out.println("ssdfsdfsd");
-       }
 
-    }
 
 
 }

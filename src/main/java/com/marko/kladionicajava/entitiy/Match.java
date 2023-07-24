@@ -43,8 +43,8 @@ public class Match {
     private Float odds_two;
     @Column(name = "odds_x")
     private Float odds_x;
-    @OneToMany(mappedBy = "matches", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Adds> odds;
+    @OneToMany(mappedBy = "matches", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Quotas> odds;
     @Column(nullable = false)
     private Date createdAt;
     @Column(nullable = false)
