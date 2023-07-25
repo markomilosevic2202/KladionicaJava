@@ -28,5 +28,5 @@ public interface QuotaRepository extends JpaRepository<Quotas, String> {
     List<String> findAllDistinctByNumberOfView();
 
     @Query("select q from Quotas q where q.number = ?1")
-    List<Match> findAllByNumber(String number);
+    List<Quotas> findAllByNumber(String number);
 }

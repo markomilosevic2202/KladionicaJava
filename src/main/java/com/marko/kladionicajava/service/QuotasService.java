@@ -2,6 +2,7 @@ package com.marko.kladionicajava.service;
 
 
 import com.marko.kladionicajava.entitiy.Match;
+import com.marko.kladionicajava.entitiy.Quotas;
 import com.marko.kladionicajava.repository.QuotaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,10 @@ public class QuotasService {
 
     private final QuotaRepository quotaRepository;
 
-    public List<Match> getAllQuotasLastView(String dateView) {
+    public List<Quotas> getAllQuotasLastView(String timeView) {
 
         try {
-            return quotaRepository.findAllByNumber();
+            return quotaRepository.findAllByNumber(timeView);
 
         } catch (Exception e) {
 

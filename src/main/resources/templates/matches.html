@@ -13,7 +13,7 @@
     <style>
 
     body {
-      background-image: url("settings.jpg");
+      background-image: url("http://localhost:9910/footbal.jpg");
       background-size: cover;
       background-opacity: 0.1;
     }
@@ -50,6 +50,7 @@
         }
 
 
+
     </style>
 
 
@@ -72,10 +73,27 @@
        class="btn btn-primary btn-sm mb-3">
         After 1Hours
     </a>
-    <select id="myDropdown">
-        <!-- Use Thymeleaf to iterate over the list and create options -->
-        <option th:each="item : ${optionalViews}" th:value="${item}" th:text="${item}"></option>
-    </select>
+
+
+    <form id="myForm" action="#" th:object="${time}" th:action="@{/matches/showSetTime}">
+        <select id="myDropdown" name="myDropdown"> <!-- Dodajte 'name' atribut ovde -->
+            <option th:each="item : ${optionalViews}" th:value="${item}" th:text="${item}"></option>
+        </select>
+    </form>
+
+    <script>
+    // Get a reference to the form and dropdown element
+    const form = document.getElementById('myForm');
+    const dropdown = document.getElementById('myDropdown');
+
+    // Add event listener to the dropdown to submit the form on value change
+    dropdown.addEventListener('change', function() {
+        form.submit(); // This will submit the form to the specified action URL
+    });
+</script>
+
+
+
 
 
 
@@ -100,47 +118,56 @@
             <th>Link</th>
 
 
-
-
-
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each="match, index : ${matches}">
-            <td th:text="${match.idMatch}"/>
-            <td th:text="${match.bettingShop.name().substring(0)}"/>
-            <td th:text="${match.dateMatch}"/>
-            <td th:text="${match.dateMatch}"/>
-            <td th:text="${match.nameHome}"/>
-            <td th:text="${match.odds_one}"/>
-            <td th:text="${match.odds_two}"/>
-            <td th:text="${match.odds_x}"/>
-            <td />
-            <td />
-            <td />
-            <td />
-            <td />
-            <td><a th:href="${match.linkForeign}" target="_blank">Link</a></td>
+        <tr th:each="quota, index : ${quotas}">
 
 
+            <td th:text="${quota.matches.idMatch}"/>
+            <td th:text="${quota.matches.bettingShop.name().substring(0)}"/>
+            <td>
+                <span th:text="${#dates.format(quota.matches.dateMatch, 'dd.MM.yyyy.')}"></span>
+            </td>
+            <td>
+                <span th:text="${#dates.format(quota.matches.dateMatch, 'HH:mm')}"></span>
+            </td>
+            <td>
+                <a th:href="@{/matches/individualDisplayMatch(matchId=${quota.matches.id})}">
+                    <span th:text="${quota.matches.nameHome}"></span>
+                </a>
+            </td>
+            <td th:text="${quota.difference_one}"/>
 
-
-<!--            <td>-->
-<!--                <a th:href="@{/settings/delete(emailId = ${email.id})}" class="btn btn-danger btn-sm" onclick="if (!(confirm('Are you sure you wont to delete this employee?'))) return false ">-->
-<!--                    Delete-->
-<!--                </a>-->
-<!--            </td>-->
 
         </tr>
         </tbody>
     </table>
 
+
+
     <script>
     function submitForm() {
         document.getElementById('myForm').submit();
     }
-</script>
+
+       function sendSelectedValue() {
+        var selectedValue = document.getElementById("myDropdown").value;
+        var formData = new FormData();
+        formData.append("selectedValue", selectedValue);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/matches/showSetTime", true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log("Vrednost je uspešno poslata na server.");
+            }
+        };
+        xhr.send(formData);
+    }
+
+   </script>
 
 
 </div>

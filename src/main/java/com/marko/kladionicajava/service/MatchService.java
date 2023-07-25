@@ -44,7 +44,7 @@ public class MatchService {
     public void refreshShow() {
         driver = webDriverMono.open();
         MaxBetService maxBetService = new MaxBetService(driver);
-        List<MatchDTO> listMatchPage = maxBetService.getAllMatchesMaxBetBonus("https://www.maxbet.rs/ibet-web-client/#/home#top", "3");
+        List<MatchDTO> listMatchPage = maxBetService.getAllMatchesMaxBetBonus("https://www.maxbet.rs/ibet-web-client/#/home#top", "5");
         driver.quit();
         //TODO list for Mozzart and Meridian
         List<Match> listMatchBase = matchRepository.findAll();
@@ -120,6 +120,12 @@ public class MatchService {
     public List<String> getOptionalView() {
 
         return  quotaRepository.findAllDistinctByNumberOfView();
+    }
+
+    public Match getMatch(String matchId) {
+
+        Optional<Match> match = matchRepository.findById(matchId);
+        return match.get();
     }
 }
 //konsider my self    start it
