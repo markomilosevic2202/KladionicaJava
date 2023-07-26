@@ -37,12 +37,16 @@ public class Quotas {
     private Float quotaX;
     @Column(name = "difference_one")
     private Float differenceOne;
-    @Column(name = "difference_one_two")
-    private Float differenceTwo;
     @Column(name = "difference_two")
+    private Float differenceTwo;
+    @Column(name = "difference_x")
     private Float differenceX;
-    @Column(name = "bet")
-    private Float bet;
+    @Column(name = "bet_one")
+    private Float betOne;
+    @Column(name = "bet_two")
+    private Float betTwo;
+    @Column(name = "bet_x")
+    private Float betX;
     @Column(nullable = false)
     private Date createdAt;
     @Column(nullable = false)

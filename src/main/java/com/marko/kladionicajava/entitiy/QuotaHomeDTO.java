@@ -6,17 +6,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Date;
-
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class MatchDTO {
+public class QuotaHomeDTO {
 
     private String code;
-    private String name;
-    private Date time;
-
-
+    private String one;
+    private String two;
+    private String x;
 }

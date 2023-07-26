@@ -1,12 +1,9 @@
 package com.marko.kladionicajava.service;
 
-import com.marko.kladionicajava.entitiy.Match;
-import com.marko.kladionicajava.entitiy.MatchDTO;
-import com.marko.kladionicajava.entitiy.NameBetting;
-import com.marko.kladionicajava.entitiy.Quotas;
+import com.marko.kladionicajava.entitiy.*;
+import com.marko.kladionicajava.page_factory.ForeignPage;
 import com.marko.kladionicajava.repository.MatchRepository;
 import com.marko.kladionicajava.repository.QuotaRepository;
-import com.marko.kladionicajava.tools.ForeignService;
 import com.marko.kladionicajava.tools.MaxBetService;
 import com.marko.kladionicajava.tools.WebDriverMono;
 import lombok.RequiredArgsConstructor;
@@ -27,29 +24,14 @@ public class MatchService {
     private WebDriver driver;
 
 
-//    public List<Match> getMatches() {
-//
-//        try {
-//            return matchRepository.findAll();
-//
-//        } catch (Exception e) {
-//
-//            e.printStackTrace();
-//            return new ArrayList<>();
-//        }
-//    }
-
     public void refreshShow() {
         driver = webDriverMono.open();
         MaxBetService maxBetService = new MaxBetService(driver);
-        String timeReview = appConfigService.getTimeReview();
-        List<MatchDTO> listMatchPage = maxBetService.getAllMatchesMaxBetBonus("https://www.maxbet.rs/ibet-web-client/#/home#top", timeReview);
+        List<MatchDTO> listMatchPage = maxBetService.getAllMatchesBonus(appConfigService.getAddressMaxBet(), appConfigService.getTimeReview());
         driver.quit();
         //TODO list for Mozzart and Meridian
         List<Match> listMatchBase = matchRepository.findAll();
-        Date currentDate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM. HH:mm");
-        String timeView = dateFormat.format(currentDate);
+
 
 
         for (int i = 0; i < listMatchPage.size(); i++) {
@@ -64,28 +46,12 @@ public class MatchService {
                 match.setDateMatch(matchDTOPage.getTime());
                 match.setBettingShop(NameBetting.MAXBET);
                 optionalMatch = Optional.of(matchRepository.save(match));
-
-                ;
-            } else {
-                optionalMatch = matchRepository.findMatchByIdMatch(matchDTOPage.getCode());
-                optionalMatch = Optional.of(matchRepository.save(optionalMatch.get()));
-
             }
-            //TODO write in quota table
-//            Quotas quota = new Quotas();
-//            quota.setDifferenceOne(Float.parseFloat(matchDTOPage.getOdds_one()));
-//            quota.setDifferenceTwo(Float.parseFloat(matchDTOPage.getOdds_two()));
-//            quota.setDifferenceX(Float.parseFloat(matchDTOPage.getOdds_x()));
-//            quota.setTimeView(timeView);
-//            quota.setMatches(optionalMatch.get());
-//            quotaRepository.save(quota);
-
         }
         quotaRepository.deleteAllMatchHaveStarted();
         matchRepository.deleteMatchStarted();
         findPairInForeignBettingShop();
         matchRepository.deleteMatchByLinkForeignNull();
-
     }
 
 
@@ -93,22 +59,42 @@ public class MatchService {
 
         List<Match> list = matchRepository.findWithLinkForeignIsNull();
         driver = webDriverMono.open();
-        ForeignService foreignService = new ForeignService(driver);
+        ForeignPage foreignPage = new ForeignPage(driver);
+        foreignPage.goAddress(appConfigService.getAddressForeign());
         for (int i = 0; i < list.size(); i++) {
             Match match = list.get(i);
-            matchRepository.updateMatchLink(match, foreignService.findLink(match.getNameHome()));
-
+            matchRepository.updateMatchLink(match, foreignPage.findLink(match.getNameHome()));
 
         }
         driver.quit();
     }
 
     public void refreshQuotas() {
-        List<Match> listMatch = matchRepository.findAll();
-        for (int i = 0; i < listMatch.size(); i++) {
-            Match match = listMatch.get(i);
+        try {
 
+            Date currentDate = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM. HH:mm");
+            String timeView = dateFormat.format(currentDate);
+            driver = webDriverMono.open();
+            MaxBetService maxBetService = new MaxBetService(driver);
+            ForeignPage foreignPage = new ForeignPage(driver);
+            List<Match> listMatchMaxbetBase = matchRepository.findAllByBettingShop(NameBetting.MAXBET);
+            List<QuotaHomeDTO> listQuotasMaxbetPage = maxBetService.getAllQuotasBonus(appConfigService.getAddressMaxBet(), appConfigService.getTimeReview());
+
+            for (int i = 0; i < listMatchMaxbetBase.size(); i++) {
+                Quotas quotas = new Quotas();
+                Match match = listMatchMaxbetBase.get(i);
+                QuotaForeignDTO quotaForeignDTO = foreignPage.getQuotaForeign(match.getLinkForeign());
+                QuotaHomeDTO quotaHomeDTO = findMatchByCode(listQuotasMaxbetPage, match.getIdMatch());
+                if(match != null && quotaHomeDTO != null && quotaForeignDTO != null ) {
+                    quotaRepository.save(setQuotas(quotaForeignDTO, quotaHomeDTO, match, timeView));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            driver.quit();
         }
+        driver.quit();
 
     }
 
@@ -121,6 +107,32 @@ public class MatchService {
     public Match getMatch(String matchId) {
         Optional<Match> match = matchRepository.findById(matchId);
         return match.get();
+    }
+
+    public Quotas setQuotas(QuotaForeignDTO quotaForeignDTO, QuotaHomeDTO quotaHomeDTO, Match match, String timeView) {
+        Quotas quotas = new Quotas();
+        quotas.setMatches(match);
+        quotas.setQuotaOne(Float.parseFloat(quotaHomeDTO.getOne()));
+        quotas.setQuotaTwo(Float.parseFloat(quotaHomeDTO.getTwo()));
+        quotas.setQuotaX(Float.parseFloat(quotaHomeDTO.getX()));
+        quotas.setDifferenceOne(quotaForeignDTO.getTwoXQuota());
+        quotas.setDifferenceTwo(quotaForeignDTO.getOneXQuota());
+        quotas.setDifferenceX(quotaForeignDTO.getOneTwoQuota());
+        quotas.setBetOne(quotaForeignDTO.getTwoXBet());
+        quotas.setBetTwo(quotaForeignDTO.getOneXBet());
+        quotas.setBetX(quotaForeignDTO.getOneTwoQuota());
+        quotas.setTimeView(timeView);
+        return quotas;
+
+    }
+
+    public static QuotaHomeDTO findMatchByCode(List<QuotaHomeDTO> listMatchMaxbetBase, String searchCode) {
+        for (QuotaHomeDTO quotaHomeDTO : listMatchMaxbetBase) {
+            if (quotaHomeDTO.getCode().equals(searchCode)) {
+                return quotaHomeDTO;
+            }
+        }
+        return null;
     }
 }
 //konsider my self    start it

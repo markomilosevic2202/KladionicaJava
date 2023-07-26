@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component;
 public class AppConfigService {
 
     private String timeReview;
-
-
+    private String addressMaxBet;
+    private String addressForeign;
 
 }
 

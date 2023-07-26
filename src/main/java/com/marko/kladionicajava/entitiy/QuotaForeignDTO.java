@@ -6,17 +6,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Date;
-
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class MatchDTO {
+public class QuotaForeignDTO {
 
-    private String code;
-    private String name;
-    private Date time;
-
-
+    private Float oneXQuota;
+    private Float oneXBet;
+    private Float twoXQuota;
+    private Float twoXBet;
+    private Float oneTwoQuota;
+    private Float oneTwoBet;
 }

@@ -3,6 +3,7 @@ package com.marko.kladionicajava.page_factory;
 
 import com.marko.kladionicajava.entitiy.Match;
 import com.marko.kladionicajava.entitiy.MatchDTO;
+import com.marko.kladionicajava.entitiy.QuotaHomeDTO;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -104,62 +105,7 @@ public class MaxBet {
 
     }
 
-//    public void waitForPageToLoad() throws InterruptedException {
-//        JavascriptExecutor js = (JavascriptExecutor) this.driver;
-//        WebElement scrollBar = (WebElement) js.executeScript("return document.querySelector('body > div > div:nth-child(3) > div > div > div.slimScrollBar');");
-//        boolean isScrollBarAtEnd = false;
-//        // skrolovanje na kraj skrol bara
-//        while (!isScrollBarAtEnd) {
-//
-//
-//            js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-//            Thread.sleep(500);
-//            isScrollBarAtEnd = (boolean) js.executeScript("return (document.documentElement.scrollHeight - window.innerHeight) === window.scrollY");
-//
-//
-//        }
-//    }
-
-    public List<Match> writeMatch() {
-        JavascriptExecutor js = (JavascriptExecutor) this.driver;
-        List<Match> matches = (List<Match>) js.executeScript(
-                "let list = document.querySelectorAll('.home-game.bck-col-1.ng-scope');\n" +
-                        "let result = [];\n" +
-                        "list.forEach(e=>{\n" +
-                        "    result.push({\n" +
-                        "        \"code\": e.querySelector('.cc-match-code').innerText,\n" +
-                        "        \"name\": e.querySelector('.teams-overflow').textContent.replaceAll('\\n', ''),\n" +
-                        "        \"one\": e.getElementsByTagName('odd')[0].outerText,\n" +
-                        "        \"x\": e.getElementsByTagName('odd')[1].outerText,\n" +
-                        "        \"two\": e.getElementsByTagName('odd')[2].outerText,\n" +
-                        "        \"time\": e.querySelector('.cc-match-kickoff').outerText.split(' ')[1],\n" +
-                        "        \"date\": e.querySelector('.cc-match-kickoff').outerText.split(' ')[0]\n" +
-                        "\n" +
-                        "    });\n" +
-                        "});\n" +
-                        "return result;");
-        System.out.println(matches.size());
-        return matches;
-
-//        List<Match> listObject = new ArrayList<>();
-//        System.out.println(listMatchDiv.size());
-//        for (int i = 0; i < listMatchDiv.size(); i++) {
-//            WebElement element = listMatchDiv.get(i);
-//            Match match = new Match();
-//            match.setCode(element.findElement(By.xpath("match/span/div/div[1]")).getText());
-//            String fullDate = element.findElement(By.xpath("match/span/div/div[2]")).getText();
-////            match.setTime(fullDate.substring(7,12));
-//            match.setTime(fullDate.split(" ")[1]);
-////            match.setDate(fullDate.substring(0,5));
-//            match.setDate(fullDate.split(" ")[0]);
-//            match.setName(element.findElement(By.xpath("match/span/div/div[3]")).getText());
-//            match.setOne(element.findElement(By.xpath("match/span/div/div[5]/span[1]/odd")).getText());
-//            match.setTwo(element.findElement(By.xpath("match/span/div/div[5]/span[1]/odd[2]")).getText());
-//            match.setX(element.findElement(By.xpath("match/span/div/div[5]/span[1]/odd[3]")).getText());
-//            listObject.add(match);
-    }
-
-    public List<MatchDTO> writeBonusMatch() {
+    public List<MatchDTO> getBonusMatch() {
 
         JavascriptExecutor js = (JavascriptExecutor) this.driver;
         List<Object> resultList = (List<Object>) js.executeScript(
@@ -169,9 +115,6 @@ public class MaxBet {
                         "    result.push({\n" +
                         "        \"code\": e.querySelector('.cc-match-code').innerText,\n" +
                         "        \"name\": e.querySelector('.teams-overflow').textContent.replaceAll('\\n', ''),\n" +
-                        "        \"one\": e.getElementsByTagName('odd')[0].outerText,\n" +
-                        "        \"x\": e.getElementsByTagName('odd')[1].outerText,\n" +
-                        "        \"two\": e.getElementsByTagName('odd')[2].outerText,\n" +
                         "        \"time\": e.querySelector('.cc-match-kickoff').outerText.split(' ')[1],\n" +
                         "        \"date\": e.querySelector('.cc-match-kickoff').outerText.split(' ')[0]\n" +
                         "\n" +
@@ -198,13 +141,45 @@ public class MaxBet {
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
-                matchDTO.setOdds_one((String) matchMap.get("one"));
-                matchDTO.setOdds_two((String) matchMap.get("two"));
-                matchDTO.setOdds_x((String) matchMap.get("x"));
                 matches.add(matchDTO);
             }
         }
         return matches;
+
+
+    }
+
+    public List<QuotaHomeDTO> getQuota() {
+
+        JavascriptExecutor js = (JavascriptExecutor) this.driver;
+        List<Object> resultList = (List<Object>) js.executeScript(
+                "let list = document.querySelectorAll('.home-game.bck-col-1.ng-scope');\n" +
+                        "let result = [];\n" +
+                        "list.forEach(e=>{\n" +
+                        "    result.push({\n" +
+                        "        \"code\": e.querySelector('.cc-match-code').innerText,\n" +
+                        "        \"one\": e.getElementsByTagName('odd')[0].outerText,\n" +
+                        "        \"x\": e.getElementsByTagName('odd')[1].outerText,\n" +
+                        "        \"two\": e.getElementsByTagName('odd')[2].outerText,\n" +
+                        "\n" +
+                        "    });\n" +
+                        "});\n" +
+                        "return result;");
+
+        List<QuotaHomeDTO> quota = new ArrayList<>();
+        for (Object obj : resultList) {
+            if (obj instanceof Map) {
+                Map<String, Object> matchMap = (Map<String, Object>) obj;
+
+                QuotaHomeDTO quotaHomeDTO = new QuotaHomeDTO();
+                quotaHomeDTO.setCode((String) matchMap.get("code"));
+                quotaHomeDTO.setOne((String) matchMap.get("one"));
+                quotaHomeDTO.setTwo((String) matchMap.get("two"));
+                quotaHomeDTO.setX((String) matchMap.get("x"));
+                quota.add(quotaHomeDTO);
+            }
+        }
+        return quota;
 
 
     }

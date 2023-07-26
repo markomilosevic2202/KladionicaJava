@@ -3,6 +3,7 @@ package com.marko.kladionicajava.repository;
 
 import com.marko.kladionicajava.entitiy.Email;
 import com.marko.kladionicajava.entitiy.Match;
+import com.marko.kladionicajava.entitiy.NameBetting;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -43,4 +44,9 @@ public interface MatchRepository extends JpaRepository<Match, String> {
     @Modifying
     @Query("delete from Match m where m.linkForeign is null")
     void deleteMatchByLinkForeignNull();
+
+    @Query("select m from Match m where m.bettingShop = ?1")
+    List<Match> findAllByBettingShop(NameBetting nameBetting);
+
+
 }

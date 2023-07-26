@@ -1,16 +1,11 @@
 package com.marko.kladionicajava.tools;
 
-import com.marko.kladionicajava.entitiy.Match;
 import com.marko.kladionicajava.entitiy.MatchDTO;
+import com.marko.kladionicajava.entitiy.QuotaHomeDTO;
 import com.marko.kladionicajava.page_factory.MaxBet;
 import lombok.RequiredArgsConstructor;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.stereotype.Service;
-
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,31 +20,36 @@ public class MaxBetService {
         this.driver = driver;
     }
 
-    public List<MatchDTO> getAllMatchesMaxBetBonus(String address, String hoursOfReview) {
+    public List<MatchDTO> getAllMatchesBonus(String address, String hoursOfReview) {
         List<MatchDTO> listMaxbetBonusMatch = new ArrayList<>();
 
         try {
-
-             listMaxbetBonusMatch = getListMaxbetOrdinaryMatch(address, hoursOfReview);
-
-//
+            MaxBet maxBet = new MaxBet(driver);
+            setPageBonusMatch(address, hoursOfReview, maxBet);
+            listMaxbetBonusMatch = maxBet.getBonusMatch();
         } catch (Exception e) {
             e.printStackTrace();
         }
-       // driver.quit();
-
         return listMaxbetBonusMatch;
-
-
     }
 
-    private List<MatchDTO> getListMaxbetOrdinaryMatch(String address, String hoursOfReview) {
+
+    public List<QuotaHomeDTO> getAllQuotasBonus(String address, String hoursOfReview) {
+        List<QuotaHomeDTO> listMaxbetBonusQuotas = new ArrayList<>();
+
         try {
-//
-
-           // this.webDriver = WebDriverService.getWebdriver();
-
             MaxBet maxBet = new MaxBet(driver);
+            setPageBonusMatch(address, hoursOfReview, maxBet);
+            listMaxbetBonusQuotas = maxBet.getQuota();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listMaxbetBonusQuotas;
+    }
+
+    private void setPageBonusMatch(String address, String hoursOfReview, MaxBet maxBet) {
+        try {
+
             maxBet.goAddress(address);
             Thread.sleep(6000);
             maxBet.clickSlider(hoursOfReview);
@@ -57,18 +57,12 @@ public class MaxBetService {
             maxBet.clickFootball();
             Thread.sleep(500);
             maxBet.clickMaxBonus();
-          //  maxBet.clickSelectAll();
             Thread.sleep(1000);
-          //  maxBet.waitForPageToLoad();
-           return maxBet.writeBonusMatch();
-
         } catch (Exception e) {
             e.printStackTrace();
-            return new ArrayList<>();
+
 
         }
-
-
     }
 
 

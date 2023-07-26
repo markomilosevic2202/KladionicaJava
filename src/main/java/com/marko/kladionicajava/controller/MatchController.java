@@ -35,7 +35,6 @@ public class MatchController {
 
     @RequestMapping ("/showSetTime")
     public String handleFormSubmission(@RequestParam("myDropdown") String selectedValue, Model model) {
-        System.out.println(selectedValue);
         List<Quotas> listMatch = quotasService.getAllQuotasLastView(selectedValue);
         model.addAttribute("quotas", listMatch);
         List<String> optionalView = matchService.getOptionalView();
@@ -49,11 +48,13 @@ public class MatchController {
         return "redirect:/matches";
     }
 
-    @GetMapping("/findPairInForeignBettingShop")
+    @GetMapping("/findPairInForeignBettingShop")//treba da se obrise
     public String findPairIn(){
-        matchService.findPairInForeignBettingShop();
+//        matchService.findPairInForeignBettingShop();
+//
+//        return "redirect:/matches";
+        return "redirect:/refreshQuota";
 
-        return "redirect:/matches";
     }
 
     @GetMapping("/refreshQuota")
