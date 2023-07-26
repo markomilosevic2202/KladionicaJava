@@ -23,28 +23,27 @@ public class MatchService {
     private final MatchRepository matchRepository;
     private final QuotaRepository quotaRepository;
     private final WebDriverMono webDriverMono;
+    private final AppConfigService appConfigService;
     private WebDriver driver;
 
 
-
-
-
-    public List<Match> getMatches() {
-
-        try {
-            return matchRepository.findAll();
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }
+//    public List<Match> getMatches() {
+//
+//        try {
+//            return matchRepository.findAll();
+//
+//        } catch (Exception e) {
+//
+//            e.printStackTrace();
+//            return new ArrayList<>();
+//        }
+//    }
 
     public void refreshShow() {
         driver = webDriverMono.open();
         MaxBetService maxBetService = new MaxBetService(driver);
-        List<MatchDTO> listMatchPage = maxBetService.getAllMatchesMaxBetBonus("https://www.maxbet.rs/ibet-web-client/#/home#top", "5");
+        String timeReview = appConfigService.getTimeReview();
+        List<MatchDTO> listMatchPage = maxBetService.getAllMatchesMaxBetBonus("https://www.maxbet.rs/ibet-web-client/#/home#top", timeReview);
         driver.quit();
         //TODO list for Mozzart and Meridian
         List<Match> listMatchBase = matchRepository.findAll();
@@ -64,39 +63,30 @@ public class MatchService {
                 match.setIdMatch(matchDTOPage.getCode());
                 match.setDateMatch(matchDTOPage.getTime());
                 match.setBettingShop(NameBetting.MAXBET);
-                match.setOdds_one(Float.parseFloat(matchDTOPage.getOdds_one()));
-                match.setOdds_two(Float.parseFloat(matchDTOPage.getOdds_two()));
-                match.setOdds_x(Float.parseFloat(matchDTOPage.getOdds_x()));
-                optionalMatch = Optional.of( matchRepository.save(match));
+                optionalMatch = Optional.of(matchRepository.save(match));
 
-               ;
+                ;
             } else {
                 optionalMatch = matchRepository.findMatchByIdMatch(matchDTOPage.getCode());
-                optionalMatch.get().setOdds_one(Float.parseFloat(matchDTOPage.getOdds_one()));
-                optionalMatch.get().setOdds_two(Float.parseFloat(matchDTOPage.getOdds_two()));
-                optionalMatch.get().setOdds_x(Float.parseFloat(matchDTOPage.getOdds_x()));//));
                 optionalMatch = Optional.of(matchRepository.save(optionalMatch.get()));
 
             }
             //TODO write in quota table
-            Quotas quota = new Quotas();
-            quota.setDifference_one(Float.parseFloat(matchDTOPage.getOdds_one()));
-            quota.setDifference_two(Float.parseFloat(matchDTOPage.getOdds_two()));
-            quota.setDifference_x(Float.parseFloat(matchDTOPage.getOdds_x()));
-            quota.setNumber(timeView);
-            quota.setMatches(optionalMatch.get());
-            quotaRepository.save(quota);
+//            Quotas quota = new Quotas();
+//            quota.setDifferenceOne(Float.parseFloat(matchDTOPage.getOdds_one()));
+//            quota.setDifferenceTwo(Float.parseFloat(matchDTOPage.getOdds_two()));
+//            quota.setDifferenceX(Float.parseFloat(matchDTOPage.getOdds_x()));
+//            quota.setTimeView(timeView);
+//            quota.setMatches(optionalMatch.get());
+//            quotaRepository.save(quota);
 
         }
         quotaRepository.deleteAllMatchHaveStarted();
         matchRepository.deleteMatchStarted();
         findPairInForeignBettingShop();
+        matchRepository.deleteMatchByLinkForeignNull();
 
     }
-
-
-
-
 
 
     public void findPairInForeignBettingShop() {
@@ -113,17 +103,22 @@ public class MatchService {
         driver.quit();
     }
 
-    public void refreshQuots() {
+    public void refreshQuotas() {
+        List<Match> listMatch = matchRepository.findAll();
+        for (int i = 0; i < listMatch.size(); i++) {
+            Match match = listMatch.get(i);
+
+        }
+
     }
 
 
     public List<String> getOptionalView() {
 
-        return  quotaRepository.findAllDistinctByNumberOfView();
+        return quotaRepository.findAllDistinctByNumberOfView();
     }
 
     public Match getMatch(String matchId) {
-
         Optional<Match> match = matchRepository.findById(matchId);
         return match.get();
     }

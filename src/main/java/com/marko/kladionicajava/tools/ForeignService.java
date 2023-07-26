@@ -26,34 +26,24 @@ public class ForeignService {
 
 
     public String findLink(String nameClub) {
-        List<MatchDTO> listMaxbetBonusMatch = new ArrayList<>();
-
         try {
-
-           Foreign foreign = new Foreign(driver);
-           // this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
-
-
-
+            Foreign foreign = new Foreign(driver);
+            // this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
             foreign.goAddress("https://www.orbitxch.com/customer/inplay/highlights/1");
             foreign.inputSearch(nameClub);
             foreign.clickFirstMatchOnFindList();
             foreign.clickButtonDoubleChance();
-          //  this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-
-
+            //  this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
             return foreign.getAddress();
-
-
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-
-
-
     }
-
+    public String getQuota(String linkMatch) {
+        Foreign foreign = new Foreign(driver);
+        foreign.goAddress(linkMatch);
+    }
 
 
 }

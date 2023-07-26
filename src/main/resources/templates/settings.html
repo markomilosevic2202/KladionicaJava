@@ -96,11 +96,29 @@
         </tr>
         </tbody>
     </table>
+    <hr>
+    <h3>Vreme Pregleda</h3>
+    <hr>
+    <form action="/settings/saveTimeReview" method="post">
+        <label for="timeReview">Vreme pregleda:</label>
+        <select id="timeReview" name="timeReview">
+            <option value="3" th:selected="${timeReviewModel == '3'}">3</option>
+            <option value="5" th:selected="${timeReviewModel == '5'}">5</option>
+            <option value="12" th:selected="${timeReviewModel == '12'}">12</option>
+            <option value="24" th:selected="${timeReviewModel == '24'}">24</option>
+            <option value="48" th:selected="${timeReviewModel == '48'}">48</option>
+            <option value="all" th:selected="${timeReviewModel == 'all'}">all</option>
+        </select>
+        <button type="submit">Zapamti</button>
+    </form>
+
+
 
     <script>
     function submitForm() {
         document.getElementById('myForm').submit();
     }
+
 </script>
 
 

@@ -37,14 +37,8 @@ public class Match {
     @ManyToOne(fetch = FetchType.EAGER )
     @JoinColumn(name = "id_guest_club", nullable = true)
     private ClubName guestNameClub;
-    @Column(name = "odds_one")
-    private Float odds_one;
-    @Column(name = "odds_two")
-    private Float odds_two;
-    @Column(name = "odds_x")
-    private Float odds_x;
     @OneToMany(mappedBy = "matches", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Quotas> odds;
+    private Set<Quotas> quotas;
     @Column(nullable = false)
     private Date createdAt;
     @Column(nullable = false)

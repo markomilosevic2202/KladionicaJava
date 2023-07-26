@@ -53,11 +53,12 @@ public class MaxBetService {
             maxBet.goAddress(address);
             Thread.sleep(6000);
             maxBet.clickSlider(hoursOfReview);
-            Thread.sleep(1000);
+            Thread.sleep(500);
             maxBet.clickFootball();
-            Thread.sleep(2000);
+            Thread.sleep(500);
             maxBet.clickMaxBonus();
-            Thread.sleep(2000);
+          //  maxBet.clickSelectAll();
+            Thread.sleep(1000);
           //  maxBet.waitForPageToLoad();
            return maxBet.writeBonusMatch();
 

@@ -24,9 +24,9 @@ public interface QuotaRepository extends JpaRepository<Quotas, String> {
 
 
 
-    @Query("SELECT DISTINCT q.number FROM Quotas q")
+    @Query("SELECT DISTINCT q.timeView FROM Quotas q")
     List<String> findAllDistinctByNumberOfView();
 
-    @Query("select q from Quotas q where q.number = ?1")
-    List<Quotas> findAllByNumber(String number);
+    @Query("select q from Quotas q where q.timeView = ?1")
+    List<Quotas> findAllByNumber(String timeView);
 }

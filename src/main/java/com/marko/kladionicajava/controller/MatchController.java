@@ -58,17 +58,17 @@ public class MatchController {
 
     @GetMapping("/refreshQuota")
     public String refreshQuota(){
-        matchService.refreshQuots();
+        matchService.refreshQuotas();
 
         return "redirect:/matches";
     }
 
     @GetMapping("/individualDisplayMatch")
-    public String individualDisplayMatch(@RequestParam("matchId") String matchId){
+    public String individualDisplayMatch(@RequestParam("matchId") String matchId, Model model){
 
         Match match = matchService.getMatch(matchId);
-        System.out.println(matchId);
-        return "redirect:/matches";
+        model.addAttribute("match", match);
+        return "matchIndividual";
     }
 
 }

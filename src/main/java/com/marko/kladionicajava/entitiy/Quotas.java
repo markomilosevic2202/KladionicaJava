@@ -23,24 +23,24 @@ public class Quotas {
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     @Column(name = "id", nullable = false)
     private String id;
-    @Column(name = "number", nullable = false)
-    private String number;
+    @Column(name = "time_view", nullable = false)
+    private String timeView;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "matches_id")
     @JsonBackReference
     private Match matches;
-    @Column(name = "odds_one")
-    private Float odds_one;
-    @Column(name = "odds_two")
-    private Float odds_two;
-    @Column(name = "odds_x")
-    private Float odds_x;
+    @Column(name = "quota_one")
+    private Float quotaOne;
+    @Column(name = "quota_two")
+    private Float quotaTwo;
+    @Column(name = "quota_x")
+    private Float quotaX;
     @Column(name = "difference_one")
-    private Float difference_one;
+    private Float differenceOne;
     @Column(name = "difference_one_two")
-    private Float difference_two;
+    private Float differenceTwo;
     @Column(name = "difference_two")
-    private Float difference_x;
+    private Float differenceX;
     @Column(name = "bet")
     private Float bet;
     @Column(nullable = false)

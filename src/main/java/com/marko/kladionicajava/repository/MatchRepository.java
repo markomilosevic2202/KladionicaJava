@@ -37,4 +37,10 @@ public interface MatchRepository extends JpaRepository<Match, String> {
     @Modifying
     @Query("DELETE FROM Match m WHERE m.dateMatch < CURRENT_TIMESTAMP")
     void deleteMatchStarted();
+
+
+    @Transactional
+    @Modifying
+    @Query("delete from Match m where m.linkForeign is null")
+    void deleteMatchByLinkForeignNull();
 }
