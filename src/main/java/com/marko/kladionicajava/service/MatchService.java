@@ -46,7 +46,14 @@ public class MatchService {
 
             if (clubNamesRepository.existByName(clubNameHome)) {
                 ClubName clubName = new ClubName();
-                clubName.setName(clubNameHome);
+                clubName.setMaxbetName(clubNameHome);
+                clubNamesRepository.save(clubName);
+            }
+            String clubNameForeign = matchName.substring(delimiterIndex + 3);
+
+            if (clubNamesRepository.existByName(clubNameForeign)) {
+                ClubName clubName = new ClubName();
+                clubName.setMaxbetName(clubNameForeign);
                 clubNamesRepository.save(clubName);
             }
 
@@ -63,7 +70,7 @@ public class MatchService {
         quotaRepository.deleteAllMatchHaveStarted();
         matchRepository.deleteMatchStarted();
         findPairInForeignBettingShop();
-        matchRepository.deleteMatchByLinkForeignNull();
+       // matchRepository.deleteMatchByLinkForeignNull();
     }
 
 

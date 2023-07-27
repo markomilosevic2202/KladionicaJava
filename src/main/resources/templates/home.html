@@ -8,6 +8,9 @@
 <style>
     /* CSS stilovi za centriranje naslova */
     body {
+      background-image: url("http://localhost:9910/footbal.jpg");
+      background-size: cover;
+      background-opacity: 0.1;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -47,8 +50,7 @@ User: <span sec:authentication="principal.username"></span>
 <h2>Linkovi</h2>
 <ul>
     <li><a th:href="@{/matches}">Matches</a>
-    <li><a th:href="@{/systems}">Max Bet Bonus Matchs</a>
-    <li><a th:href="@{/systems}">Dodavanje Imena</a>
+    <li><a th:href="@{/addNames}">Dodavanje Imena</a>
     <li><a th:href="@{/settings}">Podesavanja</a>
 
 </ul>
