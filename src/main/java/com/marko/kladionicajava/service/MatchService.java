@@ -32,8 +32,6 @@ public class MatchService {
         //TODO list for Mozzart and Meridian
         List<Match> listMatchBase = matchRepository.findAll();
 
-
-
         for (int i = 0; i < listMatchPage.size(); i++) {
             Match match = new Match();
             MatchDTO matchDTOPage = listMatchPage.get(i);
@@ -64,10 +62,10 @@ public class MatchService {
         for (int i = 0; i < list.size(); i++) {
             Match match = list.get(i);
             matchRepository.updateMatchLink(match, foreignPage.findLink(match.getNameHome()));
-
         }
         driver.quit();
     }
+
 
     public void refreshQuotas() {
         try {
