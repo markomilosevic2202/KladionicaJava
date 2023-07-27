@@ -78,14 +78,18 @@ public class ForeignPage {
         QuotaForeignDTO quotaForeignDTO = new QuotaForeignDTO();
         goAddress(linkForeign);
         Thread.sleep(3000);
-        List<WebElement> listQuota = driver.findElements(By.xpath("//*[contains(@class, 'biab_bet biab_blue-cell js-blue-cell biab_bet-back js-bet-back biab_back-0 js-back-0')]"));
-      //  new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(),'Double Chance')]")));
-       quotaForeignDTO.setOneXQuota(Float.parseFloat(listQuota.get(0).findElement(By.xpath("//*[contains(@class,'js-odds')]")).getText()));
-        quotaForeignDTO.setOneXBet(Float.parseFloat(listQuota.get(0).findElement(By.xpath("//*[contains(@class,'biab_bet-amount')]")).getText()));
-        quotaForeignDTO.setTwoXQuota(Float.parseFloat(listQuota.get(1).findElement(By.xpath("//*[contains(@class,'js-odds')]")).getText()));
-        quotaForeignDTO.setTwoXBet(Float.parseFloat(listQuota.get(1).findElement(By.xpath("//*[contains(@class,'biab_bet-amount')]")).getText()));
-        quotaForeignDTO.setOneTwoQuota(Float.parseFloat(listQuota.get(2).findElement(By.xpath("//*[contains(@class,'js-odds')]")).getText()));
-        quotaForeignDTO.setOneTwoBet(Float.parseFloat(listQuota.get(2).findElement(By.xpath("//*[contains(@class,'biab_bet-amount')]")).getText()));
+        WebElement elementOne = driver.findElements(By.xpath("//*[contains(@class, 'biab_bet biab_blue-cell js-blue-cell biab_bet-back js-bet-back biab_back-0 js-back-0')]"))
+                .get(0);
+        WebElement elementTwo = driver.findElements(By.xpath("//*[contains(@class, 'biab_bet biab_blue-cell js-blue-cell biab_bet-back js-bet-back biab_back-0 js-back-0')]"))
+                .get(1);
+        WebElement elementX = driver.findElements(By.xpath("//*[contains(@class, 'biab_bet biab_blue-cell js-blue-cell biab_bet-back js-bet-back biab_back-0 js-back-0')]"))
+                .get(2);
+        quotaForeignDTO.setOneXQuota(Float.parseFloat(elementOne.findElement(By.xpath("div/div/div/span[1]")).getText()));
+        quotaForeignDTO.setOneXBet(Float.parseFloat(elementOne.findElement(By.xpath("div/div/div/span[2]")).getText()));
+        quotaForeignDTO.setTwoXQuota(Float.parseFloat(elementTwo.findElement(By.xpath("div/div/div/span[1]")).getText()));
+        quotaForeignDTO.setTwoXBet(Float.parseFloat(elementTwo.findElement(By.xpath("div/div/div/span[2]")).getText()));
+        quotaForeignDTO.setOneTwoQuota(Float.parseFloat(elementX.findElement(By.xpath("div/div/div/span[1]")).getText()));
+        quotaForeignDTO.setOneTwoBet(Float.parseFloat(elementX.findElement(By.xpath("div/div/div/span[2]")).getText()));
         return quotaForeignDTO;
 
 

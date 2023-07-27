@@ -21,13 +21,13 @@ public class ClubName {
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     @Column(name = "id", nullable = false)
     private String id;
-    @Column(name = "foreignBet")
+    @Column(name = "foreign_name")
     private String foreignName;
-    @Column(name = "maxbet")
+    @Column(name = "maxbet_name")
     private String maxbetName;
-    @Column(name = "meridian")
+    @Column(name = "meridian_name")
     private String meridianName;
-    @Column(name = "mozzart")
+    @Column(name = "mozzart_name")
     private String mozzartName;
 
 

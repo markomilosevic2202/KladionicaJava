@@ -107,12 +107,16 @@
             <th>Datum</th>
             <th>Vreme</th>
             <th>Timovi</th>
-            <th>1 Domaca</th>
-            <th>2 Domaca</th>
-            <th>x Domaca</th>
-            <th>1 Strana</th>
-            <th>2 Strana</th>
-            <th>x Strana</th>
+            <th>1 </th>
+            <th>X-2 </th>
+            <th>Ulog</th>
+            <th>Zarada</th>
+            <th>2</th>
+            <th>1-X </th>
+            <th>Ulog</th>
+            <th>Zarada</th>
+            <th>x</th>
+            <th>1-2</th>
             <th>Ulog</th>
             <th>Zarada</th>
             <th>Link</th>
@@ -138,7 +142,22 @@
                     <span th:text="${quota.matches.nameHome}"></span>
                 </a>
             </td>
+            <td th:text="${quota.quotaOne}"/>
             <td th:text="${quota.differenceOne}"/>
+            <td th:text="${quota.betOne}"/>
+            <td th:text="${quota.profitOne}"/>
+            <td th:text="${quota.quotaTwo}"/>
+            <td th:text="${quota.differenceTwo}"/>
+            <td th:text="${quota.betTwo}"/>
+            <td th:text="${quota.profitTwo}"/>
+            <td th:text="${quota.quotaX}"/>
+            <td th:text="${quota.differenceX}"/>
+            <td th:text="${quota.betX}"/>
+            <td th:text="${quota.profitX}"/>
+            <td>
+                <a th:href="${quota.matches.linkForeign}" target="_blank" th:text="Link"></a>
+            </td>
+
 
 
         </tr>

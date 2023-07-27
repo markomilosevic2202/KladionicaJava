@@ -19,6 +19,7 @@ public class AppConfigService {
     private String timeReview;
     private String addressMaxBet;
     private String addressForeign;
+    private Float bet;
 
 }
 

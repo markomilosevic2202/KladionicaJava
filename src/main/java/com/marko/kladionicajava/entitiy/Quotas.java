@@ -47,6 +47,12 @@ public class Quotas {
     private Float betTwo;
     @Column(name = "bet_x")
     private Float betX;
+    @Column(name = "profit_one")
+    private Float profitOne;
+    @Column(name = "profit_two")
+    private Float profitTwo;
+    @Column(name = "profit_x")
+    private Float profitX;
     @Column(nullable = false)
     private Date createdAt;
     @Column(nullable = false)

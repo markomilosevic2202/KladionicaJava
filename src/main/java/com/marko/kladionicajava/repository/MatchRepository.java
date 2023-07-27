@@ -49,4 +49,5 @@ public interface MatchRepository extends JpaRepository<Match, String> {
     List<Match> findAllByBettingShop(NameBetting nameBetting);
 
 
+
 }
