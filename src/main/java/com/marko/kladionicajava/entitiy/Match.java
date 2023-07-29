@@ -31,10 +31,10 @@ public class Match {
     private String linkForeign;
     @Column(name = "name_home")
     private String nameHome;
-    @ManyToOne (fetch = FetchType.EAGER )
+    @ManyToOne (fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @JoinColumn(name = "id_host_club", nullable = true)
     private ClubName hostNameClub;
-    @ManyToOne(fetch = FetchType.EAGER )
+    @ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @JoinColumn(name = "id_guest_club", nullable = true)
     private ClubName guestNameClub;
     @OneToMany(mappedBy = "matches", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)

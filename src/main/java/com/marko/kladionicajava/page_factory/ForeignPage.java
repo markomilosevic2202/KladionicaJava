@@ -72,6 +72,8 @@ public class ForeignPage {
 
     public String findLink(String homeClubName, String foreignClubName, String url) {
         try {
+            if(homeClubName != null && foreignClubName!= null ){
+            this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
             //inputSearch(homeClubName, foreignClubName);
             String url2 = " " + homeClubName + " v " + foreignClubName;
             url2 = url2.replace(" ", "+");
@@ -80,7 +82,8 @@ public class ForeignPage {
 
             clickButtonDoubleChance();
             Thread.sleep(10000);
-            return getAddress();
+            return getAddress();}
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
