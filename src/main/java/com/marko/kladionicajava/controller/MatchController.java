@@ -25,7 +25,7 @@ public class MatchController {
     @GetMapping()
     public String showMatches(Model model){
         List<String> optionalView = matchService.getOptionalView();
-        String timeView = optionalView.get(0);
+        String timeView = "";//optionalView.get(0);
         List<Quotas> listMatch = quotasService.getAllQuotasLastView(timeView);
         model.addAttribute("optionalViews", optionalView);
         model.addAttribute("quotas", listMatch);

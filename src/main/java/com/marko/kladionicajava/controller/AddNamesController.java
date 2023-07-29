@@ -4,6 +4,7 @@ package com.marko.kladionicajava.controller;
 import com.marko.kladionicajava.entitiy.ClubName;
 import com.marko.kladionicajava.entitiy.Email;
 import com.marko.kladionicajava.service.ClubNameService;
+import com.marko.kladionicajava.service.MatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,18 +18,26 @@ import java.util.List;
 public class AddNamesController {
 
     private final ClubNameService clubNameService;
+    private final MatchService matchService;
 
     @GetMapping()
     public String showSettings(Model model) {
         List<ClubName> listClubName = clubNameService.getAllWithoutForeignName();
         model.addAttribute("clubNameWithoutForeignName", listClubName);
-        return "addNames";
+        return "add-names";
 
     }
     @PostMapping("/updateClubName")
     public String updateClub(@ModelAttribute("club") ClubName clubName) {
-        System.out.println(clubName.getMaxbetName());
 
+        clubNameService.updateClubName(clubName);
+
+        return "redirect:/addNames";
+    }
+    @GetMapping("/deleteClubName")
+    public String deleteClub(@RequestParam("idClub") String idClub) {
+
+        clubNameService.deleteClubName(idClub);
 
         return "redirect:/addNames";
     }

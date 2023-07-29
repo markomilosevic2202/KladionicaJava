@@ -20,4 +20,7 @@ public interface ClubNamesRepository extends JpaRepository<ClubName, String> {
 
     @Query("select c from ClubName c where c.foreignName is null")
     List<ClubName> findAllByForeignNameIsNull();
+
+    @Query("select c from ClubName c where c.maxbetName = ?1")
+    ClubName findByMaxbetName(String maxbetName);
 }

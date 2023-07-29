@@ -25,7 +25,8 @@ public class ForeignPage {
     @FindBy(xpath = "//a[contains(text(),'Double Chance')]")
     WebElement btnDoubleChance;
 
-
+    @FindBy(xpath = "//*[contains(@class, 'styles_searchItem__link__t5gOP biab_search-item-wrapper')]")
+    List<WebElement> listLinkFindMatch;
 
 
     private Actions actions;
@@ -36,36 +37,49 @@ public class ForeignPage {
         PageFactory.initElements(driver, this);
 
     }
+
     public void goAddress(String address) {
         this.driver.get(address);
     }
 
-    public void inputSearch(String nameClub) {
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
-        inpSearch.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
-        inpSearch.sendKeys(nameClub);
+//    public void inputSearch(String homeClubName, String foreignClubName) {
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+//        inpSearch.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+//        inpSearch.sendKeys(homeClubName + " v " + foreignClubName);
+//    }
+
+    public void clickFirstMatchOnFindList(String url) throws InterruptedException {
+        new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(@class, 'styles_searchItem__link__t5gOP biab_search-item-wrapper')]")));
+        if (listLinkFindMatch.size() == 0) {
+            goAddress(url);
+            Thread.sleep(1500);
+        }
+        listLinkFindMatch.get(0).click();
+
     }
 
-    public void clickFirstMatchOnFindList() {
-        WebElement firstMatchOnList = driver.findElement(By.xpath("//*[contains(@class, 'biab_search-results js-search-results')]"));
-        firstMatchOnList.findElement(By.xpath(".//a")).click();
+    public void clickButtonDoubleChance() {
+        new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(),'Double Chance')]")));
+        //btnDoubleChance.click();
+        driver.findElement(By.xpath("//li//*[text()='Double Chance']/ancestor::li")).findElement(By.xpath("a")).click();
     }
 
-    public void clickButtonDoubleChance(){
-        new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(),'Correct Score')]")));
-        btnDoubleChance.click();
-    }
-    public String getAddress(){
+    public String getAddress() {
         this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         return driver.getCurrentUrl();
 
     }
 
-    public String findLink(String nameClub) {
+    public String findLink(String homeClubName, String foreignClubName, String url) {
         try {
-            inputSearch(nameClub);
-            clickFirstMatchOnFindList();
+            //inputSearch(homeClubName, foreignClubName);
+            String url2 = " " + homeClubName + " v " + foreignClubName;
+            url2 = url2.replace(" ", "+");
+            goAddress(url + url2);
+            clickFirstMatchOnFindList(url + url2);
+
             clickButtonDoubleChance();
+            Thread.sleep(10000);
             return getAddress();
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,23 +89,33 @@ public class ForeignPage {
 
 
     public QuotaForeignDTO getQuotaForeign(String linkForeign) throws InterruptedException {
-        QuotaForeignDTO quotaForeignDTO = new QuotaForeignDTO();
-        goAddress(linkForeign);
-        Thread.sleep(3000);
-        WebElement elementOne = driver.findElements(By.xpath("//*[contains(@class, 'biab_bet biab_blue-cell js-blue-cell biab_bet-back js-bet-back biab_back-0 js-back-0')]"))
-                .get(0);
-        WebElement elementTwo = driver.findElements(By.xpath("//*[contains(@class, 'biab_bet biab_blue-cell js-blue-cell biab_bet-back js-bet-back biab_back-0 js-back-0')]"))
-                .get(1);
-        WebElement elementX = driver.findElements(By.xpath("//*[contains(@class, 'biab_bet biab_blue-cell js-blue-cell biab_bet-back js-bet-back biab_back-0 js-back-0')]"))
-                .get(2);
-        quotaForeignDTO.setOneXQuota(Float.parseFloat(elementOne.findElement(By.xpath("div/div/div/span[1]")).getText()));
-        quotaForeignDTO.setOneXBet(Float.parseFloat(elementOne.findElement(By.xpath("div/div/div/span[2]")).getText()));
-        quotaForeignDTO.setTwoXQuota(Float.parseFloat(elementTwo.findElement(By.xpath("div/div/div/span[1]")).getText()));
-        quotaForeignDTO.setTwoXBet(Float.parseFloat(elementTwo.findElement(By.xpath("div/div/div/span[2]")).getText()));
-        quotaForeignDTO.setOneTwoQuota(Float.parseFloat(elementX.findElement(By.xpath("div/div/div/span[1]")).getText()));
-        quotaForeignDTO.setOneTwoBet(Float.parseFloat(elementX.findElement(By.xpath("div/div/div/span[2]")).getText()));
-        return quotaForeignDTO;
-
+        try {
+            this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
+//            new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(@class, 'betContentCellMarket biab_bet styles_betContentCell__\" +\n" +
+//                    "                            \"-gv8u biab_bet-content-cell biab_blue-cell styles_cellBlock__cell__9h0XI biab_back-0 biab_bet-back back-cell')]")));
+            QuotaForeignDTO quotaForeignDTO = new QuotaForeignDTO();
+            goAddress(linkForeign);
+            Thread.sleep(3000);
+            WebElement elementOne = driver.findElements(By.xpath("//*[contains(@class, 'betContentCellMarket biab_bet styles_betContentCell__" +
+                            "-gv8u biab_bet-content-cell biab_blue-cell styles_cellBlock__cell__9h0XI biab_back-0 biab_bet-back back-cell')]"))
+                    .get(0);
+            WebElement elementTwo = driver.findElements(By.xpath("//*[contains(@class, 'betContentCellMarket biab_bet styles_betContentCell__" +
+                            "-gv8u biab_bet-content-cell biab_blue-cell styles_cellBlock__cell__9h0XI biab_back-0 biab_bet-back back-cell')]"))
+                    .get(1);
+            WebElement elementX = driver.findElements(By.xpath("//*[contains(@class, 'betContentCellMarket biab_bet styles_betContentCell__" +
+                            "-gv8u biab_bet-content-cell biab_blue-cell styles_cellBlock__cell__9h0XI biab_back-0 biab_bet-back back-cell')]"))
+                    .get(2);
+            quotaForeignDTO.setOneXQuota(Float.parseFloat(elementOne.findElement(By.xpath("span/div/span[1]")).getText()));
+            quotaForeignDTO.setOneXBet(Float.parseFloat(elementOne.findElement(By.xpath("span/div/span[2]")).getText()));
+            quotaForeignDTO.setTwoXQuota(Float.parseFloat(elementTwo.findElement(By.xpath("span/div/span[1]")).getText()));
+            quotaForeignDTO.setTwoXBet(Float.parseFloat(elementTwo.findElement(By.xpath("span/div/span[2]")).getText()));
+            quotaForeignDTO.setOneTwoQuota(Float.parseFloat(elementX.findElement(By.xpath("span/div/span[1]")).getText()));
+            quotaForeignDTO.setOneTwoBet(Float.parseFloat(elementX.findElement(By.xpath("span/div/span[2]")).getText()));
+            return quotaForeignDTO;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
 
 
     }

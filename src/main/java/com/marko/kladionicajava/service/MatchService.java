@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -42,28 +44,36 @@ public class MatchService {
             Optional<Match> optionalMatch;
             String matchName = matchDTOPage.getName();
             int delimiterIndex = matchName.indexOf(" - ");
-            String clubNameHome = matchName.substring(0,delimiterIndex);
+            String hostClubNameString = matchName.substring(0,delimiterIndex);
 
-            if (clubNamesRepository.existByName(clubNameHome)) {
+            if (clubNamesRepository.existByName(hostClubNameString)) {
                 ClubName clubName = new ClubName();
-                clubName.setMaxbetName(clubNameHome);
+                clubName.setMaxbetName(hostClubNameString);
+                clubName.setMatchName(matchName);
                 clubNamesRepository.save(clubName);
             }
-            String clubNameForeign = matchName.substring(delimiterIndex + 3);
+            String guestClubNameString = matchName.substring(delimiterIndex + 3);
 
-            if (clubNamesRepository.existByName(clubNameForeign)) {
+            if (clubNamesRepository.existByName(guestClubNameString)) {
                 ClubName clubName = new ClubName();
-                clubName.setMaxbetName(clubNameForeign);
+                clubName.setMaxbetName(guestClubNameString);
+                clubName.setMatchName(matchName);
                 clubNamesRepository.save(clubName);
             }
 
 
             if (matchRepository.notExistsByIdMatch(matchDTOPage.getCode())) {
+
+                ClubName hostClubName = clubNamesRepository.findByMaxbetName(hostClubNameString);
+                ClubName guestClubName = clubNamesRepository.findByMaxbetName(guestClubNameString);
                 match.setIdMatch(matchDTOPage.getCode());
                 match.setNameHome(matchDTOPage.getName());
                 match.setIdMatch(matchDTOPage.getCode());
                 match.setDateMatch(matchDTOPage.getTime());
+                match.setHostNameClub(hostClubName);
+                match.setGuestNameClub(guestClubName);
                 match.setBettingShop(NameBetting.MAXBET);
+
                 optionalMatch = Optional.of(matchRepository.save(match));
             }
         }
@@ -76,15 +86,30 @@ public class MatchService {
 
     public void findPairInForeignBettingShop() {
 
+        try {
+
+
         List<Match> list = matchRepository.findWithLinkForeignIsNull();
         driver = webDriverMono.open();
         ForeignPage foreignPage = new ForeignPage(driver);
-        foreignPage.goAddress(appConfigService.getAddressForeign());
+        //foreignPage.goAddress(appConfigService.getAddressForeign());
         for (int i = 0; i < list.size(); i++) {
-            Match match = list.get(i);
-            matchRepository.updateMatchLink(match, foreignPage.findLink(match.getNameHome()));
+            try {
+                Match match = list.get(i);
+                matchRepository.updateMatchLink(match, foreignPage.findLink(match.getHostNameClub().getForeignName(),
+                        match.getGuestNameClub().getForeignName(),
+                        appConfigService.getAddressForeign()));
+        }
+            catch (Exception e){
+                e.printStackTrace();
+            }
         }
         driver.quit();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            driver.quit();
+        }
     }
 
 
@@ -162,6 +187,25 @@ public class MatchService {
             }
         }
         return null;
+    }
+
+    public static String incrementLastNumberInUrl(String url) {
+        Pattern pattern = Pattern.compile("\\d+$");
+        Matcher matcher = pattern.matcher(url);
+
+        if (matcher.find()) {
+            int start = matcher.start();
+            int end = matcher.end();
+            String lastNumberStr = url.substring(start, end);
+            int lastNumber = Integer.parseInt(lastNumberStr);
+            int newNumber = lastNumber + 1;
+            String resultUrl = url.substring(0, start) + newNumber + url.substring(end);
+
+            return resultUrl;
+        } else {
+
+            return url;
+        }
     }
 }
 //konsider my self    start it
