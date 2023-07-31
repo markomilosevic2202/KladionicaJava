@@ -16,6 +16,7 @@
       background-image: url("http://localhost:9910/footbal.jpg");
       background-size: cover;
       background-opacity: 0.1;
+      font-family: Arial, sans-serif;
     }
 
         .padajuca-lista {
@@ -33,22 +34,28 @@
             border-color: #17a2b8;
             height: 30px;
             font-size: 14px;
+             margin-left: 5%;
         }
 
         .title {
 
             height: 30px;
             font-size: 40px;
-            margin-left: 70px;
-           margin-bottom: 65px;
+            margin-left: 5%;
+            margin-bottom: 65px;
 
         }
+         .select {
+            height: 40px;
+            margin-left: 5%;
+            margin-bottom: 1%
 
-
+         }
         .table {
-    width: 90%; /* Postavljamo širinu tabele na 80% ekrana (udaljeno 10% od leve i 10% od desne margine) */
-    margin: 0 auto; /* Postavljamo automatski margin sa obe strane da bi je centrirali na ekranu */
+           width: 90%; /* Postavljamo širinu tabele na 80% ekrana (udaljeno 10% od leve i 10% od desne margine) */
+           margin: 0 auto; /* Postavljamo automatski margin sa obe strane da bi je centrirali na ekranu */
 }
+
 
 
 
@@ -64,7 +71,39 @@
 <h1 class="title">Imena</h1>
 
 
+<a th:href="@{/}"
+   class="btn btn-primary btn-sm mb-3 btn-info">
+    Back
+</a>
+</button>
+
+
+
+
 <hr>
+
+
+<form id="myForm1" action="#"  th:action="@{/addNames/setPreview}">
+    <select class ="select" id="myDropdown1" name="myDropdown1"> <!-- Dodajte 'name' atribut ovde -->
+        <option value="all" th:selected="${nameColumn == 'all'}"></option>
+        <option value="all" th:selected="${nameColumn == 'all'}">All</option>
+        <option value="maxbet" th:selected="${nameColumn == 'maxbet'}">Maxbet</option>
+        <option value="meridian" th:selected="${nameColumn == 'meridian'}">Meridian</option>
+        <option value="foreign" th:selected="${nameColumn == 'foreign'}">Foreign</option>
+        <option value="mozzart" th:selected="${nameColumn == 'mozzart'}">Mozzart</option>
+    </select>
+</form>
+
+<script>
+
+    const form = document.getElementById('myForm1');
+    const dropdown = document.getElementById('myDropdown1');
+
+    dropdown.addEventListener('change', function() {
+        form.submit(); // This will submit the form to the specified action URL
+    });
+    </script>
+
 
 <table class="table">
     <thead class="table-dark">

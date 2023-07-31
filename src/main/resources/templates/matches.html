@@ -39,7 +39,7 @@
 
             height: 30px;
             font-size: 40px;
-            margin-left: 70px;
+            margin-left: 15%;
            margin-bottom: 65px;
 
         }
@@ -47,7 +47,9 @@
 
         .table {
             margin-top: 20px;
+
         }
+
 
 
 
@@ -63,7 +65,10 @@
 
 <div class="container">
 
-    <h3>Email</h3>
+    <a th:href="@{/}"
+       class="btn btn-primary btn-sm mb-3">
+        Back
+    </a>
     <hr>
     <a th:href="@{/matches/refreshMatch}"
        class="btn btn-primary btn-sm mb-3">
@@ -77,20 +82,20 @@
 
     <form id="myForm" action="#" th:object="${time}" th:action="@{/matches/showSetTime}">
         <select id="myDropdown" name="myDropdown"> <!-- Dodajte 'name' atribut ovde -->
+            <option value="all" th:selected="${nameColumn == 'all'}"></option>
             <option th:each="item : ${optionalViews}" th:value="${item}" th:text="${item}"></option>
         </select>
     </form>
 
     <script>
-    // Get a reference to the form and dropdown element
+
     const form = document.getElementById('myForm');
     const dropdown = document.getElementById('myDropdown');
 
-    // Add event listener to the dropdown to submit the form on value change
     dropdown.addEventListener('change', function() {
         form.submit(); // This will submit the form to the specified action URL
     });
-</script>
+    </script>
 
 
 

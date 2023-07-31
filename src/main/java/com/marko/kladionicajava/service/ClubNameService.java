@@ -12,10 +12,31 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class ClubNameService {
+
     private final ClubNamesRepository clubNamesRepository;
+
+
     public List<ClubName> getAllWithoutForeignName() {
 
         return clubNamesRepository.findAllByForeignNameIsNull();
+    }
+    public List<ClubName> getAll() {
+
+        return clubNamesRepository.findAll();
+    }
+    public List<ClubName> getAllWithoutMaxbetName() {
+
+        return clubNamesRepository.findAllByMaxbetNameIsNull();
+    }
+
+    public List<ClubName> getAllWithoutMeridianName() {
+
+        return clubNamesRepository.findAllByMeridianNameIsNull();
+    }
+
+    public List<ClubName> getAllWithoutMozzartName() {
+
+        return clubNamesRepository.findAllByMozzartNameIsNull();
     }
 
     public void updateClubName(ClubName clubName) {
@@ -64,5 +85,9 @@ public class ClubNameService {
         catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public List<ClubName> getAllClubName() {
+         return clubNamesRepository.findAll();
     }
 }

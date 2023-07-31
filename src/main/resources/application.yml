@@ -18,7 +18,7 @@ spring:
     database-platform: org.hibernate.dialect.MariaDB103Dialect
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
 
 
   mvc:
@@ -41,5 +41,7 @@ app:
   addressMaxBet: 'https://www.maxbet.rs/ibet-web-client/#/home#top'
   addressForeign: 'https://www.orbitxch.com/customer/inplay/highlights?search='
   bet: 100
+  timeRefreshMatches: 120
+  timeRefreshQuotas: 10
 
 

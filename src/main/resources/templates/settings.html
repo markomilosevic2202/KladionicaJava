@@ -39,9 +39,12 @@
 
             height: 30px;
             font-size: 40px;
-            margin-left: 70px;
-           margin-bottom: 65px;
+            margin-left: 15%;
+            margin-bottom: 65px;
 
+        }
+        .titleh3 {
+           margin-top: 5%;
         }
 
 
@@ -97,7 +100,7 @@
         </tbody>
     </table>
     <hr>
-    <h3>Vreme Pregleda</h3>
+    <h3>Vreme Pregleda Meceva</h3>
     <hr>
     <form action="/settings/saveTimeReview" method="post">
         <label for="timeReview">Vreme pregleda:</label>
@@ -109,6 +112,23 @@
             <option value="48" th:selected="${timeReviewModel == '48'}">48</option>
             <option value="all" th:selected="${timeReviewModel == 'all'}">all</option>
         </select>
+        <button type="submit">Zapamti</button>
+    </form>
+
+    <h3 class="titleh3">Vreme Refresovanja Meceva</h3>
+    <hr>
+    <form action="/settings/saveTimeReview" method="post">
+        <label for="timeReview">Vreme refresovanja meca:</label>
+        <input type="text" id="timeMatchRefresh" name="maxbetName" /> Sekoundi
+        <button type="submit">Zapamti</button>
+    </form>
+
+    <h3 class="titleh3" >Vreme Refresovanja Kvota</h3>
+    <hr>
+
+    <form action="/settings/saveTimeReview" method="post">
+        <label for="timeReview">Vreme refresovanja kvot:</label>
+        <input type="text" id="timeQuotaRefresh" name="maxbetName" /> Sekoundi
         <button type="submit">Zapamti</button>
     </form>
 

@@ -4,10 +4,12 @@ package com.marko.kladionicajava.controller;
 import com.marko.kladionicajava.entitiy.Email;
 import com.marko.kladionicajava.entitiy.Match;
 import com.marko.kladionicajava.entitiy.Quotas;
+import com.marko.kladionicajava.service.AppConfigService;
 import com.marko.kladionicajava.service.EmailService;
 import com.marko.kladionicajava.service.MatchService;
 import com.marko.kladionicajava.service.QuotasService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,9 @@ public class MatchController {
 
     private final MatchService matchService;
     private final QuotasService quotasService;
+
+
+
 
     @GetMapping()
     public String showMatches(Model model){
@@ -43,6 +48,7 @@ public class MatchController {
     }
 
     @GetMapping("/refreshMatch")
+    @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshMatches * 60000}")
     public String refreshMatches(){
         matchService.refreshShow();
         return "redirect:/matches";
@@ -58,6 +64,7 @@ public class MatchController {
     }
 
     @GetMapping("/refreshQuota")
+    @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshQuotas * 60000}")
     public String refreshQuota(){
         matchService.refreshQuotas();
 

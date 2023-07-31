@@ -73,8 +73,7 @@ public class MatchService {
                 match.setHostNameClub(hostClubName);
                 match.setGuestNameClub(guestClubName);
                 match.setBettingShop(NameBetting.MAXBET);
-
-                optionalMatch = Optional.of(matchRepository.save(match));
+                matchRepository.save(match);
             }
         }
         quotaRepository.deleteAllMatchHaveStarted();

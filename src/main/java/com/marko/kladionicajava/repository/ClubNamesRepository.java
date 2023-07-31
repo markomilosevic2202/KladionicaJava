@@ -1,8 +1,6 @@
 package com.marko.kladionicajava.repository;
 
 import com.marko.kladionicajava.entitiy.ClubName;
-import com.marko.kladionicajava.entitiy.Match;
-import com.marko.kladionicajava.entitiy.NameBetting;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -23,4 +21,15 @@ public interface ClubNamesRepository extends JpaRepository<ClubName, String> {
 
     @Query("select c from ClubName c where c.maxbetName = ?1")
     ClubName findByMaxbetName(String maxbetName);
+
+
+
+    @Query("select c from ClubName c where c.maxbetName is null")
+    List<ClubName> findAllByMaxbetNameIsNull();
+
+    @Query("select c from ClubName c where c.meridianName is null")
+    List<ClubName> findAllByMeridianNameIsNull();
+
+    @Query("select c from ClubName c where c.mozzartName is null")
+    List<ClubName> findAllByMozzartNameIsNull();
 }
