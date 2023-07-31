@@ -38,7 +38,7 @@ public class MatchController {
         return "matches";
     }
 
-    @RequestMapping ("/showSetTime")
+    @RequestMapping ("/show-set-time")
     public String handleFormSubmission(@RequestParam("myDropdown") String selectedValue, Model model) {
         List<Quotas> listMatch = quotasService.getAllQuotasLastView(selectedValue);
         model.addAttribute("quotas", listMatch);
@@ -47,23 +47,16 @@ public class MatchController {
         return "matches";
     }
 
-    @GetMapping("/refreshMatch")
+    @GetMapping("/refresh-match")
     @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshMatches * 60000}")
     public String refreshMatches(){
         matchService.refreshShow();
         return "redirect:/matches";
     }
 
-    @GetMapping("/findPairInForeignBettingShop")//treba da se obrise
-    public String findPairIn(){
-//        matchService.findPairInForeignBettingShop();
-//
-//        return "redirect:/matches";
-        return "redirect:/refreshQuota";
 
-    }
 
-    @GetMapping("/refreshQuota")
+    @GetMapping("/refresh-quota")
     @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshQuotas * 60000}")
     public String refreshQuota(){
         matchService.refreshQuotas();
@@ -71,7 +64,7 @@ public class MatchController {
         return "redirect:/matches";
     }
 
-    @GetMapping("/individualDisplayMatch")
+    @GetMapping("/individual-display-match")
     public String individualDisplayMatch(@RequestParam("matchId") String matchId, Model model){
 
         Match match = matchService.getMatch(matchId);

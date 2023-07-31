@@ -70,17 +70,17 @@
         Back
     </a>
     <hr>
-    <a th:href="@{/matches/refreshMatch}"
+    <a th:href="@{/matches/refresh-match}"
        class="btn btn-primary btn-sm mb-3">
         1 Hours
     </a>
-    <a th:href="@{/matches/refreshQuota}"
+    <a th:href="@{/matches/refresh-quota}"
        class="btn btn-primary btn-sm mb-3">
         After 1Hours
     </a>
 
 
-    <form id="myForm" action="#" th:object="${time}" th:action="@{/matches/showSetTime}">
+    <form id="myForm" action="#" th:object="${time}" th:action="@{/matches/show-set-time}">
         <select id="myDropdown" name="myDropdown"> <!-- Dodajte 'name' atribut ovde -->
             <option value="all" th:selected="${nameColumn == 'all'}"></option>
             <option th:each="item : ${optionalViews}" th:value="${item}" th:text="${item}"></option>
@@ -143,7 +143,7 @@
                 <span th:text="${#dates.format(quota.matches.dateMatch, 'HH:mm')}"></span>
             </td>
             <td>
-                <a th:href="@{/matches/individualDisplayMatch(matchId=${quota.matches.id})}">
+                <a th:href="@{/matches/individual-display-match(matchId=${quota.matches.id})}">
                     <span th:text="${quota.matches.nameHome}"></span>
                 </a>
             </td>

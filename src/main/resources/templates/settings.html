@@ -44,12 +44,14 @@
 
         }
         .titleh3 {
-           margin-top: 5%;
+           margin-top: 2%;
+           margin-bottom: 2%;
         }
 
 
         .table {
             margin-top: 20px;
+            margin-bottom: 65px;
         }
 
 
@@ -63,7 +65,14 @@
 
 <h1 class="title">Settings</h1>
 
+
+
 <div class="container">
+
+    <a th:href="@{/}"
+       class="btn btn-primary btn-sm mb-3">
+        Back
+    </a>
 
     <h3>Email</h3>
     <hr>
@@ -100,9 +109,8 @@
         </tbody>
     </table>
     <hr>
-    <h3>Vreme Pregleda Meceva</h3>
-    <hr>
-    <form action="/settings/saveTimeReview" method="post">
+    <h3 class="titleh3">Vreme Pregleda Meceva</h3>
+    <form action="/settings/save-time-review" method="post">
         <label for="timeReview">Vreme pregleda:</label>
         <select id="timeReview" name="timeReview">
             <option value="3" th:selected="${timeReviewModel == '3'}">3</option>
@@ -114,21 +122,22 @@
         </select>
         <button type="submit">Zapamti</button>
     </form>
-
-    <h3 class="titleh3">Vreme Refresovanja Meceva</h3>
     <hr>
-    <form action="/settings/saveTimeReview" method="post">
+    <h3 class="titleh3">Vreme Refresovanja Meceva</h3>
+
+    <form action="/settings/save-time-refresh-matchs" method="post">
         <label for="timeReview">Vreme refresovanja meca:</label>
-        <input type="text" id="timeMatchRefresh" name="maxbetName" /> Sekoundi
+        <input type="text" id="timeMatchRefresh" name="timeMatchRefresh" th:value="${timeRefreshMatch}"/> minuta
         <button type="submit">Zapamti</button>
     </form>
 
-    <h3 class="titleh3" >Vreme Refresovanja Kvota</h3>
     <hr>
+    <h3 class="titleh3" >Vreme Refresovanja Kvota</h3>
 
-    <form action="/settings/saveTimeReview" method="post">
+
+    <form action="/settings/save-time-refresh-quotas" method="post">
         <label for="timeReview">Vreme refresovanja kvot:</label>
-        <input type="text" id="timeQuotaRefresh" name="maxbetName" /> Sekoundi
+        <input type="text" id="timeQuotaRefresh" name="timeQuotaRefresh" th:value="${timeRefreshQuotas}"/> minuta
         <button type="submit">Zapamti</button>
     </form>
 

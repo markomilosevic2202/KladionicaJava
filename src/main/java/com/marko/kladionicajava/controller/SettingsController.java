@@ -29,6 +29,8 @@ public class SettingsController {
         String timeReview = appConfig.getTimeReview();
         model.addAttribute("emails", listReports);
         model.addAttribute("timeReviewModel", timeReview);
+        model.addAttribute("timeRefreshMatch", appConfig.getTimeRefreshMatches());
+        model.addAttribute("timeRefreshQuotas", appConfig.getTimeRefreshQuotas());
         return "settings";
 
     }
@@ -51,9 +53,23 @@ public class SettingsController {
         return "redirect:/settings";
     }
 
-    @PostMapping("/saveTimeReview")
+    @PostMapping("/save-time-review")
     public String saveTimeReview(@RequestParam("timeReview") String timeReview) {
        appConfig.setTimeReview(timeReview);
+
+        return "redirect:/settings";
+    }
+
+    @PostMapping("/save-time-refresh-matchs")
+    public String saveTimeRefreshMatchs(@RequestParam("timeMatchRefresh") String timeMatchRefresh) {
+        appConfig.setTimeRefreshMatches(Integer.parseInt(timeMatchRefresh));
+
+        return "redirect:/settings";
+    }
+
+    @PostMapping("/save-time-refresh-quotas")
+    public String saveTimeRefreshQuotas(@RequestParam("timeQuotaRefresh") String timeQuotasRefresh) {
+        appConfig.setTimeRefreshQuotas(Integer.parseInt(timeQuotasRefresh));
 
         return "redirect:/settings";
     }
