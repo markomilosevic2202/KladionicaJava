@@ -73,5 +73,4 @@ public class Quotas {
         this.updatedAt = new Date();
     }
 
-
 }

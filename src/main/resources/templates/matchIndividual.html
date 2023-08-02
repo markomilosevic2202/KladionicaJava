@@ -103,9 +103,8 @@
         </thead>
 
         <tbody>
+
         <tr th:each="quota, index : ${match.quotas}">
-
-
             <td th:text="${quota.timeView}"/>
             <td th:text="${quota.quotaOne}"/>
             <td th:text="${quota.differenceOne}"/>
@@ -122,10 +121,6 @@
             <td>
                 <a th:href="${quota.matches.linkForeign}" target="_blank" th:text="Link"></a>
             </td>
-
-
-
-
 
         </tr>
         </tbody>

@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -38,7 +39,7 @@ public class Match {
     @JoinColumn(name = "id_guest_club", nullable = true)
     private ClubName guestNameClub;
     @OneToMany(mappedBy = "matches", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Quotas> quotas;
+    private List<Quotas> quotas;
     @Column(nullable = false)
     private Date createdAt;
     @Column(nullable = false)

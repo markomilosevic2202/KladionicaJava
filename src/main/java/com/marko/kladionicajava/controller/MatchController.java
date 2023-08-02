@@ -8,13 +8,17 @@ import com.marko.kladionicajava.service.AppConfigService;
 import com.marko.kladionicajava.service.EmailService;
 import com.marko.kladionicajava.service.MatchService;
 import com.marko.kladionicajava.service.QuotasService;
+import com.marko.kladionicajava.tools.SortService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
+
 
 @Controller
 @RequestMapping("/matches")
@@ -23,6 +27,7 @@ public class MatchController {
 
     private final MatchService matchService;
     private final QuotasService quotasService;
+    private final SortService sortService;
 
 
 
@@ -32,6 +37,7 @@ public class MatchController {
         List<String> optionalView = matchService.getOptionalView();
         String timeView = "";//optionalView.get(0);
         List<Quotas> listMatch = quotasService.getAllQuotasLastView(timeView);
+        sortService.sortQuota(listMatch);
         model.addAttribute("optionalViews", optionalView);
         model.addAttribute("quotas", listMatch);
 
@@ -41,6 +47,7 @@ public class MatchController {
     @RequestMapping ("/show-set-time")
     public String handleFormSubmission(@RequestParam("myDropdown") String selectedValue, Model model) {
         List<Quotas> listMatch = quotasService.getAllQuotasLastView(selectedValue);
+        sortService.sortQuota(listMatch);
         model.addAttribute("quotas", listMatch);
         List<String> optionalView = matchService.getOptionalView();
         model.addAttribute("optionalViews", optionalView);
@@ -71,6 +78,8 @@ public class MatchController {
         model.addAttribute("match", match);
         return "matchIndividual";
     }
+
+
 
 }
 //

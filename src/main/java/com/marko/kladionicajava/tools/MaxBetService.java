@@ -51,13 +51,14 @@ public class MaxBetService {
         try {
 
             maxBet.goAddress(address);
-            Thread.sleep(6000);
+
+
             maxBet.clickSlider(hoursOfReview);
-            Thread.sleep(500);
+
             maxBet.clickFootball();
-            Thread.sleep(500);
-            maxBet.clickMaxBonus();
-            Thread.sleep(1000);
+            Thread.sleep(3500);
+
+
         } catch (Exception e) {
             e.printStackTrace();
 

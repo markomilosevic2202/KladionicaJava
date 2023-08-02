@@ -50,4 +50,9 @@ public interface MatchRepository extends JpaRepository<Match, String> {
 
 
 
+    @Query("select m from Match m LEFT JOIN FETCH m.quotas q where m.id = ?1 ORDER BY q.timeView DESC")
+    Optional<Match> findMatchById1(String id);
+
+
+
 }

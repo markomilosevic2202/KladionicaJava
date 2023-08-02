@@ -81,7 +81,7 @@ public class ForeignPage {
             clickFirstMatchOnFindList(url + url2);
 
             clickButtonDoubleChance();
-            Thread.sleep(10000);
+            Thread.sleep(1000);
             return getAddress();}
             return null;
         } catch (Exception e) {

@@ -45,10 +45,12 @@ public class MaxBet {
     @FindBy(xpath = "//*[contains(@class, 'ui-slider-handle ui-state-default ui-corner-all')]")
     private WebElement slider;
 
-    @FindBy(xpath = "//*[contains(@class,'ngdialog-close ng-scope')]")
+    @FindBy(xpath = "//a[contains(@class, 'ng-binding ng-scope')]")
     private WebElement btnClosePopup;
 
-    private final WebDriver driver;
+    private  WebDriver driver;
+
+    JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
 
     public MaxBet(WebDriver driver) {
         this.driver = driver;
@@ -57,8 +59,11 @@ public class MaxBet {
 
 
     public void clickFootball() {
-        this.listFootball.get(0).click();
-
+       // this.listFootball.get(0).click();
+        String jsCode = "const targetElement = Array.from(document.querySelectorAll('p')).find(element => element.textContent.includes('Max Bonus Tip Fudbal'));\n" +
+                "targetElement.click();";
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        jsExecutor.executeScript(jsCode);
     }
 
     public void clickSelectAll() {
@@ -70,13 +75,29 @@ public class MaxBet {
 
     }
     public void clickClosePopup() {
-        this.btnClosePopup.click();
+       // this.btnClosePopup.click();
+
+
+        // Definisanje JavaScript koda za pronalaženje i klik na link koji sadrži klasu "ng-binding ng-scope"
+        String jsCode = "const targetElement = Array.from(document.querySelectorAll('p')).find(element => element.textContent.includes('Max Bonus Tip Fudbal'));\n" +
+                "targetElement.click();";
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+
+        // Izvršavanje JavaScript koda
+        jsExecutor.executeScript(jsCode);
+
 
     }
 
     public void clickSlider(String hours) {
 
-        this.slider.click();
+        String jsCode = "let link = document.querySelector('.ui-slider-handle.ui-state-default.ui-corner-all');\n" +
+                "link.click();";
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        jsExecutor.executeScript(jsCode);
+
+
+       // this.slider.click();
         if (hours.equals("3")) {
             for (int i = 0; i < 5; i++) {
                 this.slider.sendKeys(Keys.ARROW_LEFT);
@@ -96,7 +117,6 @@ public class MaxBet {
             }
         } else if (hours.equals("48")) {
             this.slider.sendKeys(Keys.ARROW_LEFT);
-        } else if (hours.equals("all")) {
 
         } else {
             // Assertions.fail("  :: The specified parameter was not found. The options offered are 3,5,12,24,48,all :: ");

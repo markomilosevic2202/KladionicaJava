@@ -14,8 +14,7 @@ import org.springframework.stereotype.Service;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +43,7 @@ public class MatchService {
             Optional<Match> optionalMatch;
             String matchName = matchDTOPage.getName();
             int delimiterIndex = matchName.indexOf(" - ");
-            String hostClubNameString = matchName.substring(0,delimiterIndex);
+            String hostClubNameString = matchName.substring(0, delimiterIndex);
 
             if (clubNamesRepository.existByName(hostClubNameString)) {
                 ClubName clubName = new ClubName();
@@ -79,7 +78,7 @@ public class MatchService {
         quotaRepository.deleteAllMatchHaveStarted();
         matchRepository.deleteMatchStarted();
         findPairInForeignBettingShop();
-       // matchRepository.deleteMatchByLinkForeignNull();
+        // matchRepository.deleteMatchByLinkForeignNull();
     }
 
 
@@ -88,24 +87,22 @@ public class MatchService {
         try {
 
 
-        List<Match> list = matchRepository.findWithLinkForeignIsNull();
-        driver = webDriverMono.open();
-        ForeignPage foreignPage = new ForeignPage(driver);
-        //foreignPage.goAddress(appConfigService.getAddressForeign());
-        for (int i = 0; i < list.size(); i++) {
-            try {
-                Match match = list.get(i);
-                matchRepository.updateMatchLink(match, foreignPage.findLink(match.getHostNameClub().getForeignName(),
-                        match.getGuestNameClub().getForeignName(),
-                        appConfigService.getAddressForeign()));
-        }
-            catch (Exception e){
-                e.printStackTrace();
+            List<Match> list = matchRepository.findWithLinkForeignIsNull();
+            driver = webDriverMono.open();
+            ForeignPage foreignPage = new ForeignPage(driver);
+            //foreignPage.goAddress(appConfigService.getAddressForeign());
+            for (int i = 0; i < list.size(); i++) {
+                try {
+                    Match match = list.get(i);
+                    matchRepository.updateMatchLink(match, foreignPage.findLink(match.getHostNameClub().getForeignName(),
+                            match.getGuestNameClub().getForeignName(),
+                            appConfigService.getAddressForeign()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        }
-        driver.quit();
-        }
-        catch (Exception e){
+            driver.quit();
+        } catch (Exception e) {
             e.printStackTrace();
             driver.quit();
         }
@@ -130,7 +127,7 @@ public class MatchService {
                 Match match = listMatchMaxbetBase.get(i);
                 QuotaForeignDTO quotaForeignDTO = foreignPage.getQuotaForeign(match.getLinkForeign());
                 QuotaHomeDTO quotaHomeDTO = findMatchByCode(listQuotasMaxbetPage, match.getIdMatch());
-                if(match != null && quotaHomeDTO != null && quotaForeignDTO != null ) {
+                if (match != null && quotaHomeDTO != null && quotaForeignDTO != null) {
                     quotaRepository.save(setQuotas(quotaForeignDTO, quotaHomeDTO, match, timeView, bet));
                 }
             }
@@ -149,7 +146,7 @@ public class MatchService {
     }
 
     public Match getMatch(String matchId) {
-        Optional<Match> match = matchRepository.findById(matchId);
+        Optional<Match> match = matchRepository.findMatchById1(matchId);
         return match.get();
     }
 
@@ -165,17 +162,17 @@ public class MatchService {
         quotas.setBetOne(Float.valueOf(decimalFormat.format(quotaForeignDTO.getTwoXBet())));
         quotas.setBetTwo(Float.valueOf(decimalFormat.format(quotaForeignDTO.getOneXBet())));
         quotas.setBetX(Float.valueOf(decimalFormat.format(quotaForeignDTO.getOneTwoQuota())));
-        quotas.setProfitOne(Float.valueOf(decimalFormat.format(recalculateProfit(quotas.getQuotaOne(), quotas.getDifferenceOne(),bet))));
-        quotas.setProfitTwo(Float.valueOf(decimalFormat.format(recalculateProfit(quotas.getQuotaTwo(), quotas.getDifferenceTwo(),bet))));
-        quotas.setProfitX(Float.valueOf(decimalFormat.format(recalculateProfit(quotas.getQuotaX(), quotas.getDifferenceX(),bet))));
+        quotas.setProfitOne(Float.valueOf(decimalFormat.format(recalculateProfit(quotas.getQuotaOne(), quotas.getDifferenceOne(), bet))));
+        quotas.setProfitTwo(Float.valueOf(decimalFormat.format(recalculateProfit(quotas.getQuotaTwo(), quotas.getDifferenceTwo(), bet))));
+        quotas.setProfitX(Float.valueOf(decimalFormat.format(recalculateProfit(quotas.getQuotaX(), quotas.getDifferenceX(), bet))));
         quotas.setTimeView(timeView);
         return quotas;
 
     }
 
-    public static Float recalculateProfit(Float homeQuota, Float foreignQuota,  Float bet){
+    public static Float recalculateProfit(Float homeQuota, Float foreignQuota, Float bet) {
 
-        return (bet * homeQuota / foreignQuota) - (bet * homeQuota / (100/(homeQuota * 100 - 100) + 1));
+        return (bet * homeQuota / (100 / (homeQuota * 100 - 100) + 1)) - (bet * homeQuota / foreignQuota) ;
 
     }
 
@@ -188,23 +185,5 @@ public class MatchService {
         return null;
     }
 
-    public static String incrementLastNumberInUrl(String url) {
-        Pattern pattern = Pattern.compile("\\d+$");
-        Matcher matcher = pattern.matcher(url);
-
-        if (matcher.find()) {
-            int start = matcher.start();
-            int end = matcher.end();
-            String lastNumberStr = url.substring(start, end);
-            int lastNumber = Integer.parseInt(lastNumberStr);
-            int newNumber = lastNumber + 1;
-            String resultUrl = url.substring(0, start) + newNumber + url.substring(end);
-
-            return resultUrl;
-        } else {
-
-            return url;
-        }
-    }
 }
 //konsider my self    start it

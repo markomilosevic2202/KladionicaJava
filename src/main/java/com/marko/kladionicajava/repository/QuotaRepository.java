@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -24,7 +25,7 @@ public interface QuotaRepository extends JpaRepository<Quotas, String> {
 
 
 
-    @Query("SELECT DISTINCT q.timeView FROM Quotas q")
+    @Query("SELECT DISTINCT q.timeView FROM Quotas q ORDER BY q.timeView DESC")
     List<String> findAllDistinctByNumberOfView();
 
     @Query("select q from Quotas q where q.timeView = ?1")
