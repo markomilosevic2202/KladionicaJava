@@ -66,7 +66,7 @@ public class MatchController {
     @GetMapping("/refresh-quota")
     @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshQuotas * 60000}")
     public String refreshQuota(){
-        matchService.refreshQuotas();
+        quotasService.refreshQuotas();
 
         return "redirect:/matches";
     }

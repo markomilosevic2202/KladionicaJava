@@ -19,8 +19,6 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-
-
   mvc:
 
     static-locations: classpath:/static/
