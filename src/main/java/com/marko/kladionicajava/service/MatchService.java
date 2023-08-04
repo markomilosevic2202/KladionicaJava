@@ -83,10 +83,7 @@ public class MatchService {
 
 
     public void findPairInForeignBettingShop() {
-
         try {
-
-
             List<Match> list = matchRepository.findWithLinkForeignIsNull();
             driver = webDriverMono.open();
             ForeignPage foreignPage = new ForeignPage(driver);
@@ -105,6 +102,17 @@ public class MatchService {
         } catch (Exception e) {
             e.printStackTrace();
             driver.quit();
+        }
+    }
+
+    public List<Match> findAllWithoutLink(String nameBetShop) {
+        List<Match> listMatch;
+        try {
+             return matchRepository.findWithLinkForeignIsNull();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+           return listMatch = new ArrayList<>();
         }
     }
 
