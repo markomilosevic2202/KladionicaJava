@@ -22,18 +22,26 @@ public class WithoutLinkController {
     private final MatchService matchService;
 
     @GetMapping()
-    public String showSettingsDefault(Model model, String nameBetShop) {
-        List<Match> listMatch= matchService.findAllWithoutLink(nameBetShop);
+    public String showMatchesWithoutLink(Model model) {
+        List<Match> listMatch= matchService.findAllWithoutLink();
         model.addAttribute("clubNameWithoutForeignName", listMatch);
         return "add-link";
 
     }
 
     @PostMapping("/updateLink")
-    public String updateClub(@ModelAttribute("link") String link) {
+    public String updateClub(@ModelAttribute("match") Match match) {
 
-        matchService.updateLink(link);
+        matchService.updateLink(match);
 
-        return "redirect:/addNames";
+        return "redirect:/withoutLink";
+    }
+
+    @GetMapping("/showAllMatches")
+    public String showAllMatch(Model model) {
+        List<Match> listMatch= matchService.findAllMatches();
+        model.addAttribute("clubNameWithoutForeignName", listMatch);
+        return "add-link";
+
     }
 }

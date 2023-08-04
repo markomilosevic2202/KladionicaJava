@@ -49,6 +49,9 @@
             margin-top: 20px;
 
         }
+        .id-input {
+        width: 550px;
+    }
 
 
 
@@ -70,36 +73,10 @@
         Back
     </a>
     <hr>
-    <a th:href="@{/matches/refresh-match}"
+    <a th:href="@{/withoutLink/showAllMatches}"
        class="btn btn-primary btn-sm mb-3">
-        1 Hours
+        Show all matches
     </a>
-    <a th:href="@{/matches/refresh-quota}"
-       class="btn btn-primary btn-sm mb-3">
-        After 1Hours
-    </a>
-
-
-<!--    <form id="myForm" action="#" th:object="${time}" th:action="@{/matches/show-set-time}">-->
-<!--        <select id="myDropdown" name="myDropdown"> &lt;!&ndash; Dodajte 'name' atribut ovde &ndash;&gt;-->
-<!--            <option value="all" th:selected="${nameColumn == 'all'}"></option>-->
-<!--            <option th:each="item : ${optionalViews}" th:value="${item}" th:text="${item}"></option>-->
-<!--        </select>-->
-<!--    </form>-->
-
-<!--    <script>-->
-
-<!--    const form = document.getElementById('myForm');-->
-<!--    const dropdown = document.getElementById('myDropdown');-->
-
-<!--    dropdown.addEventListener('change', function() {-->
-<!--        form.submit(); // This will submit the form to the specified action URL-->
-<!--    });-->
-<!--    </script>-->
-
-
-
-
 
 
 
@@ -113,6 +90,7 @@
             <th>Vreme</th>
             <th>Timovi</th>
             <th>Link</th>
+            <th>Save</th>
 
 
         </tr>
@@ -121,22 +99,16 @@
         <tbody>
         <tr th:each="match, index : ${clubNameWithoutForeignName}">
 
-            <form action="/withoutLink/updateLink" th:object='${club}'  method="post">
-            <td th:text="${match.idMatch}"/>
+            <form action="/withoutLink/updateLink" th:object='${match}'  method="post">
+            <td  th:text="${match.idMatch}"/>
             <td th:text="${match.bettingShop.name().substring(0)}"/>
-            <td>
-                <span th:text="${#dates.format(match.dateMatch, 'dd.MM.yyyy.')}"></span>
-            </td>
-            <td>
-                <span th:text="${#dates.format(match.dateMatch, 'HH:mm')}"></span>
-            </td>
+            <td><span th:text="${#dates.format(match.dateMatch, 'dd.MM.yyyy.')}"></span></td>
+            <td><span th:text="${#dates.format(match.dateMatch, 'HH:mm')}"></span></td>
             <td th:text="${match.nameHome}"/>
-            <td th:text="${match.linkForeign}"/>
-            <td><input type="text" id="foreignName" name="foreignName"/></td>
+                <td><input type="text" id="linkForeign" name="linkForeign" th:value="${match.linkForeign}" class="id-input"/></td>
             <td><button type="submit">Save  </button></td>
+                <input type="hidden"  id="id" name="id" th:value="${match.id}"/>
             </form>
-
-
         </tr>
         </tbody>
     </table>

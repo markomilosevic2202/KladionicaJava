@@ -44,9 +44,6 @@ public class ClubNameService {
         try {
             Optional<ClubName> optionalClubName = clubNamesRepository.findById(clubName.getId());
             clubNamesRepository.save(setClubName(clubName,optionalClubName.get()));
-
-
-
         }
 
         catch (Exception e){

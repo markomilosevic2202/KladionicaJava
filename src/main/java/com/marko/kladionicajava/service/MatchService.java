@@ -105,7 +105,7 @@ public class MatchService {
         }
     }
 
-    public List<Match> findAllWithoutLink(String nameBetShop) {
+    public List<Match> findAllWithoutLink() {
         List<Match> listMatch;
         try {
              return matchRepository.findWithLinkForeignIsNull();
@@ -131,9 +131,24 @@ public class MatchService {
     }
 
 
-    public void updateLink(String link) {
+    public void updateLink(Match match) {
 
+        try {
+        Optional<Match> optionalMatch = matchRepository.findById(match.getId());
+        if(optionalMatch.isPresent()){
+        Match matchBase = optionalMatch.get();
+        matchBase.setLinkForeign(match.getLinkForeign().trim());
+        matchRepository.save(matchBase);}
+        }
 
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public List<Match> findAllMatches() {
+        return matchRepository.findAll();
     }
 }
 //konsider my self    start it
