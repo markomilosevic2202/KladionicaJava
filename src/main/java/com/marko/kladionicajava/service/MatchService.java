@@ -41,7 +41,7 @@ public class MatchService {
             Match match = new Match();
             MatchDTO matchDTOPage = listMatchPage.get(i);
             Optional<Match> optionalMatch;
-            String matchName = matchDTOPage.getName();
+            String matchName = matchDTOPage.getName().trim();
             int delimiterIndex = matchName.indexOf(" - ");
             String hostClubNameString = matchName.substring(0, delimiterIndex);
 
@@ -72,6 +72,7 @@ public class MatchService {
                 match.setHostNameClub(hostClubName);
                 match.setGuestNameClub(guestClubName);
                 match.setBettingShop(NameBetting.MAXBET);
+                match.setReview(true);
                 matchRepository.save(match);
             }
         }
@@ -108,16 +109,13 @@ public class MatchService {
     public List<Match> findAllWithoutLink() {
         List<Match> listMatch;
         try {
-             return matchRepository.findWithLinkForeignIsNull();
+            return matchRepository.findWithLinkForeignIsNull();
 
         } catch (Exception e) {
             e.printStackTrace();
-           return listMatch = new ArrayList<>();
+            return listMatch = new ArrayList<>();
         }
     }
-
-
-
 
 
     public List<String> getOptionalView() {
@@ -131,17 +129,24 @@ public class MatchService {
     }
 
 
-    public void updateLink(Match match) {
+    public void updateLink(Match matchPage) {
 
         try {
-        Optional<Match> optionalMatch = matchRepository.findById(match.getId());
-        if(optionalMatch.isPresent()){
-        Match matchBase = optionalMatch.get();
-        matchBase.setLinkForeign(match.getLinkForeign().trim());
-        matchRepository.save(matchBase);}
-        }
 
-        catch (Exception e){
+            Optional<Match> optionalMatch = matchRepository.findById(matchPage.getId());
+            if (optionalMatch.isPresent()) {
+                Match matchBase = optionalMatch.get();
+                if (matchPage.getLinkForeign().length() > 15) {
+                    matchBase.setLinkForeign(matchPage.getLinkForeign().trim());
+                }
+                if (matchPage.getReview() == null) {
+                    matchBase.setReview(false);
+                }
+
+
+                matchRepository.save(matchBase);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -151,4 +156,3 @@ public class MatchService {
         return matchRepository.findAll();
     }
 }
-//konsider my self    start it

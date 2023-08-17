@@ -35,11 +35,11 @@ file:
   upload-dir: src/main/resources/static/
 
 app:
-  timeReview: 3
+  timeReview: 12
   addressMaxBet: 'https://www.maxbet.rs/ibet-web-client/#/home#top'
   addressForeign: 'https://www.orbitxch.com/customer/inplay/highlights?search='
   bet: 100
   timeRefreshMatches: 120
-  timeRefreshQuotas: 10
+  timeRefreshQuotas: 30
 
 

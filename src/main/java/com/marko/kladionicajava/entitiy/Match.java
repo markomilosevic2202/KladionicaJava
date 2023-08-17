@@ -44,6 +44,8 @@ public class Match {
     private Date createdAt;
     @Column(nullable = false)
     private Date updatedAt;
+    @Column(nullable = false)
+    private Boolean review;
 
     @PrePersist
     private void prePersist() {

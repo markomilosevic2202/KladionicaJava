@@ -90,6 +90,7 @@
             <th>Vreme</th>
             <th>Timovi</th>
             <th>Link</th>
+            <th>Pregledaj</th>
             <th>Save</th>
 
 
@@ -106,6 +107,7 @@
             <td><span th:text="${#dates.format(match.dateMatch, 'HH:mm')}"></span></td>
             <td th:text="${match.nameHome}"/>
                 <td><input type="text" id="linkForeign" name="linkForeign" th:value="${match.linkForeign}" class="id-input"/></td>
+                <td><input type="checkbox" id="review" name="review" th:checked="${match.review}" /></td>
             <td><button type="submit">Save  </button></td>
                 <input type="hidden"  id="id" name="id" th:value="${match.id}"/>
             </form>

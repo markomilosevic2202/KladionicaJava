@@ -2,6 +2,10 @@ INSERT INTO emails (email, id) VALUES('marko.milosevic2202@gmail.com', '18251640
 INSERT INTO emails (email, id) VALUES('urkejov1996@gmail.com', 'c20c01f0-33fc-48e3-9fd5-c89b6808cb8f');
 
 
+INSERT INTO emails (email, id) VALUES('marko.milosevic2202@gmail.com', '18251640-45b8-4720-8daa-a0c5d3f26008');
+INSERT INTO emails (email, id) VALUES('urkejov1996@gmail.com', 'c20c01f0-33fc-48e3-9fd5-c89b6808cb8f');
+
+
 INSERT INTO club_names (created_at, updated_at, foreign_name, id, match_name, maxbet_name, meridian_name, mozzart_name) VALUES('2023-08-02 14:54:19.414', '2023-08-02 15:00:59.898', 'Goias', '01fe76bf-b1e7-4cdc-b0d1-ac2e0ac8028a', 'Estudiantes - Goias', 'Goias', NULL, NULL);
 INSERT INTO club_names (created_at, updated_at, foreign_name, id, match_name, maxbet_name, meridian_name, mozzart_name) VALUES('2023-08-02 07:22:32.094', '2023-08-02 07:25:32.750', 'Sparta Prague B', '0697a799-96df-4646-a3fc-a810099e8bde', 'Prostejov - Sparta P. B', 'Sparta P. B', NULL, NULL);
 INSERT INTO club_names (created_at, updated_at, foreign_name, id, match_name, maxbet_name, meridian_name, mozzart_name) VALUES('2023-08-02 14:54:19.507', '2023-08-02 15:01:16.419', 'SE Palmeiras', '09040007-0ceb-4005-8651-1174a64a37ef', 'Atletico-MG - Palmeiras', 'Palmeiras', NULL, NULL);
