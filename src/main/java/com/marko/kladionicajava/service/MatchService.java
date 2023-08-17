@@ -117,6 +117,17 @@ public class MatchService {
         }
     }
 
+    public List<Match> findAllHasLink() {
+        List<Match> listMatch;
+        try {
+            return matchRepository.findWithLinkForeignIsNotNull();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return listMatch = new ArrayList<>();
+        }
+    }
+
 
     public List<String> getOptionalView() {
 
@@ -139,13 +150,29 @@ public class MatchService {
                 if (matchPage.getLinkForeign().length() > 15) {
                     matchBase.setLinkForeign(matchPage.getLinkForeign().trim());
                 }
-                if (matchPage.getReview() == null) {
-                    matchBase.setReview(false);
-                }
-
-
                 matchRepository.save(matchBase);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void updateReview(Match matchPage) {
+
+        try {
+
+            Optional<Match> optionalMatch = matchRepository.findById(matchPage.getId());
+
+            if (optionalMatch.isPresent()) {
+                if (matchPage.getReview() == null) {
+                    optionalMatch.get().setReview(false);
+                } else {
+                    optionalMatch.get().setReview(true);
+                }
+            }
+                matchRepository.save(optionalMatch.get());
+
         } catch (Exception e) {
             e.printStackTrace();
         }

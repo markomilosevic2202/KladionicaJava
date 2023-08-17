@@ -22,6 +22,9 @@ public interface MatchRepository extends JpaRepository<Match, String> {
     @Query("select m from Match m where m.linkForeign is null")
     List<Match> findWithLinkForeignIsNull();
 
+    @Query("select m from Match m where m.linkForeign is not null")
+    List<Match> findWithLinkForeignIsNotNull();
+
 
     @Modifying
     @Transactional

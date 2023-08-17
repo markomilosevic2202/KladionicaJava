@@ -56,6 +56,7 @@
 
 
 
+
     </style>
 
 
@@ -79,8 +80,6 @@
     </a>
 
 
-
-
     <table class="table table-bordered table-striped">
         <thead class="table-dark">
         <tr>
@@ -90,6 +89,7 @@
             <th>Vreme</th>
             <th>Timovi</th>
             <th>Link</th>
+            <th>Pregledaj</th>
             <th>Save</th>
 
 
@@ -99,21 +99,22 @@
         <tbody>
         <tr th:each="match, index : ${clubNameWithoutForeignName}">
 
-            <form action="/withoutLink/updateLink" th:object='${match}'  method="post">
-            <td  th:text="${match.idMatch}"/>
-            <td th:text="${match.bettingShop.name().substring(0)}"/>
-            <td><span th:text="${#dates.format(match.dateMatch, 'dd.MM.yyyy.')}"></span></td>
-            <td><span th:text="${#dates.format(match.dateMatch, 'HH:mm')}"></span></td>
-            <td th:text="${match.nameHome}"/>
-                <td><input type="text" id="linkForeign" name="linkForeign" th:value="${match.linkForeign}" class="id-input"/></td>
-                <td><button type="submit">Save  </button></td>
-                <input type="hidden"  id="id" name="id" th:value="${match.id}"/>
+            <form action="/review/updateReview" th:object='${match}' method="post">
+                <td th:text="${match.idMatch}"/>
+                <td th:text="${match.bettingShop.name().substring(0)}"/>
+                <td><span th:text="${#dates.format(match.dateMatch, 'dd.MM.yyyy.')}"></span></td>
+                <td><span th:text="${#dates.format(match.dateMatch, 'HH:mm')}"></span></td>
+                <td th:text="${match.nameHome}"/>
+                                <td><a th:href="${match.linkForeign}" target="_blank" th:text="Link"></a></td>
+                <td><input type="checkbox" id="review" name="review" th:checked="${match.review}"/></td>
+                <td>
+                    <button type="submit">Save</button>
+                </td>
+                <input type="hidden" id="id" name="id" th:value="${match.id}"/>
             </form>
         </tr>
         </tbody>
     </table>
-
-
 
 
 </div>

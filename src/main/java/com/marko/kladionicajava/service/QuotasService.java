@@ -80,12 +80,13 @@ public class QuotasService {
             Float bet = appConfigService.getBet();
 
             for (int i = 0; i < listMatchMaxbetBase.size(); i++) {
-                Quotas quotas = new Quotas();
                 Match match = listMatchMaxbetBase.get(i);
-                QuotaForeignDTO quotaForeignDTO = foreignPage.getQuotaForeign(match.getLinkForeign());
-                QuotaHomeDTO quotaHomeDTO = findMatchByCode(listQuotasMaxbetPage, match.getIdMatch());
-                if (match != null && quotaHomeDTO != null && quotaForeignDTO != null) {
-                    quotaRepository.save(setQuotas(quotaForeignDTO, quotaHomeDTO, match, timeView, bet));
+                if (match.getReview()) {
+                    QuotaForeignDTO quotaForeignDTO = foreignPage.getQuotaForeign(match.getLinkForeign());
+                    QuotaHomeDTO quotaHomeDTO = findMatchByCode(listQuotasMaxbetPage, match.getIdMatch());
+                    if (match != null && quotaHomeDTO != null && quotaForeignDTO != null) {
+                        quotaRepository.save(setQuotas(quotaForeignDTO, quotaHomeDTO, match, timeView, bet));
+                    }
                 }
             }
         } catch (Exception e) {
