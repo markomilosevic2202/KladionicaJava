@@ -27,7 +27,7 @@ public class ReviewController {
         return "review";
 
     }
-    @PostMapping("/updateReview")
+    @PostMapping("/updateReviewStatus")
     public String updateClub(@ModelAttribute("match") Match match) {
         matchService.updateReview(match);
         return "redirect:/review";

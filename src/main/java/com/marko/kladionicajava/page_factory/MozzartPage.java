@@ -78,12 +78,7 @@ public class MozzartPage {
             actions.moveToElement(scrollBar);
             actions.sendKeys(org.openqa.selenium.Keys.ARROW_DOWN);
             actions.perform();
-//            Thread.sleep(1000);
-//            System.out.println("11111111111111111111111");
         }
-        // Skrolujte element koristeći tastaturu
-
-        System.out.println();
     }
 
     public List<MatchDTO> writeMatch() {
@@ -125,9 +120,6 @@ public class MozzartPage {
                 matches1.add(matchDTO);
             }
         }
-        System.out.println("***********************************************" + matches1.size());
-        ;
-
         return matches1;
 
     }

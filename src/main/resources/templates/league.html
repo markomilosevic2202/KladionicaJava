@@ -87,47 +87,77 @@
         Back
     </a>
     <hr>
-    <a th:href="@{/withoutLink/showAllMatches}"
+    <a th:href="@{/league/add-league}"
        class="btn btn-primary btn-sm mb-3">
-        Show all matches
+        Dodaj Ligu
     </a>
 
 
     <table class="table table-bordered table-striped">
         <thead class="table-dark">
         <tr>
-            <th>Sifra</th>
-            <th>Kladionica</th>
-            <th>Datum</th>
-            <th>Vreme</th>
-            <th>Timovi</th>
-            <th>Link</th>
+            <th>Ime Lige</th>
             <th>Pregledaj</th>
-            <th>Save</th>
-
+            <th>Obrisi</th>
 
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each="match, index : ${clubNameWithoutForeignName}">
+        <tr th:each="league, index : ${leagues}">
+            <td th:text="${league.nameLeague}"/>
+            <td <form id="myForm" action="#" th:object="${time}" th:action="@{/league/updateReviewStatus}">
+                <select id="myDropdown" name="myDropdown">
 
-            <form action="/review/updateReview" th:object='${match}' method="post">
-                <td th:text="${match.idMatch}"/>
-                <td th:text="${match.bettingShop.name().substring(0)}"/>
-                <td><span th:text="${#dates.format(match.dateMatch, 'dd.MM.yyyy.')}"></span></td>
-                <td><span th:text="${#dates.format(match.dateMatch, 'HH:mm')}"></span></td>
-                <td th:text="${match.nameHome}"/>
-                                <td><a th:href="${match.linkForeign}" target="_blank" th:text="Link"></a></td>
-                <td id="container"><input type="checkbox" id="review" name="review" th:checked="${match.review}"/></td>
-                <td>
-                    <button type="submit">Save</button>
-                </td>
-                <input type="hidden" id="id" name="id" th:value="${match.id}"/>
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                </select>
             </form>
+            </td>
+            <script>
+
+    const form = document.getElementById('myForm');
+    const dropdown = document.getElementById('myDropdown');
+
+    dropdown.addEventListener('change', function() {
+        form.submit(); // This will submit the form to the specified action URL
+    });
+    </script>
+            <td>
+                <a th:href="@{/league/deleteLeague(leagueId = ${league.id})}"
+                   class="btn btn-danger btn-sm"
+                   onclick="return confirmDeleteLeague(this);"> <!-- Promijenjen onclick event -->
+                    Delete
+                </a>
+
+            </td>
         </tr>
+
         </tbody>
     </table>
+
+    <script>
+    function submitForm() {
+        document.getElementById('myForm').submit();
+    }
+
+       function sendSelectedValue() {
+        var selectedValue = document.getElementById("myDropdown").value;
+        var formData = new FormData();
+        formData.append("selectedValue", selectedValue);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/league/updateReviewStatus", true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log("Vrednost je uspešno poslata na server.");
+            }
+        };
+        xhr.send(formData);
+    }
+
+   </script>
+
 
 
 </div>

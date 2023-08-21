@@ -24,7 +24,7 @@ public class League {
     @Column(name = "id", nullable = false)
     private String id;
     @Column(name = "name_league")
-    private String idMatch;
+    private String nameLeague;
     @Column(name = "review")
     private Boolean review;
 }
