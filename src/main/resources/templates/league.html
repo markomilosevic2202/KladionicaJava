@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <style>
+
+    body {
+      background-image: url("http://localhost:9910/footbal.jpg");
+      background-size: cover;
+      background-opacity: 0.1;
+    }
+
+        .padajuca-lista {
+            width: 50%;
+            height: 30px;
+            font-size: 14px;
+            display: inline-block;
+            margin-right: 10px;
+            width: 100px;
+        }
+
+
+        .btn-info {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+            height: 30px;
+            font-size: 14px;
+        }
+
+        .title {
+
+            height: 30px;
+            font-size: 40px;
+            margin-left: 15%;
+           margin-bottom: 65px;
+
+        }
+
+
+        .table {
+            margin-top: 20px;
+
+        }
+        .id-input {
+        width: 550px;
+    }
+    #review {
+    transform: scale(2.5);
+    }
+
+    #container {
+    display: flex;
+    align-items: center; /* Vertikalno centriranje */
+    justify-content: center; /* Horizontalno centriranje */
+     height:50px;
+
+
+}
+
+
+
+
+
+
+    </style>
+
+
+    <title>Matches</title>
+</head>
+
+<body>
+
+<h1 class="title">Aktuelni Mecevi</h1>
+
+<div class="container">
+
+    <a th:href="@{/}"
+       class="btn btn-primary btn-sm mb-3">
+        Back
+    </a>
+    <hr>
+    <a th:href="@{/withoutLink/showAllMatches}"
+       class="btn btn-primary btn-sm mb-3">
+        Show all matches
+    </a>
+
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>Sifra</th>
+            <th>Kladionica</th>
+            <th>Datum</th>
+            <th>Vreme</th>
+            <th>Timovi</th>
+            <th>Link</th>
+            <th>Pregledaj</th>
+            <th>Save</th>
+
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="match, index : ${clubNameWithoutForeignName}">
+
+            <form action="/review/updateReview" th:object='${match}' method="post">
+                <td th:text="${match.idMatch}"/>
+                <td th:text="${match.bettingShop.name().substring(0)}"/>
+                <td><span th:text="${#dates.format(match.dateMatch, 'dd.MM.yyyy.')}"></span></td>
+                <td><span th:text="${#dates.format(match.dateMatch, 'HH:mm')}"></span></td>
+                <td th:text="${match.nameHome}"/>
+                                <td><a th:href="${match.linkForeign}" target="_blank" th:text="Link"></a></td>
+                <td id="container"><input type="checkbox" id="review" name="review" th:checked="${match.review}"/></td>
+                <td>
+                    <button type="submit">Save</button>
+                </td>
+                <input type="hidden" id="id" name="id" th:value="${match.id}"/>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>
+
+</body>
+</html>

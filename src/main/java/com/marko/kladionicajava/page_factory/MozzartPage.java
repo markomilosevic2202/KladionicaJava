@@ -26,12 +26,14 @@ public class MozzartPage {
     @FindBy(xpath = "//button[contains(text(),'Allow')]")
     WebElement btnAllow;
 
-    @FindBy(xpath = "//button[contains(text(),'Fudbal')]")
+    @FindBy(xpath = "//span[contains(text(),'Fudbal')]")
     WebElement btnFootbal;
+
+    @FindBy(xpath = "//*[contains(@class, 'leagueheader')]")
+    WebElement btnFootbal1;
 
     @FindBy(xpath = "//*[contains(@class, 'vb-dragger-styler')]")
     List<WebElement> listScrollElement;
-
 
 
     private WebDriver driver;
@@ -43,11 +45,11 @@ public class MozzartPage {
 
     public void goAddress(String address) {
         try {
-           this.driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
+            this.driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
             this.driver.get(address);
         } catch (Exception e) {
             e.printStackTrace();
-         this.driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
+            this.driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
         }
         this.driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
 
@@ -62,25 +64,28 @@ public class MozzartPage {
 //        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
 //        jsExecutor.executeScript(jsCode);
     }
+
     public void waitForPageToLoad() throws InterruptedException {
 
-        WebElement scrollBar = listScrollElement.get(0);
+        WebElement scrollBar = driver.findElement(By.xpath("//*[contains(@class, 'bar-bar vb vb-visible')]")).findElement(By.xpath("div[1]"));
 
 
         // Kreiranje akcija
         Actions actions = new Actions(driver);
+        btnFootbal1.click();
+        for (int i = 0; i < 10; i++) {
 
-        for (int i = 0; i < 5; i++) {
             actions.moveToElement(scrollBar);
             actions.sendKeys(org.openqa.selenium.Keys.ARROW_DOWN);
             actions.perform();
-            Thread.sleep(1000);
-            System.out.println("11111111111111111111111");
+//            Thread.sleep(1000);
+//            System.out.println("11111111111111111111111");
         }
         // Skrolujte element koristeći tastaturu
 
         System.out.println();
     }
+
     public List<MatchDTO> writeMatch() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         List<Object> matches = (List<Object>) js.executeScript(
@@ -120,20 +125,31 @@ public class MozzartPage {
                 matches1.add(matchDTO);
             }
         }
-        System.out.println("***********************************************" + matches1.size());;
+        System.out.println("***********************************************" + matches1.size());
+        ;
 
-return matches1;
+        return matches1;
 
     }
 
+    public void clickLeague() {
+        WebElement element = driver.findElement(By.cssSelector(".main-item.active.all-active"));
+        WebElement element1 = element.findElement(By.xpath(".//span[contains(text(), 'ŠPANIJA  1')]"));
+        element1.click();
+        WebElement element2 = element.findElement(By.xpath(".//span[contains(text(), 'ITALIJA  1')]"));
+        element2.click();
+    }
 
     public List<MatchDTO> getAllMatches(String addressMozzart, String timeReviewMozzart) throws InterruptedException {
         goAddress(addressMozzart);
-     //  btnAllow.click();
+        //  btnAllow.click();
         btnSacuvaj.click();
 
         goAddress(addressMozzart);
+        btnAllow.click();
         setTimeReview("12");
+        btnFootbal.click();
+        clickLeague();
         Thread.sleep(3000);
         waitForPageToLoad();
         writeMatch();
