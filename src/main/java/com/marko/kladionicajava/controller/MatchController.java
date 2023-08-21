@@ -35,7 +35,7 @@ public class MatchController {
     @GetMapping()
     public String showMatches(Model model){
         List<String> optionalView = matchService.getOptionalView();
-        String timeView = "";//optionalView.get(0);
+        String timeView = optionalView.get(0);
         List<Quotas> listMatch = quotasService.getAllQuotasLastView(timeView);
         sortService.sortQuota(listMatch);
         model.addAttribute("optionalViews", optionalView);
@@ -51,6 +51,7 @@ public class MatchController {
         model.addAttribute("quotas", listMatch);
         List<String> optionalView = matchService.getOptionalView();
         model.addAttribute("optionalViews", optionalView);
+        model.addAttribute("views", selectedValue);
         return "matches";
     }
 
@@ -63,13 +64,13 @@ public class MatchController {
 
 
 
-    @GetMapping("/refresh-quota")
-    @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshQuotas * 60000}")
-    public String refreshQuota(){
-        quotasService.refreshQuotas();
-
-        return "redirect:/matches";
-    }
+//    @GetMapping("/refresh-quota")
+//    @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshQuotas * 60000}")
+//    public String refreshQuota(){
+//        quotasService.refreshQuotas();
+//
+//        return "redirect:/matches";
+//    }
 
     @GetMapping("/individual-display-match")
     public String individualDisplayMatch(@RequestParam("matchId") String matchId, Model model){

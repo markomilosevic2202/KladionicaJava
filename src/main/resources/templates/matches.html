@@ -72,18 +72,18 @@
     <hr>
     <a th:href="@{/matches/refresh-match}"
        class="btn btn-primary btn-sm mb-3">
-        1 Hours
+        Refrešuj Mečev
     </a>
     <a th:href="@{/matches/refresh-quota}"
        class="btn btn-primary btn-sm mb-3">
-        After 1Hours
+        Refrešuj Kvote
     </a>
 
 
     <form id="myForm" action="#" th:object="${time}" th:action="@{/matches/show-set-time}">
-        <select id="myDropdown" name="myDropdown"> <!-- Dodajte 'name' atribut ovde -->
-            <option value="all" th:selected="${nameColumn == 'all'}"></option>
-            <option th:each="item : ${optionalViews}" th:value="${item}" th:text="${item}"></option>
+        <select id="myDropdown" name="myDropdown">
+
+            <option th:each="item : ${optionalViews}" th:value="${item}" th:text="${item}" th:selected="${item == views}"></option>
         </select>
     </form>
 

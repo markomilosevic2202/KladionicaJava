@@ -2,6 +2,7 @@ package com.marko.kladionicajava.service;
 
 import com.marko.kladionicajava.entitiy.*;
 import com.marko.kladionicajava.page_factory.ForeignPage;
+import com.marko.kladionicajava.page_factory.MozzartPage;
 import com.marko.kladionicajava.repository.ClubNamesRepository;
 import com.marko.kladionicajava.repository.MatchRepository;
 import com.marko.kladionicajava.repository.QuotaRepository;
@@ -11,8 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.WebDriver;
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -30,12 +29,25 @@ public class MatchService {
 
 
     public void refreshShow() {
-        driver = webDriverMono.open();
-        MaxBetService maxBetService = new MaxBetService(driver);
-        List<MatchDTO> listMatchPage = maxBetService.getAllMatchesBonus(appConfigService.getAddressMaxBet(), appConfigService.getTimeReview());
-        driver.quit();
+        List<MatchDTO> listMatchPage = new ArrayList<>();
+//        try {
+//        driver = webDriverMono.open();
+//        MaxBetService maxBetService = new MaxBetService(driver);
+//        listMatchPage = maxBetService.getAllMatchesBonus(appConfigService.getAddressMaxBet(), appConfigService.getTimeReviewMaxbet());
+//        driver.quit();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         //TODO list for Mozzart and Meridian
-        List<Match> listMatchBase = matchRepository.findAll();
+        try {
+            driver = webDriverMono.open();
+            MozzartPage mozzartPage = new MozzartPage(driver);
+            listMatchPage = mozzartPage.getAllMatches(appConfigService.getAddressMozzart(), appConfigService.getTimeReviewMozzart());
+            driver.quit();
+            List<Match> listMatchBase = matchRepository.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         for (int i = 0; i < listMatchPage.size(); i++) {
             Match match = new Match();
@@ -75,7 +87,9 @@ public class MatchService {
                 match.setReview(true);
                 matchRepository.save(match);
             }
+
         }
+
         quotaRepository.deleteAllMatchHaveStarted();
         matchRepository.deleteMatchStarted();
         findPairInForeignBettingShop();
@@ -171,7 +185,7 @@ public class MatchService {
                     optionalMatch.get().setReview(true);
                 }
             }
-                matchRepository.save(optionalMatch.get());
+            matchRepository.save(optionalMatch.get());
 
         } catch (Exception e) {
             e.printStackTrace();

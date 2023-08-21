@@ -26,7 +26,7 @@ public class SettingsController {
     @GetMapping()
     public String showSettings(Model model) {
         List<Email> listReports = emailService.getEmails();
-        String timeReview = appConfig.getTimeReview();
+        String timeReview = appConfig.getTimeReviewMaxbet();
         model.addAttribute("emails", listReports);
         model.addAttribute("timeReviewModel", timeReview);
         model.addAttribute("timeRefreshMatch", appConfig.getTimeRefreshMatches());
@@ -55,7 +55,7 @@ public class SettingsController {
 
     @PostMapping("/save-time-review")
     public String saveTimeReview(@RequestParam("timeReview") String timeReview) {
-       appConfig.setTimeReview(timeReview);
+       appConfig.setTimeReviewMaxbet(timeReview);
 
         return "redirect:/settings";
     }

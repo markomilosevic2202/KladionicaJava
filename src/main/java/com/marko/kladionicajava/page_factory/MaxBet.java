@@ -27,7 +27,7 @@ public class MaxBet {
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
-    private final DateTimeFormatter baseFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+
 
 
     @FindBy(xpath = "//div[contains(text(),'Fudbal')]")
@@ -74,20 +74,7 @@ public class MaxBet {
         this.btnMaxBonus.click();
 
     }
-    public void clickClosePopup() {
-       // this.btnClosePopup.click();
 
-
-        // Definisanje JavaScript koda za pronalaženje i klik na link koji sadrži klasu "ng-binding ng-scope"
-        String jsCode = "const targetElement = Array.from(document.querySelectorAll('p')).find(element => element.textContent.includes('Max Bonus Tip Fudbal'));\n" +
-                "targetElement.click();";
-        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
-
-        // Izvršavanje JavaScript koda
-        jsExecutor.executeScript(jsCode);
-
-
-    }
 
     public void clickSlider(String hours) {
 

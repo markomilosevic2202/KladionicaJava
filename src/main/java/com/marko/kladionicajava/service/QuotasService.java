@@ -3,7 +3,6 @@ package com.marko.kladionicajava.service;
 
 import com.marko.kladionicajava.entitiy.*;
 import com.marko.kladionicajava.page_factory.ForeignPage;
-import com.marko.kladionicajava.repository.ClubNamesRepository;
 import com.marko.kladionicajava.repository.MatchRepository;
 import com.marko.kladionicajava.repository.QuotaRepository;
 import com.marko.kladionicajava.tools.MaxBetService;
@@ -76,7 +75,7 @@ public class QuotasService {
             MaxBetService maxBetService = new MaxBetService(driver);
             ForeignPage foreignPage = new ForeignPage(driver);
             List<Match> listMatchMaxbetBase = matchRepository.findAllByBettingShop(NameBetting.MAXBET);
-            List<QuotaHomeDTO> listQuotasMaxbetPage = maxBetService.getAllQuotasBonus(appConfigService.getAddressMaxBet(), appConfigService.getTimeReview());
+            List<QuotaHomeDTO> listQuotasMaxbetPage = maxBetService.getAllQuotasBonus(appConfigService.getAddressMaxBet(), appConfigService.getTimeReviewMaxbet());
             Float bet = appConfigService.getBet();
 
             for (int i = 0; i < listMatchMaxbetBase.size(); i++) {

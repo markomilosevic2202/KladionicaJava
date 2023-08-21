@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AppConfigService {
 
-    private String timeReview;
+    private String timeReviewMaxbet;
     private String addressMaxBet;
     private String addressForeign;
     private Float bet;
@@ -26,6 +26,9 @@ public class AppConfigService {
     private Integer timeRefreshMatches;
     @Value("${app.timeRefreshQuotas}")
     private Integer timeRefreshQuotas;
+    private String addressMozzart;
+    private String timeReviewMozzart;
+
 
 }
 

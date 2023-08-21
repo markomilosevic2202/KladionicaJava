@@ -52,6 +52,19 @@
         .id-input {
         width: 550px;
     }
+    #review {
+    transform: scale(2.5);
+    }
+
+    #container {
+    display: flex;
+    align-items: center; /* Vertikalno centriranje */
+    justify-content: center; /* Horizontalno centriranje */
+     height:50px;
+
+
+}
+
 
 
 
@@ -106,7 +119,7 @@
                 <td><span th:text="${#dates.format(match.dateMatch, 'HH:mm')}"></span></td>
                 <td th:text="${match.nameHome}"/>
                                 <td><a th:href="${match.linkForeign}" target="_blank" th:text="Link"></a></td>
-                <td><input type="checkbox" id="review" name="review" th:checked="${match.review}"/></td>
+                <td id="container"><input type="checkbox" id="review" name="review" th:checked="${match.review}"/></td>
                 <td>
                     <button type="submit">Save</button>
                 </td>
