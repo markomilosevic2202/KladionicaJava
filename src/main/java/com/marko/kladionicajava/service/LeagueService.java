@@ -3,6 +3,7 @@ package com.marko.kladionicajava.service;
 
 import com.marko.kladionicajava.entitiy.Email;
 import com.marko.kladionicajava.entitiy.League;
+import com.marko.kladionicajava.entitiy.Match;
 import com.marko.kladionicajava.repository.LeagueRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -54,7 +55,22 @@ public class LeagueService {
         }
     }
 
-    public void updateLeague() {
 
+    public void updateReviewStatus(String leagueId, Boolean isChecked) {
+
+        try {
+            Optional<League> optionalLeague = leagueRepository.findById(leagueId);
+            if (optionalLeague.isPresent()) {
+                if (optionalLeague.get().getReview() != isChecked) {
+                    optionalLeague.get().setReview(isChecked);
+                }
+            }
+            leagueRepository.save(optionalLeague.get());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 }
+

@@ -1,5 +1,6 @@
 package com.marko.kladionicajava.page_factory;
 
+import com.marko.kladionicajava.entitiy.League;
 import com.marko.kladionicajava.entitiy.MatchDTO;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -9,6 +10,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -85,35 +89,37 @@ public class MozzartPage {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         List<Object> matches = (List<Object>) js.executeScript(
                 "let list = document.querySelectorAll('.match.botFlex');\n" +
-                        "                        let result = [];\n" +
-                        "                        list.forEach(e=>{\n" +
-                        "                               console.log(e.querySelector('.bonus-group'));\n" +
-                        "                                                \n" +
-                        "                             if(e.querySelector('.sp-mark') === null){\n" +
-                        "                                   result.push({\n" +
-                        "                                      code: e.querySelector('.moreoddstext').innerText,\n" +
-
-                        "                                             \n" +
-                        "                                     }); }\n" +
-                        "                                              });\n" +
-                        "                        return result;");
+                        "        let result = [];\n" +
+                        "        list.forEach(e=>{\n" +
+                        "        console.log(e.querySelector('.bonus-group'));\n" +
+                        "          \n" +
+                        "        if(e.querySelector('.sp-mark') === null){\n" +
+                        "        result.push({\n" +
+                        "           code: e.querySelector('.moreoddstext').innerText,\n" +
+                        "           name: e.querySelector('.pairs').outerText.split('\\n')[0] + \" - \" + e.querySelector('.pairs').outerText.split('\\n')[1],\n" +
+                        "           time: e.querySelector('.time').outerText.slice(e.querySelector('.time').outerText.indexOf(\".\") + 2),\n" +
+                        "           date: '25.05.' \n" +
+                        "             \n" +
+                        "        }); }\n" +
+                        "        });\n" +
+                        "        return result;");
 
         List<MatchDTO> matches1 = new ArrayList<>();
         for (Object obj : matches) {
             if (obj instanceof Map) {
                 Map<String, Object> matchMap = (Map<String, Object>) obj;
-//                String date =(String) matchMap.get("date");
-//                date = date  + currentYear ;
-//                String time =(String) matchMap.get("time");
-//                LocalDate datum = LocalDate.parse(date, formatter);
-//                String dateTimeString = datum.getYear() + "-" + datum.getMonthValue() + "-" + datum.getDayOfMonth() + " " + time;
+                String date = (String) matchMap.get("date");
+                date = date + currentYear;
+                String time = (String) matchMap.get("time");
+                LocalDate datum = LocalDate.parse(date, formatter);
+                String dateTimeString = datum.getYear() + "-" + datum.getMonthValue() + "-" + datum.getDayOfMonth() + " " + time;
                 MatchDTO matchDTO = new MatchDTO();
                 matchDTO.setCode((String) matchMap.get("code"));
-//                matchDTO.setName((String) matchMap.get("name"));
-//                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                matchDTO.setName((String) matchMap.get("name"));
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
 //                try {
-//                    matchDTO.setTime(dateFormat.parse(dateTimeString));
+//                   // matchDTO.setTime(dateFormat.parse(dateTimeString));
 //                } catch (ParseException e) {
 //                    throw new RuntimeException(e);
 //                }
@@ -124,28 +130,36 @@ public class MozzartPage {
 
     }
 
-    public void clickLeague() {
-        WebElement element = driver.findElement(By.cssSelector(".main-item.active.all-active"));
-        WebElement element1 = element.findElement(By.xpath(".//span[contains(text(), 'ŠPANIJA  1')]"));
-        element1.click();
-        WebElement element2 = element.findElement(By.xpath(".//span[contains(text(), 'ITALIJA  1')]"));
-        element2.click();
+    public void clickLeague(List<League> leagues) {
+        WebElement elementParent = driver.findElement(By.cssSelector(".main-item.active.all-active"));
+        this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
+        for (int i = 0; i < leagues.size(); i++) {
+            try {
+                League league = leagues.get(i);
+                if (league.getReview()) {
+                    WebElement element = elementParent.findElement(By.xpath(".//span[contains(text(),'" + league.getNameLeague() + "')]"));
+                    if (element != null) {
+                        element.click();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+
     }
 
-    public List<MatchDTO> getAllMatches(String addressMozzart, String timeReviewMozzart) throws InterruptedException {
+    public List<MatchDTO> getAllMatches(String addressMozzart, String timeReviewMozzart, List<League> leagues) throws InterruptedException {
         goAddress(addressMozzart);
-        //  btnAllow.click();
         btnSacuvaj.click();
-
         goAddress(addressMozzart);
         btnAllow.click();
         setTimeReview("12");
         btnFootbal.click();
-        clickLeague();
+        clickLeague(leagues);
         Thread.sleep(3000);
-        waitForPageToLoad();
-        writeMatch();
-
-        return null;
+        // waitForPageToLoad();
+        return writeMatch();
     }
 }

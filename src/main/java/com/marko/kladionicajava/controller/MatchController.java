@@ -35,6 +35,9 @@ public class MatchController {
     @GetMapping()
     public String showMatches(Model model){
         List<String> optionalView = matchService.getOptionalView();
+        if(optionalView.isEmpty()){
+            optionalView.add(" - ");
+        }
         String timeView = optionalView.get(0);
         List<Quotas> listMatch = quotasService.getAllQuotasLastView(timeView);
         sortService.sortQuota(listMatch);

@@ -4,6 +4,7 @@ import com.marko.kladionicajava.entitiy.*;
 import com.marko.kladionicajava.page_factory.ForeignPage;
 import com.marko.kladionicajava.page_factory.MozzartPage;
 import com.marko.kladionicajava.repository.ClubNamesRepository;
+import com.marko.kladionicajava.repository.LeagueRepository;
 import com.marko.kladionicajava.repository.MatchRepository;
 import com.marko.kladionicajava.repository.QuotaRepository;
 import com.marko.kladionicajava.tools.MaxBetService;
@@ -24,6 +25,7 @@ public class MatchService {
     private final ClubNamesRepository clubNamesRepository;
     private final WebDriverMono webDriverMono;
     private final AppConfigService appConfigService;
+    private final LeagueRepository leagueRepository;
 
     private WebDriver driver;
 
@@ -42,7 +44,7 @@ public class MatchService {
         try {
             driver = webDriverMono.open();
             MozzartPage mozzartPage = new MozzartPage(driver);
-            listMatchPage = mozzartPage.getAllMatches(appConfigService.getAddressMozzart(), appConfigService.getTimeReviewMozzart());
+            listMatchPage = mozzartPage.getAllMatches(appConfigService.getAddressMozzart(), appConfigService.getTimeReviewMozzart(),leagueRepository.findAll());
             driver.quit();
             List<Match> listMatchBase = matchRepository.findAll();
         } catch (Exception e) {
@@ -59,7 +61,7 @@ public class MatchService {
 
             if (clubNamesRepository.existByName(hostClubNameString)) {
                 ClubName clubName = new ClubName();
-                clubName.setMaxbetName(hostClubNameString);
+                clubName.setMozzartName(hostClubNameString);
                 clubName.setMatchName(matchName);
                 clubNamesRepository.save(clubName);
             }
@@ -67,23 +69,23 @@ public class MatchService {
 
             if (clubNamesRepository.existByName(guestClubNameString)) {
                 ClubName clubName = new ClubName();
-                clubName.setMaxbetName(guestClubNameString);
+                clubName.setMozzartName(guestClubNameString);
                 clubName.setMatchName(matchName);
                 clubNamesRepository.save(clubName);
             }
 
 
-            if (matchRepository.notExistsByIdMatch(matchDTOPage.getCode())) {
+            if (matchRepository.notExistsByNameHome(matchDTOPage.getName())) {
 
-                ClubName hostClubName = clubNamesRepository.findByMaxbetName(hostClubNameString);
-                ClubName guestClubName = clubNamesRepository.findByMaxbetName(guestClubNameString);
+                ClubName hostClubName = clubNamesRepository.findByMozzartName(hostClubNameString);
+                ClubName guestClubName = clubNamesRepository.findByMozzartName(guestClubNameString);
                 match.setIdMatch(matchDTOPage.getCode());
                 match.setNameHome(matchDTOPage.getName());
                 match.setIdMatch(matchDTOPage.getCode());
                 match.setDateMatch(matchDTOPage.getTime());
                 match.setHostNameClub(hostClubName);
                 match.setGuestNameClub(guestClubName);
-                match.setBettingShop(NameBetting.MAXBET);
+                match.setBettingShop(NameBetting.MOZZART);
                 match.setReview(true);
                 matchRepository.save(match);
             }
@@ -175,7 +177,6 @@ public class MatchService {
     public void updateReview(Match matchPage) {
 
         try {
-
             Optional<Match> optionalMatch = matchRepository.findById(matchPage.getId());
 
             if (optionalMatch.isPresent()) {
@@ -190,7 +191,6 @@ public class MatchService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public List<Match> findAllMatches() {

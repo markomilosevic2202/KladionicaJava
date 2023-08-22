@@ -6,6 +6,8 @@ import com.marko.kladionicajava.entitiy.Match;
 import com.marko.kladionicajava.service.LeagueService;
 import com.marko.kladionicajava.service.MatchService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +32,14 @@ public class LeagueController {
     }
 
     @PostMapping("/updateReviewStatus")
-    public String updateReviewStatus() {
-        leagueService.updateLeague();
-        return null;
+    @ResponseBody
+    public String updateReviewStatus(@RequestParam String leagueId, @RequestParam Boolean isChecked) {
+        try {
+            leagueService.updateReviewStatus(leagueId, isChecked);
+        } catch (Exception e) {
+           e.printStackTrace();
+        }
+        return "redirect:/league";
     }
 
     @GetMapping("/deleteLeague")

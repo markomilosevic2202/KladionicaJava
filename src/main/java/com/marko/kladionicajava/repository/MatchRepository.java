@@ -31,8 +31,8 @@ public interface MatchRepository extends JpaRepository<Match, String> {
     @Query("UPDATE Match m SET m.linkForeign = :newLink WHERE m = :match")
     void updateMatchLink(@Param("match") Match match, @Param("newLink") String newLink);
 
-    @Query("select (count(m) = 0) from Match m where m.idMatch = ?1")
-    Boolean notExistsByIdMatch(String idMatch);
+    @Query("select (count(m) = 0) from Match m where m.nameHome = ?1")
+    Boolean notExistsByNameHome(String nameHome);
 
     @Query("select m from Match m where m.idMatch = ?1")
     Optional<Match> findMatchByIdMatch(String IdMatch);
