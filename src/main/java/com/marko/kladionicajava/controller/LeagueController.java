@@ -32,7 +32,6 @@ public class LeagueController {
     }
 
     @PostMapping("/updateReviewStatus")
-    @ResponseBody
     public String updateReviewStatus(@RequestParam String leagueId, @RequestParam Boolean isChecked) {
         try {
             leagueService.updateReviewStatus(leagueId, isChecked);

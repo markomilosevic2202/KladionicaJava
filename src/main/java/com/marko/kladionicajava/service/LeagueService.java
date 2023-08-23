@@ -34,8 +34,9 @@ public class LeagueService {
     public void createLeague(League league) {
 
         try {
-            Optional<League> optionalLeague = leagueRepository.existByLeagueName(league.getNameLeague());
+            Optional<League> optionalLeague = leagueRepository.existByLeagueName(league.getNameLeague().trim());
             if (optionalLeague.isEmpty()) {
+                league.setNameLeague(league.getNameLeague().trim());
                 league.setReview(true);
                 leagueRepository.save(league);
             }

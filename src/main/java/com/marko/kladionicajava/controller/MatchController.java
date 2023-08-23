@@ -58,22 +58,22 @@ public class MatchController {
         return "matches";
     }
 
-    @GetMapping("/refresh-match")
-    @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshMatches * 60000}")
-    public String refreshMatches(){
-        matchService.refreshShow();
-        return "redirect:/matches";
-    }
-
-
-
-//    @GetMapping("/refresh-quota")
-//    @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshQuotas * 60000}")
-//    public String refreshQuota(){
-//        quotasService.refreshQuotas();
-//
+//    @GetMapping("/refresh-match")
+//    @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshMatches * 60000}")
+//    public String refreshMatches(){
+//        matchService.refreshShow();
 //        return "redirect:/matches";
 //    }
+
+
+
+    @GetMapping("/refresh-quota")
+    @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshQuotas * 60000}")
+    public String refreshQuota(){
+        quotasService.refreshQuotas();
+
+        return "redirect:/matches";
+    }
 
     @GetMapping("/individual-display-match")
     public String individualDisplayMatch(@RequestParam("matchId") String matchId, Model model){

@@ -12,6 +12,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 public class QuotaHomeDTO {
 
+    private String name;
     private String code;
     private String one;
     private String two;

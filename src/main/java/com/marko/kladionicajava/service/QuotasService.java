@@ -3,6 +3,8 @@ package com.marko.kladionicajava.service;
 
 import com.marko.kladionicajava.entitiy.*;
 import com.marko.kladionicajava.page_factory.ForeignPage;
+import com.marko.kladionicajava.page_factory.MozzartPage;
+import com.marko.kladionicajava.repository.LeagueRepository;
 import com.marko.kladionicajava.repository.MatchRepository;
 import com.marko.kladionicajava.repository.QuotaRepository;
 import com.marko.kladionicajava.tools.MaxBetService;
@@ -25,6 +27,7 @@ public class QuotasService {
     private final MatchRepository matchRepository;
     private final WebDriverMono webDriverMono;
     private final AppConfigService appConfigService;
+    private final LeagueRepository leagueRepository;
     private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
     private WebDriver driver;
 
@@ -42,50 +45,59 @@ public class QuotasService {
 
     public Quotas setQuotas(QuotaForeignDTO quotaForeignDTO, QuotaHomeDTO quotaHomeDTO, Match match, String timeView, Float bet) {
         Quotas quotas = new Quotas();
-        quotas.setMatches(match);
-        quotas.setQuotaOne(Float.valueOf(decimalFormat.format(Float.parseFloat(quotaHomeDTO.getOne()))));
-        quotas.setQuotaTwo(Float.valueOf(decimalFormat.format(Float.parseFloat(quotaHomeDTO.getTwo()))));
-        quotas.setQuotaX(Float.valueOf(decimalFormat.format(Float.parseFloat(quotaHomeDTO.getX()))));
-        quotas.setDifferenceOne(Float.valueOf(decimalFormat.format(quotaForeignDTO.getTwoXQuota())));
-        quotas.setDifferenceTwo(Float.valueOf(decimalFormat.format(quotaForeignDTO.getOneXQuota())));
-        quotas.setDifferenceX(Float.valueOf(decimalFormat.format(quotaForeignDTO.getOneTwoQuota())));
-        quotas.setBetOne(Float.valueOf(decimalFormat.format(quotaForeignDTO.getTwoXBet())));
-        quotas.setBetTwo(Float.valueOf(decimalFormat.format(quotaForeignDTO.getOneXBet())));
-        quotas.setBetX(Float.valueOf(decimalFormat.format(quotaForeignDTO.getOneTwoQuota())));
-        quotas.setProfitOne(Float.valueOf(decimalFormat.format(recalculateProfit(quotas.getQuotaOne(), quotas.getDifferenceOne(), bet))));
-        quotas.setProfitTwo(Float.valueOf(decimalFormat.format(recalculateProfit(quotas.getQuotaTwo(), quotas.getDifferenceTwo(), bet))));
-        quotas.setProfitX(Float.valueOf(decimalFormat.format(recalculateProfit(quotas.getQuotaX(), quotas.getDifferenceX(), bet))));
-        quotas.setTimeView(timeView);
-        return quotas;
+        try {
+            quotas.setMatches(match);
+            quotas.setQuotaOne(Float.valueOf(decimalFormat.format(Float.parseFloat(quotaHomeDTO.getOne()))));
+            quotas.setQuotaTwo(Float.valueOf(decimalFormat.format(Float.parseFloat(quotaHomeDTO.getTwo()))));
+            quotas.setQuotaX(Float.valueOf(decimalFormat.format(Float.parseFloat(quotaHomeDTO.getX()))));
+            quotas.setDifferenceOne(Float.valueOf(decimalFormat.format(quotaForeignDTO.getTwoXQuota())));
+            quotas.setDifferenceTwo(Float.valueOf(decimalFormat.format(quotaForeignDTO.getOneXQuota())));
+            quotas.setDifferenceX(Float.valueOf(decimalFormat.format(quotaForeignDTO.getOneTwoQuota())));
+            quotas.setBetOne(Float.valueOf(decimalFormat.format(quotaForeignDTO.getTwoXBet())));
+            quotas.setBetTwo(Float.valueOf(decimalFormat.format(quotaForeignDTO.getOneXBet())));
+            quotas.setBetX(Float.valueOf(decimalFormat.format(quotaForeignDTO.getOneTwoQuota())));
+            quotas.setProfitOne(Float.valueOf(decimalFormat.format(recalculateProfit(quotas.getQuotaOne(), quotas.getDifferenceOne(), bet))));
+            quotas.setProfitTwo(Float.valueOf(decimalFormat.format(recalculateProfit(quotas.getQuotaTwo(), quotas.getDifferenceTwo(), bet))));
+            quotas.setProfitX(Float.valueOf(decimalFormat.format(recalculateProfit(quotas.getQuotaX(), quotas.getDifferenceX(), bet))));
+            quotas.setTimeView(timeView);
 
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return quotas;
     }
 
     public static Float recalculateProfit(Float homeQuota, Float foreignQuota, Float bet) {
 
-        return (bet * homeQuota / (100 / (homeQuota * 100 - 100) + 1)) - (bet * homeQuota / foreignQuota) ;
+        return (bet * homeQuota / (100 / (homeQuota * 100 - 100) + 1)) - (bet * homeQuota / foreignQuota);
 
     }
+
     public void refreshQuotas() {
         try {
-
             Date currentDate = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM. HH:mm");
             String timeView = dateFormat.format(currentDate);
             driver = webDriverMono.open();
-            MaxBetService maxBetService = new MaxBetService(driver);
+            MozzartPage mozzartPage = new MozzartPage(driver);
             ForeignPage foreignPage = new ForeignPage(driver);
-            List<Match> listMatchMaxbetBase = matchRepository.findAllByBettingShop(NameBetting.MAXBET);
-            List<QuotaHomeDTO> listQuotasMaxbetPage = maxBetService.getAllQuotasBonus(appConfigService.getAddressMaxBet(), appConfigService.getTimeReviewMaxbet());
+            List<Match> listMatchMozzartBase = matchRepository.findAllByBettingShop(NameBetting.MOZZART);
+            List<QuotaHomeDTO> listQuotasMozzartPage = mozzartPage.getAllQuotas(appConfigService.getAddressMozzart(), appConfigService.getTimeReviewMozzart(), leagueRepository.findAll());
             Float bet = appConfigService.getBet();
 
-            for (int i = 0; i < listMatchMaxbetBase.size(); i++) {
-                Match match = listMatchMaxbetBase.get(i);
-                if (match.getReview()) {
+            for (int i = 0; i < listMatchMozzartBase.size(); i++) {
+                Match match = listMatchMozzartBase.get(i);
+                try {
+                    QuotaHomeDTO quotaHomeDTO = findMatchByNameMatch(listQuotasMozzartPage, match.getNameHome());
+                    if (match.getReview() && quotaHomeDTO.getOne() != null ) {
                     QuotaForeignDTO quotaForeignDTO = foreignPage.getQuotaForeign(match.getLinkForeign());
-                    QuotaHomeDTO quotaHomeDTO = findMatchByCode(listQuotasMaxbetPage, match.getIdMatch());
                     if (match != null && quotaHomeDTO != null && quotaForeignDTO != null) {
                         quotaRepository.save(setQuotas(quotaForeignDTO, quotaHomeDTO, match, timeView, bet));
                     }
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
             }
         } catch (Exception e) {
@@ -96,9 +108,9 @@ public class QuotasService {
 
     }
 
-    public static QuotaHomeDTO findMatchByCode(List<QuotaHomeDTO> listMatchMaxbetBase, String searchCode) {
-        for (QuotaHomeDTO quotaHomeDTO : listMatchMaxbetBase) {
-            if (quotaHomeDTO.getCode().equals(searchCode)) {
+    public static QuotaHomeDTO findMatchByNameMatch(List<QuotaHomeDTO> listMatchMozzartBase, String searchNameMatch) {
+        for (QuotaHomeDTO quotaHomeDTO : listMatchMozzartBase) {
+            if (quotaHomeDTO.getName().equals(searchNameMatch)) {
                 return quotaHomeDTO;
             }
         }
