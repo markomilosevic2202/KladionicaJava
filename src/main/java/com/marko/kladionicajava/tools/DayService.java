@@ -1,12 +1,12 @@
-package com.marko.kladionicajava.controller;
+package com.marko.kladionicajava.tools;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
+import java.util.Date;
 
-public class sfdsf {
-    public static LocalDate getNextDayInWeek(String dayOfWeek) {
-        // Konvertujemo uneti dan u nedelji na engleski jezik
+public class DayService {
+    public static String getNextDayInWeek(String dayOfWeek) {
+
         String englishDayOfWeek = convertToEnglishDay(dayOfWeek);
 
         DayOfWeek inputDay = DayOfWeek.valueOf(englishDayOfWeek.toUpperCase());
@@ -15,37 +15,27 @@ public class sfdsf {
         int daysUntilInputDay = (inputDay.getValue() - today.getDayOfWeek().getValue() + 7) % 7;
         LocalDate nextDay = today.plusDays(daysUntilInputDay);
 
-        return nextDay;
+        return String.valueOf(nextDay);
     }
 
     public static String convertToEnglishDay(String day) {
         switch (day.toLowerCase()) {
-            case "ponedeljak":
+            case "pon.":
                 return "MONDAY";
-            case "utorak":
+            case "uto.":
                 return "TUESDAY";
-            case "sreda":
+            case "sre.":
                 return "WEDNESDAY";
-            case "cetvrtak":
+            case "čet.":
                 return "THURSDAY";
-            case "petak":
+            case "pet.":
                 return "FRIDAY";
-            case "subota":
+            case "sub.":
                 return "SATURDAY";
-            case "nedelja":
+            case "ned.":
                 return "SUNDAY";
             default:
                 throw new IllegalArgumentException("Nepoznat dan: " + day);
         }
     }
-
-    public static void main(String[] args) {
-        String inputDayOfWeek = "sreda"; // Možete promeniti na željeni dan
-        LocalDate nextDay = getNextDayInWeek(inputDayOfWeek);
-
-        System.out.println("Prvi sledeći " + inputDayOfWeek + " je: " + nextDay);
-    }
 }
-
-
-

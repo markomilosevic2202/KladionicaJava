@@ -3,7 +3,7 @@ package com.marko.kladionicajava.page_factory;
 import com.marko.kladionicajava.entitiy.League;
 import com.marko.kladionicajava.entitiy.MatchDTO;
 import com.marko.kladionicajava.entitiy.QuotaHomeDTO;
-import com.marko.kladionicajava.entitiy.Quotas;
+import com.marko.kladionicajava.tools.DayService;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -14,6 +14,9 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.text.ParseException;
 
@@ -21,8 +24,11 @@ import java.time.Duration;
 import java.time.LocalDate;
 
 import java.util.ArrayList;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 
 public class MozzartPage {
     private final int currentYear = LocalDate.now().getYear();
@@ -30,6 +36,8 @@ public class MozzartPage {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     private WebDriver driver;
+
+    private DayService dayService;
 
     public MozzartPage(WebDriver driver) {
         this.driver = driver;
@@ -76,7 +84,7 @@ public class MozzartPage {
         WebElement scrollBar = driver.findElement(By.xpath("//*[contains(@class, 'bar-bar vb vb-visible')]")).findElement(By.xpath("div[1]"));
         Actions actions = new Actions(driver);
         btnFootbal1.click();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 30; i++) {
             actions.moveToElement(scrollBar);
             actions.sendKeys(org.openqa.selenium.Keys.ARROW_DOWN);
             actions.perform();
@@ -87,24 +95,26 @@ public class MozzartPage {
     public List<MatchDTO> writeMatch() {
         List<Object> matchesPage = getMatchesPage();
         List<MatchDTO> matches1 = new ArrayList<>();
+        dayService = new DayService();
         for (Object obj : matchesPage) {
             if (obj instanceof Map) {
                 Map<String, Object> matchMap = (Map<String, Object>) obj;
-                String date = (String) matchMap.get("date");
-                date = date + currentYear;
-                String time = (String) matchMap.get("time");
-                LocalDate datum = LocalDate.parse(date, formatter);
-                String dateTimeString = datum.getYear() + "-" + datum.getMonthValue() + "-" + datum.getDayOfMonth() + " " + time;
+                String date = dayService.getNextDayInWeek((String) matchMap.get("date"));
+                String  timeString = (String) matchMap.get("time");
+                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+
                 MatchDTO matchDTO = new MatchDTO();
                 matchDTO.setCode((String) matchMap.get("code"));
                 matchDTO.setName((String) matchMap.get("name"));
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
                 try {
-                    matchDTO.setTime(dateFormat.parse(dateTimeString));
+                    matchDTO.setTime(dateFormat.parse(date + " " + timeString));
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
+
                 matches1.add(matchDTO);
             }
         }
@@ -203,19 +213,19 @@ public class MozzartPage {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         return (List<Object>) js.executeScript(
                 "let list = document.querySelectorAll('.match.botFlex');\n" +
-                        "        let result = [];\n" +
-                        "        list.forEach(e=>{\n" +
-                        "        console.log(e.querySelector('.bonus-group'));\n" +
-                        "          \n" +
-                        "        if(e.querySelector('.sp-mark') === null){\n" +
+                        "let result = [];\n" +
+                        "list.forEach(e => {\n" +
+                        "    console.log(e.querySelector('.bonus-group'));\n" +
+                        "    if (e.querySelector('.sp-mark') === null) {\n" +
                         "        result.push({\n" +
-                        "           code: e.querySelector('.moreoddstext').innerText,\n" +
-                        "           name: e.querySelector('.pairs').outerText.split('\\n')[0] + \" - \" + e.querySelector('.pairs').outerText.split('\\n')[1],\n" +
-                        "           time: e.querySelector('.time').outerText.slice(e.querySelector('.time').outerText.indexOf(\".\") + 2),\n" +
-                        "           date: '23.08.' \n" +
-                        "             \n" +
-                        "        }); }\n" +
+                        "            code: e.querySelector('.moreoddstext').innerText,\n" +
+                        "            name: e.querySelector('.pairs').outerText.split('\\n')[0] + \" - \" + e.querySelector('.pairs').outerText.split('\\n')[1],\n" +
+                        "            time: e.querySelector('.time').outerText.slice(e.querySelector('.time').outerText.indexOf(\".\") + 2),\n" +
+                        "            date: e.querySelector('.time').outerText.slice(0, 4),\n" + // Promenjeno ovde
                         "        });\n" +
-                        "        return result;");
+                        "    }\n" +
+                        "});\n" +
+                        "return result;"
+        );
     }
 }

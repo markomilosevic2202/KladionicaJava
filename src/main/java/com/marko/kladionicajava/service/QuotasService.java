@@ -7,7 +7,6 @@ import com.marko.kladionicajava.page_factory.MozzartPage;
 import com.marko.kladionicajava.repository.LeagueRepository;
 import com.marko.kladionicajava.repository.MatchRepository;
 import com.marko.kladionicajava.repository.QuotaRepository;
-import com.marko.kladionicajava.tools.MaxBetService;
 import com.marko.kladionicajava.tools.WebDriverMono;
 import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.WebDriver;

@@ -7,7 +7,6 @@ import com.marko.kladionicajava.repository.ClubNamesRepository;
 import com.marko.kladionicajava.repository.LeagueRepository;
 import com.marko.kladionicajava.repository.MatchRepository;
 import com.marko.kladionicajava.repository.QuotaRepository;
-import com.marko.kladionicajava.tools.MaxBetService;
 import com.marko.kladionicajava.tools.WebDriverMono;
 import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.WebDriver;
@@ -26,6 +25,7 @@ public class MatchService {
     private final WebDriverMono webDriverMono;
     private final AppConfigService appConfigService;
     private final LeagueRepository leagueRepository;
+
 
     private WebDriver driver;
 

@@ -58,12 +58,12 @@ public class MatchController {
         return "matches";
     }
 
-//    @GetMapping("/refresh-match")
-//    @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshMatches * 60000}")
-//    public String refreshMatches(){
-//        matchService.refreshShow();
-//        return "redirect:/matches";
-//    }
+    @GetMapping("/refresh-match")
+    @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshMatches * 60000}")
+    public String refreshMatches(){
+        matchService.refreshShow();
+        return "redirect:/matches";
+    }
 
 
 
