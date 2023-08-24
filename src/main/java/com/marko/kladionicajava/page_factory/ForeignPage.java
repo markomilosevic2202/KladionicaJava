@@ -3,7 +3,6 @@ package com.marko.kladionicajava.page_factory;
 
 import com.marko.kladionicajava.entitiy.QuotaForeignDTO;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -11,7 +10,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 import java.util.List;
 
@@ -39,14 +37,14 @@ public class ForeignPage {
     }
 
     public void goAddress(String address) {
-        this.driver.get(address);
+        try {
+            this.driver.get(address);
+        }catch (Exception e){
+           // e.printStackTrace();
+        }
     }
 
-//    public void inputSearch(String homeClubName, String foreignClubName) {
-//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
-//        inpSearch.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
-//        inpSearch.sendKeys(homeClubName + " v " + foreignClubName);
-//    }
+
 
     public void clickFirstMatchOnFindList(String url) throws InterruptedException {
         new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(@class, 'styles_searchItem__link__t5gOP biab_search-item-wrapper')]")));
@@ -59,9 +57,15 @@ public class ForeignPage {
     }
 
     public void clickButtonDoubleChance() {
-        new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(),'Double Chance')]")));
-        //btnDoubleChance.click();
-        driver.findElement(By.xpath("//li//*[text()='Double Chance']/ancestor::li")).findElement(By.xpath("a")).click();
+       try {
+           new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(),'Double Chance')]")));
+           //btnDoubleChance.click();
+           driver.findElement(By.xpath("//li//*[text()='Double Chance']/ancestor::li")).findElement(By.xpath("a")).click();
+       }catch (Exception e){
+          // e.printStackTrace();
+           System.out.println("********************************************* Not Found Double Chance *****************************************");
+       }
+
     }
 
     public String getAddress() {
@@ -73,21 +77,20 @@ public class ForeignPage {
     public String findLink(String homeClubName, String foreignClubName, String url) {
         try {
             if(homeClubName != null && foreignClubName!= null ){
-            this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
-            //inputSearch(homeClubName, foreignClubName);
+            this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
             String url2 = " " + homeClubName + " v " + foreignClubName;
             url2 = url2.replace(" ", "+");
             goAddress(url + url2);
             clickFirstMatchOnFindList(url + url2);
-
             clickButtonDoubleChance();
             Thread.sleep(1000);
-            return getAddress();}
-            return null;
+            }
+
         } catch (Exception e) {
-            e.printStackTrace();
+
             return null;
         }
+        return getAddress();
     }
 
 

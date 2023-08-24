@@ -82,7 +82,7 @@
     <hr>
     <a th:href="@{/league/add-league}" class="btn btn-primary btn-sm mb-3">Dodaj Ligu</a>
     <a th:href="@{/matches/refresh-match}"
-       class="btn btn-primary btn-sm mb-3">
+       class="btn btn-primary btn-sm mb-3" onclick="if (!(confirm('Da li sigurno želite da refrešujete mečeve?'))) return false ">
         Refrešuj Mečev
     </a>
 

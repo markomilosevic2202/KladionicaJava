@@ -44,7 +44,7 @@ public class MatchService {
         try {
             driver = webDriverMono.open();
             MozzartPage mozzartPage = new MozzartPage(driver);
-            listMatchPage = mozzartPage.getAllMatches(appConfigService.getAddressMozzart(), appConfigService.getTimeReviewMozzart(),leagueRepository.findAll());
+            listMatchPage = mozzartPage.getAllMatches(appConfigService.getAddressMozzart(), appConfigService.getTimeReviewMozzart(), leagueRepository.findAll());
             driver.quit();
             List<Match> listMatchBase = matchRepository.findAll();
         } catch (Exception e) {
@@ -91,11 +91,15 @@ public class MatchService {
             }
 
         }
+        try {
+            quotaRepository.deleteAllMatchHaveStarted();
+            matchRepository.deleteMatchStarted();
+            findPairInForeignBettingShop();
+            // matchRepository.deleteMatchByLinkForeignNull();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        quotaRepository.deleteAllMatchHaveStarted();
-        matchRepository.deleteMatchStarted();
-        findPairInForeignBettingShop();
-        // matchRepository.deleteMatchByLinkForeignNull();
     }
 
 

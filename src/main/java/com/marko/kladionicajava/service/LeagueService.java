@@ -20,7 +20,7 @@ public class LeagueService {
 
     public List<League> getAllLeague() {
         try {
-            return leagueRepository.findAll();
+            return leagueRepository.findAllLeague();
 
         } catch (Exception e) {
 

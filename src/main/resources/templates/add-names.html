@@ -104,6 +104,11 @@
     });
     </script>
 
+<a th:href="@{/matches/refresh-match}"
+   class="btn btn-primary btn-sm mb-3 select" onclick="if (!(confirm('Da li sigurno želite da refrešujete mečeve?'))) return false ">
+    Refrešuj Mečev
+</a>
+
 
 <table class="table">
     <thead class="table-dark">

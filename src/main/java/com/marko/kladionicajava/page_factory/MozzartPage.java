@@ -11,21 +11,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.text.ParseException;
-
 import java.time.Duration;
-import java.time.LocalDate;
-
 import java.util.ArrayList;
-
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -63,15 +55,21 @@ public class MozzartPage {
             this.driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
             this.driver.get(address);
         } catch (Exception e) {
-            e.printStackTrace();
-            this.driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
+            System.out.println("************************************* Exception Address *********************************************");
+           // this.driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
         }
         this.driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
     }
 
     public void setTimeReview(String hours) {
 
-        driver.findElement(By.xpath("//li[contains(text(),'3 dana')]")).click();
+        if(hours.equals("1")) {
+            driver.findElement(By.xpath("//li[contains(text(),'Danas')]")).click();
+        }
+
+        if(hours.equals("3")) {
+            driver.findElement(By.xpath("//li[contains(text(),'3 dana')]")).click();
+        }
 
 //        String jsCode = "let element = document.querySelector('li:contains(\"tri dana\")');\n" +
 //                "element.click();";
@@ -84,7 +82,7 @@ public class MozzartPage {
         WebElement scrollBar = driver.findElement(By.xpath("//*[contains(@class, 'bar-bar vb vb-visible')]")).findElement(By.xpath("div[1]"));
         Actions actions = new Actions(driver);
         btnFootbal1.click();
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 150; i++) {
             actions.moveToElement(scrollBar);
             actions.sendKeys(org.openqa.selenium.Keys.ARROW_DOWN);
             actions.perform();
@@ -146,8 +144,9 @@ public class MozzartPage {
         WebElement elementParent = driver.findElement(By.cssSelector(".main-item.active.all-active"));
         this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0,500));
         for (int i = 0; i < leagues.size(); i++) {
+            League league = leagues.get(i);
             try {
-                League league = leagues.get(i);
+
                 if (league.getReview()) {
                     WebElement element = elementParent.findElement(By.xpath(".//span[contains(text(),'" + league.getNameLeague() + "')]"));
                     if (element != null) {
@@ -155,7 +154,7 @@ public class MozzartPage {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("************************** Not found league: " + league.getNameLeague() + " **********************************");;
             }
         }
         this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
@@ -166,9 +165,8 @@ public class MozzartPage {
         try {
             goAddress(addressMozzart);
             btnSacuvaj.click();
-//            goAddress(addressMozzart);
             btnAllow.click();
-            setTimeReview("12");
+            setTimeReview(timeReviewMozzart);
             btnFootbal.click();
             clickLeague(leagues);
             Thread.sleep(3000);

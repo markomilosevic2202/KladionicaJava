@@ -15,5 +15,6 @@ public interface LeagueRepository extends JpaRepository<League, String> {
     @Query("select l from League l where l.nameLeague = ?1")
     Optional<League> existByLeagueName(String nameLeague);
 
-
+    @Query("select l from League l ORDER BY l.nameLeague")
+    List<League> findAllLeague();
 }

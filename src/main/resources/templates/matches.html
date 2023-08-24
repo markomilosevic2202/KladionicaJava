@@ -54,6 +54,8 @@
 
 
 
+
+
     </style>
 
 
@@ -108,11 +110,11 @@
     <table class="table table-bordered table-striped">
         <thead class="table-dark">
         <tr>
-            <th>Sifra</th>
+            <th>Broj</th>
             <th>Kladionica</th>
             <th>Datum</th>
             <th>Vreme</th>
-            <th>Timovi</th>
+            <th class="timovi">Timovi</th>
             <th>1 </th>
             <th>X-2 </th>
             <th>Ulog</th>
@@ -133,8 +135,7 @@
 
         <tbody>
         <tr th:each="quota, index : ${quotas}">
-
-            <td th:text="${quota.matches.idMatch}"/>
+            <td th:text="${index.index + 1}"/></td>
             <td th:text="${quota.matches.bettingShop.name().substring(0)}"/>
             <td>
                 <span th:text="${#dates.format(quota.matches.dateMatch, 'dd.MM.yyyy.')}"></span>
