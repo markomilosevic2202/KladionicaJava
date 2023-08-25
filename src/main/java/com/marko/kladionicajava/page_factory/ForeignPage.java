@@ -57,14 +57,14 @@ public class ForeignPage {
     }
 
     public void clickButtonDoubleChance() {
-       try {
+
            new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(),'Double Chance')]")));
            //btnDoubleChance.click();
            driver.findElement(By.xpath("//li//*[text()='Double Chance']/ancestor::li")).findElement(By.xpath("a")).click();
-       }catch (Exception e){
-          // e.printStackTrace();
-           System.out.println("********************************************* Not Found Double Chance *****************************************");
-       }
+//       }catch (Exception e){
+//          // e.printStackTrace();
+//           System.out.println("********************************************* Not Found Double Chance *****************************************");
+//       }
 
     }
 

@@ -65,16 +65,11 @@ public class MozzartPage {
 
         if(hours.equals("1")) {
             driver.findElement(By.xpath("//li[contains(text(),'Danas')]")).click();
-        }
-
-        if(hours.equals("3")) {
+        } else  {
             driver.findElement(By.xpath("//li[contains(text(),'3 dana')]")).click();
         }
 
-//        String jsCode = "let element = document.querySelector('li:contains(\"tri dana\")');\n" +
-//                "element.click();";
-//        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
-//        jsExecutor.executeScript(jsCode);
+
     }
 
     public void waitForPageToLoad() throws InterruptedException {
@@ -82,7 +77,7 @@ public class MozzartPage {
         WebElement scrollBar = driver.findElement(By.xpath("//*[contains(@class, 'bar-bar vb vb-visible')]")).findElement(By.xpath("div[1]"));
         Actions actions = new Actions(driver);
         btnFootbal1.click();
-        for (int i = 0; i < 150; i++) {
+        for (int i = 0; i < 10; i++) {
             actions.moveToElement(scrollBar);
             actions.sendKeys(org.openqa.selenium.Keys.ARROW_DOWN);
             actions.perform();
@@ -99,14 +94,10 @@ public class MozzartPage {
                 Map<String, Object> matchMap = (Map<String, Object>) obj;
                 String date = dayService.getNextDayInWeek((String) matchMap.get("date"));
                 String  timeString = (String) matchMap.get("time");
-                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-
-
                 MatchDTO matchDTO = new MatchDTO();
                 matchDTO.setCode((String) matchMap.get("code"));
                 matchDTO.setName((String) matchMap.get("name"));
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
                 try {
                     matchDTO.setTime(dateFormat.parse(date + " " + timeString));
                 } catch (ParseException e) {
@@ -119,7 +110,6 @@ public class MozzartPage {
         return matches1;
 
     }
-
 
     public List<QuotaHomeDTO> writeQuotas() {
 
@@ -146,7 +136,6 @@ public class MozzartPage {
         for (int i = 0; i < leagues.size(); i++) {
             League league = leagues.get(i);
             try {
-
                 if (league.getReview()) {
                     WebElement element = elementParent.findElement(By.xpath(".//span[contains(text(),'" + league.getNameLeague() + "')]"));
                     if (element != null) {
@@ -154,7 +143,7 @@ public class MozzartPage {
                     }
                 }
             } catch (Exception e) {
-                System.out.println("************************** Not found league: " + league.getNameLeague() + " **********************************");;
+                System.out.println("************************** Not found league: " + league.getNameLeague() + " **********************************");
             }
         }
         this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));

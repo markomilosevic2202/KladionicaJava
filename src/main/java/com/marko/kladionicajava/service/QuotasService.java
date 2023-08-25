@@ -89,7 +89,7 @@ public class QuotasService {
                 Match match = listMatchMozzartBase.get(i);
                 try {
                     QuotaHomeDTO quotaHomeDTO = findMatchByNameMatch(listQuotasMozzartPage, match.getNameHome());
-                    if (match.getReview() && quotaHomeDTO.getOne() != null ) {
+                    if (match.getReview()) {
                     QuotaForeignDTO quotaForeignDTO = foreignPage.getQuotaForeign(match.getLinkForeign());
                     if (match != null && quotaHomeDTO != null && quotaForeignDTO != null) {
                         quotaRepository.save(setQuotas(quotaForeignDTO, quotaHomeDTO, match, timeView, bet));

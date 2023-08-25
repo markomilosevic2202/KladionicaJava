@@ -36,7 +36,7 @@ file:
 
 app:
   timeReviewMaxbet: 12
-  timeReviewMozzart: 1
+  timeReviewMozzart: 3
   addressMaxBet: 'https://www.maxbet.rs/ibet-web-client/#/home#top'
   addressForeign: 'https://www.orbitxch.com/customer/inplay/highlights?search='
   addressMozzart: 'https://www.mozzartbet.com/sr/kladjenje-2018#/?sid=1'
