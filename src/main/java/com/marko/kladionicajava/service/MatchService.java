@@ -112,9 +112,17 @@ public class MatchService {
             for (int i = 0; i < list.size(); i++) {
                 try {
                     Match match = list.get(i);
-                    matchRepository.updateMatchLink(match, foreignPage.findLink(match.getHostNameClub().getForeignName(),
-                            match.getGuestNameClub().getForeignName(),
-                            appConfigService.getAddressForeign()));
+                    if(match.getHostNameClub().getForeignName() != null &&  match.getGuestNameClub().getForeignName() != null) {
+                        String link = foreignPage.findLink(match.getHostNameClub().getForeignName(),
+                                match.getGuestNameClub().getForeignName(),
+                                appConfigService.getAddressForeign());
+                        if (link != null && link.contains("www.orbitxch.com")) {
+                            matchRepository.updateMatchLink(match, link);
+                        }
+                    }
+                    else{
+                        System.out.println("Name is not complete");
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

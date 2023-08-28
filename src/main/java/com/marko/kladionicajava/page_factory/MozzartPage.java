@@ -39,7 +39,10 @@ public class MozzartPage {
     @FindBy(xpath = "//button[contains(text(),'Sa')]")
     WebElement btnSacuvaj;
     @FindBy(xpath = "//button[contains(text(),'Cancel')]")
-    WebElement btnAllow;
+    WebElement btnCancel;
+
+    @FindBy(xpath = "//*[contains(@class, 'clear-button')]")
+    WebElement btnX;
 
     @FindBy(xpath = "//span[contains(text(),'Fudbal')]")
     WebElement btnFootbal;
@@ -77,7 +80,7 @@ public class MozzartPage {
         WebElement scrollBar = driver.findElement(By.xpath("//*[contains(@class, 'bar-bar vb vb-visible')]")).findElement(By.xpath("div[1]"));
         Actions actions = new Actions(driver);
         btnFootbal1.click();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 50; i++) {
             actions.moveToElement(scrollBar);
             actions.sendKeys(org.openqa.selenium.Keys.ARROW_DOWN);
             actions.perform();
@@ -153,8 +156,11 @@ public class MozzartPage {
     public void setPage(String addressMozzart, String timeReviewMozzart, List<League> leagues) {
         try {
             goAddress(addressMozzart);
+            this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+            btnX.click();
             btnSacuvaj.click();
-            btnAllow.click();
+            btnCancel.click();
+            this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
             setTimeReview(timeReviewMozzart);
             btnFootbal.click();
             clickLeague(leagues);
