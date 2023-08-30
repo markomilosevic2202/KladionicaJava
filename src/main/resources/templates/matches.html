@@ -47,16 +47,19 @@
             margin-top: 20px;
 
         }
+          .liga {
+            width: 170px;
+
+        }
+         .timovi {
+            width: 280px;
+
+        }
         .table .shaded-column {
         background-color: #f2f2f2;
     }
 
-
-
-
-
-
-    </style>
+ </style>
 
 
     <title>Matches</title>
@@ -102,16 +105,11 @@
 
 
 
-
-
-
-
-
     <table class="table table-bordered table-striped">
         <thead class="table-dark">
         <tr>
             <th>Broj</th>
-            <th>Kladionica</th>
+            <th class="liga">Liga</th>
             <th>Datum</th>
             <th>Vreme</th>
             <th class="timovi">Timovi</th>
@@ -136,7 +134,11 @@
         <tbody>
         <tr th:each="quota, index : ${quotas}">
             <td th:text="${index.index + 1}"/></td>
-            <td th:text="${quota.matches.bettingShop.name().substring(0)}"/>
+            <td>
+                <a th:href="@{/matches/open-league(league=${quota.matches.league})}">
+                    <span th:text="${quota.matches.league}"></span>
+                </a>
+            </td>
             <td>
                 <span th:text="${#dates.format(quota.matches.dateMatch, 'dd.MM.yyyy.')}"></span>
             </td>

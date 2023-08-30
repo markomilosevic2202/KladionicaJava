@@ -28,6 +28,9 @@ public class AppConfigService {
     private Integer timeRefreshQuotas;
     private String addressMozzart;
     private String timeReviewMozzart;
+    private Float minimumQuota;
+    private Float minimumPayment;
+    private Float minimumProfit;
 
 
 }

@@ -46,53 +46,54 @@ public class MatchService {
             MozzartPage mozzartPage = new MozzartPage(driver);
             listMatchPage = mozzartPage.getAllMatches(appConfigService.getAddressMozzart(), appConfigService.getTimeReviewMozzart(), leagueRepository.findAll());
             driver.quit();
-            List<Match> listMatchBase = matchRepository.findAll();
         } catch (Exception e) {
             e.printStackTrace();
+            driver.quit();
         }
 
-        for (int i = 0; i < listMatchPage.size(); i++) {
-            Match match = new Match();
-            MatchDTO matchDTOPage = listMatchPage.get(i);
-            Optional<Match> optionalMatch;
-            String matchName = matchDTOPage.getName().trim();
-            int delimiterIndex = matchName.indexOf(" - ");
-            String hostClubNameString = matchName.substring(0, delimiterIndex);
+        if (listMatchPage.size() != 0) {
+            for (int i = 0; i < listMatchPage.size(); i++) {
+                Match match = new Match();
+                MatchDTO matchDTOPage = listMatchPage.get(i);
+                Optional<Match> optionalMatch;
+                String matchName = matchDTOPage.getName().trim();
+                int delimiterIndex = matchName.indexOf(" - ");
+                String hostClubNameString = matchName.substring(0, delimiterIndex);
 
-            if (clubNamesRepository.existByName(hostClubNameString)) {
-                ClubName clubName = new ClubName();
-                clubName.setMozzartName(hostClubNameString);
-                clubName.setMatchName(matchName);
-                clubNamesRepository.save(clubName);
+                if (clubNamesRepository.existByName(hostClubNameString)) {
+                    ClubName clubName = new ClubName();
+                    clubName.setMozzartName(hostClubNameString);
+                    clubName.setMatchName(matchName);
+                    clubNamesRepository.save(clubName);
+                }
+                String guestClubNameString = matchName.substring(delimiterIndex + 3);
+                if (clubNamesRepository.existByName(guestClubNameString)) {
+                    ClubName clubName = new ClubName();
+                    clubName.setMozzartName(guestClubNameString);
+                    clubName.setMatchName(matchName);
+                    clubNamesRepository.save(clubName);
+                }
+                if (matchRepository.notExistsByNameHome(matchDTOPage.getName())) {
+
+                    ClubName hostClubName = clubNamesRepository.findByMozzartName(hostClubNameString);
+                    ClubName guestClubName = clubNamesRepository.findByMozzartName(guestClubNameString);
+                    match.setIdMatch(matchDTOPage.getCode());
+                    match.setNameHome(matchDTOPage.getName());
+                    match.setIdMatch(matchDTOPage.getCode());
+                    match.setDateMatch(matchDTOPage.getTime());
+                    match.setLeague(matchDTOPage.getLeague());
+                    match.setHostNameClub(hostClubName);
+                    match.setGuestNameClub(guestClubName);
+                    match.setBettingShop(NameBetting.MOZZART);
+                    match.setReview(true);
+                    matchRepository.save(match);
+                }
             }
-            String guestClubNameString = matchName.substring(delimiterIndex + 3);
-
-            if (clubNamesRepository.existByName(guestClubNameString)) {
-                ClubName clubName = new ClubName();
-                clubName.setMozzartName(guestClubNameString);
-                clubName.setMatchName(matchName);
-                clubNamesRepository.save(clubName);
-            }
-
-
-            if (matchRepository.notExistsByNameHome(matchDTOPage.getName())) {
-
-                ClubName hostClubName = clubNamesRepository.findByMozzartName(hostClubNameString);
-                ClubName guestClubName = clubNamesRepository.findByMozzartName(guestClubNameString);
-                match.setIdMatch(matchDTOPage.getCode());
-                match.setNameHome(matchDTOPage.getName());
-                match.setIdMatch(matchDTOPage.getCode());
-                match.setDateMatch(matchDTOPage.getTime());
-                match.setHostNameClub(hostClubName);
-                match.setGuestNameClub(guestClubName);
-                match.setBettingShop(NameBetting.MOZZART);
-                match.setReview(true);
-                matchRepository.save(match);
-            }
-
+        } else {
+            System.out.println("************************** Match list is empty **************************");
         }
         try {
-            quotaRepository.deleteAllMatchHaveStarted();
+            quotaRepository.deleteAllQuotasWhereMatchHaveStarted();
             matchRepository.deleteMatchStarted();
             findPairInForeignBettingShop();
             // matchRepository.deleteMatchByLinkForeignNull();
@@ -112,16 +113,15 @@ public class MatchService {
             for (int i = 0; i < list.size(); i++) {
                 try {
                     Match match = list.get(i);
-                    if(match.getHostNameClub().getForeignName() != null &&  match.getGuestNameClub().getForeignName() != null) {
+                    if (match.getHostNameClub().getForeignName() != null && match.getGuestNameClub().getForeignName() != null) {
                         String link = foreignPage.findLink(match.getHostNameClub().getForeignName(),
                                 match.getGuestNameClub().getForeignName(),
                                 appConfigService.getAddressForeign());
                         if (link != null && link.contains("www.orbitxch.com")) {
                             matchRepository.updateMatchLink(match, link);
                         }
-                    }
-                    else{
-                        System.out.println("Name is not complete");
+                    } else {
+                        System.out.println("************************** Name is not complete: " + match.getNameHome() + "**************************");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -207,5 +207,22 @@ public class MatchService {
 
     public List<Match> findAllMatches() {
         return matchRepository.findAll();
+    }
+
+    public void openLeague(String league) {
+        List<League> leagues = new ArrayList<>();
+        League league1 = new League();
+        league1.setNameLeague(league);
+        leagues.add(league1);
+        try {
+            driver = webDriverMono.open();
+            MozzartPage mozzartPage = new MozzartPage(driver);
+            mozzartPage.setPage(appConfigService.getAddressMozzart(), appConfigService.getTimeReviewMozzart(), leagues);
+            driver.quit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            driver.quit();
+        }
+
     }
 }

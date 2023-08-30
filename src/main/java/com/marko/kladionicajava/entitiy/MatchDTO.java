@@ -16,6 +16,7 @@ public class MatchDTO {
 
     private String code;
     private String name;
+    private String league;
     private Date time;
 
 

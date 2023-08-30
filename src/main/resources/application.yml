@@ -18,7 +18,7 @@ spring:
     database-platform: org.hibernate.dialect.MariaDB103Dialect
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   mvc:
 
     static-locations: classpath:/static/
@@ -42,6 +42,9 @@ app:
   addressMozzart: 'https://www.mozzartbet.com/sr/kladjenje-2018#/?sid=1'
   bet: 100
   timeRefreshMatches: 360
-  timeRefreshQuotas: 15
+  timeRefreshQuotas: 6
+  minimumQuota: 3.0
+  minimumPayment: 50
+  minimumProfit: 4.0
 
 

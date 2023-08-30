@@ -70,7 +70,7 @@ public class ForeignPage {
     public String findLink(String homeClubName, String foreignClubName, String url) {
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(7));
-            if (homeClubName != null && foreignClubName != null) {
+            if (homeClubName != null && foreignClubName != null ) {
                 this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
                 String url2 = " " + homeClubName + " v " + foreignClubName;
                 url2 = url2.replace(" ", "+");
@@ -116,8 +116,9 @@ public class ForeignPage {
                 return quotaForeignDTO;
 
             } catch (Exception e) {
-                driver.navigate().refresh();
+
                 try {
+                    driver.navigate().refresh();
                     this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
 //            new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(@class, 'betContentCellMarket biab_bet styles_betContentCell__\" +\n" +
 //                    "                            \"-gv8u biab_bet-content-cell biab_blue-cell styles_cellBlock__cell__9h0XI biab_back-0 biab_bet-back back-cell')]")));
@@ -149,3 +150,5 @@ public class ForeignPage {
         return null;
     }
 }
+
+// zasto se tokom rad asoftver menjaju promenljive u yml

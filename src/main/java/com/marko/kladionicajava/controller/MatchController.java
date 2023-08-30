@@ -9,12 +9,17 @@ import com.marko.kladionicajava.service.EmailService;
 import com.marko.kladionicajava.service.MatchService;
 import com.marko.kladionicajava.service.QuotasService;
 import com.marko.kladionicajava.tools.SortService;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.*;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -30,12 +35,10 @@ public class MatchController {
     private final SortService sortService;
 
 
-
-
     @GetMapping()
-    public String showMatches(Model model){
+    public String showMatches(Model model) {
         List<String> optionalView = matchService.getOptionalView();
-        if(optionalView.isEmpty()){
+        if (optionalView.isEmpty()) {
             optionalView.add(" - ");
         }
         String timeView = optionalView.get(0);
@@ -47,7 +50,7 @@ public class MatchController {
         return "matches";
     }
 
-    @RequestMapping ("/show-set-time")
+    @RequestMapping("/show-set-time")
     public String handleFormSubmission(@RequestParam("myDropdown") String selectedValue, Model model) {
         List<Quotas> listMatch = quotasService.getAllQuotasLastView(selectedValue);
         sortService.sortQuota(listMatch);
@@ -59,31 +62,36 @@ public class MatchController {
     }
 
     @GetMapping("/refresh-match")
-    @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshMatches * 60000}")
-    public String refreshMatches(){
+   // @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshMatches * 60000}")
+    public String refreshMatches() {
+        System.out.println("////////////////////////////// Refresh Match ////////////////////////////////// ");
         matchService.refreshShow();
         return "redirect:/matches";
     }
 
 
-
     @GetMapping("/refresh-quota")
     @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshQuotas * 60000}")
-    public String refreshQuota(){
+    public String refreshQuota() {
+        System.out.println("////////////////////////////// Refresh Quotas ////////////////////////////////// ");
         quotasService.refreshQuotas();
-
         return "redirect:/matches";
     }
 
     @GetMapping("/individual-display-match")
-    public String individualDisplayMatch(@RequestParam("matchId") String matchId, Model model){
+    public String individualDisplayMatch(@RequestParam("matchId") String matchId, Model model) {
 
         Match match = matchService.getMatch(matchId);
         model.addAttribute("match", match);
         return "matchIndividual";
     }
 
+    @GetMapping("/open-league")
+    public String openLeague(@RequestParam("league") String league, Model model) {
 
+        matchService.openLeague(league);
+        return "redirect:/matches";
+    }
 
 }
 //

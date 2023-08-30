@@ -35,6 +35,8 @@ public class Match {
     @ManyToOne (fetch = FetchType.EAGER , cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_host_club", nullable = true)
     private ClubName hostNameClub;
+    @Column(name = "league")
+    private String league;
     @ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_guest_club", nullable = true)
     private ClubName guestNameClub;

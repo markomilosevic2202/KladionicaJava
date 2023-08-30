@@ -75,36 +75,39 @@ public class QuotasService {
 
     public void refreshQuotas() {
         try {
+            quotaRepository.deleteAllQuotasWhereMatchHaveStarted();
+            matchRepository.deleteMatchStarted();
             Date currentDate = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM. HH:mm");
             String timeView = dateFormat.format(currentDate);
             driver = webDriverMono.open();
             MozzartPage mozzartPage = new MozzartPage(driver);
             ForeignPage foreignPage = new ForeignPage(driver);
-           // matchRepository.deleteMatchStarted();
             List<Match> listMatchMozzartBase = matchRepository.findAllByBettingShop(NameBetting.MOZZART);
             List<QuotaHomeDTO> listQuotasMozzartPage = mozzartPage.getAllQuotas(appConfigService.getAddressMozzart(), appConfigService.getTimeReviewMozzart(), leagueRepository.findAll());
-            Float bet = appConfigService.getBet();
-
-            for (int i = 0; i < listMatchMozzartBase.size(); i++) {
-                Match match = listMatchMozzartBase.get(i);
-                try {
-                    QuotaHomeDTO quotaHomeDTO = findMatchByNameMatch(listQuotasMozzartPage, match.getNameHome());
-                    if (match.getReview() && match.getLinkForeign() != null) {
-                        QuotaForeignDTO quotaForeignDTO = foreignPage.getQuotaForeign(match.getLinkForeign());
-                        if (match != null && quotaHomeDTO != null && quotaForeignDTO != null) {
-                            quotaRepository.save(setQuotas(quotaForeignDTO, quotaHomeDTO, match, timeView, bet));
+            if (listQuotasMozzartPage.size() != 0) {
+                Float bet = appConfigService.getBet();
+                for (int i = 0; i < listMatchMozzartBase.size(); i++) {
+                    Match match = listMatchMozzartBase.get(i);
+                    try {
+                        QuotaHomeDTO quotaHomeDTO = findMatchByNameMatch(listQuotasMozzartPage, match.getNameHome());
+                        if (match.getReview() && match.getLinkForeign() != null) {
+                            QuotaForeignDTO quotaForeignDTO = foreignPage.getQuotaForeign(match.getLinkForeign());
+                            if (match != null && quotaHomeDTO != null && quotaForeignDTO != null) {
+                                quotaRepository.save(setQuotas(quotaForeignDTO, quotaHomeDTO, match, timeView, bet));
+                            }
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
+            driver.quit();
         } catch (Exception e) {
             e.printStackTrace();
             driver.quit();
         }
-        driver.quit();
+
 
     }
 

@@ -44,14 +44,17 @@
 
         }
         .titleh3 {
-           margin-top: 2%;
+           margin-top: 1%;
            margin-bottom: 2%;
         }
 
 
         .table {
-            margin-top: 20px;
-            margin-bottom: 65px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+         .filters {
+           width: 75px
         }
 
 
@@ -113,12 +116,9 @@
     <form action="/settings/save-time-review" method="post">
         <label for="timeReview">Vreme pregleda:</label>
         <select id="timeReview" name="timeReview">
-            <option value="3" th:selected="${timeReviewModel == '3'}">3</option>
-            <option value="5" th:selected="${timeReviewModel == '5'}">5</option>
-            <option value="12" th:selected="${timeReviewModel == '12'}">12</option>
-            <option value="24" th:selected="${timeReviewModel == '24'}">24</option>
-            <option value="48" th:selected="${timeReviewModel == '48'}">48</option>
-            <option value="all" th:selected="${timeReviewModel == 'all'}">all</option>
+            <option value="1" th:selected="${timeReviewModel == '1'}">1 Dana</option>
+            <option value="3" th:selected="${timeReviewModel == '3'}">3 Dana</option>
+
         </select>
         <button type="submit">Zapamti</button>
     </form>
@@ -134,10 +134,21 @@
     <hr>
     <h3 class="titleh3" >Vreme Refresovanja Kvota</h3>
 
-
     <form action="/settings/save-time-refresh-quotas" method="post">
         <label for="timeReview">Vreme refresovanja kvot:</label>
         <input type="text" id="timeQuotaRefresh" name="timeQuotaRefresh" th:value="${timeRefreshQuotas}"/> minuta
+        <button type="submit">Zapamti</button>
+    </form>
+    <hr>
+    <h3 class="titleh3" >Filteri Alarma</h3>
+
+    <form action="/settings/save-time-refresh-quotas" method="post">
+        <label for="timeReview">Minimalna kvota:</label>
+        <input type="text" id="timeQuotaRefresh" name="timeQuotaRefresh" th:value="${minimumQuota}" class = "filters"/>
+        <label for="timeReview">Minimalna kvota:</label>
+        <input type="text" id="timeQuotaRefresh" name="timeQuotaRefresh" th:value="${minimumPayment}" class = "filters"/>
+        <label for="timeReview">Minimalna kvota:</label>
+        <input type="text" id="timeQuotaRefresh" name="timeQuotaRefresh" th:value="${minimumProfit}" class = "filters"/>
         <button type="submit">Zapamti</button>
     </form>
 

@@ -31,6 +31,9 @@ public class SettingsController {
         model.addAttribute("timeReviewModel", timeReview);
         model.addAttribute("timeRefreshMatch", appConfig.getTimeRefreshMatches());
         model.addAttribute("timeRefreshQuotas", appConfig.getTimeRefreshQuotas());
+        model.addAttribute("minimumQuota", appConfig.getMinimumQuota());
+        model.addAttribute("minimumPayment", appConfig.getMinimumPayment());
+        model.addAttribute("minimumProfit", appConfig.getMinimumProfit());
         return "settings";
 
     }
