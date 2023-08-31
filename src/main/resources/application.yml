@@ -45,7 +45,7 @@ app:
   timeRefreshQuotas: 12
   minimumQuota: 1.5
   minimumPayment: 50
-  minimumProfit: 4.0
+  minimumProfit: 2.4
   host: 'mail.lumenspei.com'
   username: 'marko.milosevic@lumenspei.com'
   password: 'Donjev.018'

@@ -104,7 +104,7 @@ public class MozzartPage {
                 }
             }
             return matchesDTO;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
         }
@@ -116,15 +116,17 @@ public class MozzartPage {
         try {
             List<Object> quotasPage = getQuotasPage();
             List<QuotaHomeDTO> quotas = new ArrayList<>();
-            for (Object obj : quotasPage) {
-                if (obj instanceof Map) {
-                    Map<String, Object> matchMap = (Map<String, Object>) obj;
-                    QuotaHomeDTO quotaHomeDTO = new QuotaHomeDTO();
-                    quotaHomeDTO.setName((String) matchMap.get("name"));
-                    quotaHomeDTO.setOne((String) matchMap.get("one"));
-                    quotaHomeDTO.setTwo((String) matchMap.get("two"));
-                    quotaHomeDTO.setX((String) matchMap.get("x"));
-                    quotas.add(quotaHomeDTO);
+            if (quotasPage.size() > 0) {
+                for (Object obj : quotasPage) {
+                    if (obj instanceof Map) {
+                        Map<String, Object> matchMap = (Map<String, Object>) obj;
+                        QuotaHomeDTO quotaHomeDTO = new QuotaHomeDTO();
+                        quotaHomeDTO.setName((String) matchMap.get("name"));
+                        quotaHomeDTO.setOne((String) matchMap.get("one"));
+                        quotaHomeDTO.setTwo((String) matchMap.get("two"));
+                        quotaHomeDTO.setX((String) matchMap.get("x"));
+                        quotas.add(quotaHomeDTO);
+                    }
                 }
             }
             return quotas;
@@ -185,43 +187,52 @@ public class MozzartPage {
 
 
     public List<Object> getQuotasPage() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        return (List<Object>) js.executeScript(
-                "let list = document.querySelectorAll('.match.botFlex');\n" +
-                        "let result = [];\n" +
-                        "list.forEach(e => {\n" +
-                        "    console.log(e.querySelector('.bonus-group'));\n" +
-                        "    if (e.querySelector('.sp-mark') === null && !e.querySelector('.bonus-group')) {\n" + // Dodata provera za .bonus-group
-                        "        result.push({\n" +
-                        "            one: e.querySelectorAll('.partvar.odds')[0].outerText.substring(e.querySelectorAll('.partvar.odds')[0].outerText.indexOf(\"\\n\") + 1),\n" +
-                        "            x: e.querySelectorAll('.partvar.odds')[1].outerText.substring(e.querySelectorAll('.partvar.odds')[1].outerText.indexOf(\"\\n\") + 1),\n" +
-                        "            two: e.querySelectorAll('.partvar.odds')[2].outerText.substring(e.querySelectorAll('.partvar.odds')[2].outerText.indexOf(\"\\n\") + 1),\n" +
-                        "            name: e.querySelector('.pairs').outerText.split('\\n')[0] + \" - \" + e.querySelector('.pairs').outerText.split('\\n')[1],\n" +
-                        "        });\n" +
-                        "    }\n" +
-                        "});\n" +
-                        "return result;"
-        );
+        try {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            return (List<Object>) js.executeScript(
+                    "let list = document.querySelectorAll('.match.botFlex');\n" +
+                            "let result = [];\n" +
+                            "list.forEach(e => {\n" +
+                            "    console.log(e.querySelector('.bonus-group'));\n" +
+                            "    if (e.querySelector('.sp-mark') === null && !e.querySelector('.bonus-group')) {\n" + // Dodata provera za .bonus-group
+                            "        result.push({\n" +
+                            "            one: e.querySelectorAll('.partvar.odds')[0].outerText.substring(e.querySelectorAll('.partvar.odds')[0].outerText.indexOf(\"\\n\") + 1),\n" +
+                            "            x: e.querySelectorAll('.partvar.odds')[1].outerText.substring(e.querySelectorAll('.partvar.odds')[1].outerText.indexOf(\"\\n\") + 1),\n" +
+                            "            two: e.querySelectorAll('.partvar.odds')[2].outerText.substring(e.querySelectorAll('.partvar.odds')[2].outerText.indexOf(\"\\n\") + 1),\n" +
+                            "            name: e.querySelector('.pairs').outerText.split('\\n')[0] + \" - \" + e.querySelector('.pairs').outerText.split('\\n')[1],\n" +
+                            "        });\n" +
+                            "    }\n" +
+                            "});\n" +
+                            "return result;"
+            );
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+
     }
 
     public List<Object> getMatchesPage() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        return (List<Object>) js.executeScript(
-                "let list = document.querySelectorAll('.match.botFlex');\n" +
-                        "let result = [];\n" +
-                        "list.forEach(e => {\n" +
-                        "    console.log(e.querySelector('.bonus-group'));\n" +
-                        "    if (e.querySelector('.sp-mark') === null) {\n" +
-                        "        result.push({\n" +
-                        "            code: e.querySelector('.moreoddstext').innerText,\n" +
-                        "            name: e.querySelector('.pairs').outerText.split('\\n')[0] + \" - \" + e.querySelector('.pairs').outerText.split('\\n')[1],\n" +
-                        "            time: e.querySelector('.time').outerText.slice(e.querySelector('.time').outerText.indexOf(\".\") + 2),\n" +
-                        "            date: e.querySelector('.time').outerText.slice(0, 4),\n" +
-                        "          league: e.querySelector('.league').innerText,\n" +
-                        "        });\n" +
-                        "    }\n" +
-                        "});\n" +
-                        "return result;"
-        );
+        try {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            return (List<Object>) js.executeScript(
+                    "let list = document.querySelectorAll('.match.botFlex');\n" +
+                            "let result = [];\n" +
+                            "list.forEach(e => {\n" +
+                            "    console.log(e.querySelector('.bonus-group'));\n" +
+                            "    if (e.querySelector('.sp-mark') === null) {\n" +
+                            "        result.push({\n" +
+                            "            code: e.querySelector('.moreoddstext').innerText,\n" +
+                            "            name: e.querySelector('.pairs').outerText.split('\\n')[0] + \" - \" + e.querySelector('.pairs').outerText.split('\\n')[1],\n" +
+                            "            time: e.querySelector('.time').outerText.slice(e.querySelector('.time').outerText.indexOf(\".\") + 2),\n" +
+                            "            date: e.querySelector('.time').outerText.slice(0, 4),\n" +
+                            "          league: e.querySelector('.league').innerText,\n" +
+                            "        });\n" +
+                            "    }\n" +
+                            "});\n" +
+                            "return result;"
+            );
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 }

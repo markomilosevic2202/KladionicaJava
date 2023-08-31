@@ -119,7 +119,6 @@ public class QuotasService {
     }
 
     private void filtersQuotas(Quotas quotas, Float minimumQuota, Float minimumBet, Float minimumProfit) {
-        emailSendService.sentQuotas(quotas);
         if (quotas.getProfitOne() > minimumProfit) {
             if (quotas.getDifferenceOne() > minimumQuota) {
                 if (quotas.getBetOne() > minimumBet) {
@@ -142,11 +141,6 @@ public class QuotasService {
             }
         }
     }
-
-    private void sentQuotas(Quotas quotas) {
-        System.out.println("**************************************************************************************");
-    }
-
 
     public static QuotaHomeDTO findMatchByNameMatch(List<QuotaHomeDTO> listMatchMozzartBase, String searchNameMatch) {
         for (QuotaHomeDTO quotaHomeDTO : listMatchMozzartBase) {

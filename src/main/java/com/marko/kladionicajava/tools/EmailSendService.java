@@ -38,8 +38,7 @@ public class EmailSendService {
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(username, password);
-            }
-        });
+            }});
 
         try {
             Message message = new MimeMessage(session);
@@ -65,9 +64,10 @@ public class EmailSendService {
 
     public void sentQuotas(Quotas quota){
         String title = "ALARM";
-        String body = "Dear Sir/Madam, \n  You have received this email because you are registered " +
+        String body = "Dear Sir/Madam, \n  \n  You have received this email because you are registered " +
                 "on the mailing list of the odds difference website. The program is our next game " +
-                "that is favorable for the game:" + quota.toString();
+                "that is favorable for the game:\n  \n" +
+                "https://www.mozzartbet.com/sr/kladjenje-2018#/date/three_days?sid=1  \n" + quota.toString();
         sendEmail(title, body);
     }
 
