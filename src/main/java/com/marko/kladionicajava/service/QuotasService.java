@@ -29,6 +29,7 @@ public class QuotasService {
     private final AppConfigService appConfigService;
     private final LeagueRepository leagueRepository;
     private final EmailSendService emailSendService;
+    private final MatchService matchService;
     private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
     private WebDriver driver;
 
@@ -122,24 +123,29 @@ public class QuotasService {
         if (quotas.getProfitOne() > minimumProfit) {
             if (quotas.getDifferenceOne() > minimumQuota) {
                 if (quotas.getBetOne() > minimumBet) {
-                    emailSendService.sentQuotas(quotas);
+                    sendNotifications(quotas);
                 }
             }
 
         } else if (quotas.getProfitTwo() > minimumProfit) {
             if (quotas.getDifferenceTwo() > minimumQuota) {
                 if (quotas.getBetTwo() > minimumBet) {
-                    emailSendService.sentQuotas(quotas);
+                    sendNotifications(quotas);
                 }
             }
 
         } else if (quotas.getProfitX() > minimumProfit) {
             if (quotas.getDifferenceX() > minimumQuota) {
                 if (quotas.getBetX() > minimumBet) {
-                    emailSendService.sentQuotas(quotas);
+                    sendNotifications(quotas);
                 }
             }
         }
+    }
+
+    private void sendNotifications(Quotas quotas) {
+        emailSendService.sentQuotas(quotas);
+        matchService.openLeague(quotas.getMatches().getLeague());
     }
 
     public static QuotaHomeDTO findMatchByNameMatch(List<QuotaHomeDTO> listMatchMozzartBase, String searchNameMatch) {
