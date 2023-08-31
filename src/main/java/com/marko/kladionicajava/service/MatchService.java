@@ -212,13 +212,14 @@ public class MatchService {
     public void openLeague(String league) {
         List<League> leagues = new ArrayList<>();
         League league1 = new League();
-        league1.setNameLeague(league);
+        league1.setNameLeague(league.replace(" ", "  "));
+        league1.setReview(true);
         leagues.add(league1);
         try {
             driver = webDriverMono.open();
             MozzartPage mozzartPage = new MozzartPage(driver);
-            mozzartPage.setPage(appConfigService.getAddressMozzart(), appConfigService.getTimeReviewMozzart(), leagues);
-            driver.quit();
+            mozzartPage.setPageSingleLeague(appConfigService.getAddressMozzart(), appConfigService.getTimeReviewMozzart(), leagues);
+           // driver.quit();
         } catch (Exception e) {
             e.printStackTrace();
             driver.quit();

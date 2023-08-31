@@ -76,4 +76,14 @@ public class SettingsController {
 
         return "redirect:/settings";
     }
+
+    @PostMapping("/save-filters")
+    public String saveFilters(@RequestParam("minimumQuota") String minimumQuota, @RequestParam("minimumProfit") String minimumProfit,
+                              @RequestParam("minimumPayment") String minimumPayment) {
+        appConfig.setMinimumQuota(Float.parseFloat(minimumQuota));
+        appConfig.setMinimumProfit(Float.parseFloat(minimumProfit));
+        appConfig.setMinimumPayment(Float.parseFloat(minimumPayment));
+
+        return "redirect:/settings";
+    }
 }

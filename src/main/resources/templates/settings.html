@@ -142,13 +142,13 @@
     <hr>
     <h3 class="titleh3" >Filteri Alarma</h3>
 
-    <form action="/settings/save-time-refresh-quotas" method="post">
+    <form action="/settings/save-filters" method="post">
         <label for="timeReview">Minimalna kvota:</label>
-        <input type="text" id="timeQuotaRefresh" name="timeQuotaRefresh" th:value="${minimumQuota}" class = "filters"/>
+        <input type="text" id="minimumQuota" name="minimumQuota" th:value="${minimumQuota}" class = "filters"/>
         <label for="timeReview">Minimalna kvota:</label>
-        <input type="text" id="timeQuotaRefresh" name="timeQuotaRefresh" th:value="${minimumPayment}" class = "filters"/>
+        <input type="text" id="minimumPayment" name="minimumPayment" th:value="${minimumPayment}" class = "filters"/>
         <label for="timeReview">Minimalna kvota:</label>
-        <input type="text" id="timeQuotaRefresh" name="timeQuotaRefresh" th:value="${minimumProfit}" class = "filters"/>
+        <input type="text" id="minimumProfit" name="minimumProfit" th:value="${minimumProfit}" class = "filters"/>
         <button type="submit">Zapamti</button>
     </form>
 

@@ -174,6 +174,22 @@ public class MozzartPage {
             e.printStackTrace();
         }
     }
+    public void setPageSingleLeague(String addressMozzart, String timeReviewMozzart, List<League> leagues) {
+        try {
+            goAddress(addressMozzart);
+            this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+            btnX.click();
+            btnSacuvaj.click();
+            btnCancel.click();
+            this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+            setTimeReview(timeReviewMozzart);
+            btnFootbal.click();
+            clickLeague(leagues);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public List<MatchDTO> getAllMatches(String addressMozzart, String timeReviewMozzart, List<League> leagues) {
         setPage(addressMozzart, timeReviewMozzart, leagues);
