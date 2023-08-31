@@ -14,7 +14,7 @@ import java.util.Date;
 @Table(name = "quotas")
 @Getter
 @Setter
-@ToString
+//@ToString
 @RequiredArgsConstructor
 public class Quotas {
 
@@ -58,8 +58,6 @@ public class Quotas {
     @Column(nullable = false)
     private Date updatedAt;
 
-
-
     @PrePersist
     private void prePersist() {
         Date date = new Date();
@@ -67,10 +65,30 @@ public class Quotas {
         this.updatedAt = date;
     }
 
-
     @PreUpdate
     public void preUpdate() {
         this.updatedAt = new Date();
     }
 
+    @Override
+    public String toString() {
+        return
+
+                "\n    matches=" + matches.getNameHome() +
+                        "\n    league= " + matches.getLeague() +
+                        "\n    timeView= '" + timeView + '\'' +
+                        "\n    quotaOne= " + quotaOne +
+                        "\n    quotaTwo= " + quotaTwo +
+                        "\n    quotaX= " + quotaX +
+                        "\n    differenceOne= " + differenceOne +
+                        "\n    differenceTwo= " + differenceTwo +
+                        "\n    differenceX= " + differenceX +
+                        "\n    betOne= " + betOne +
+                        "\n    betTwo= " + betTwo +
+                        "\n    betX= " + betX +
+                        "\n    profitOne= " + profitOne +
+                        "\n    profitTwo= " + profitTwo +
+                        "\n    profitX= " + profitX +
+                        "\n    link= " + matches.getLinkForeign();
+    }
 }

@@ -7,6 +7,7 @@ import com.marko.kladionicajava.page_factory.MozzartPage;
 import com.marko.kladionicajava.repository.LeagueRepository;
 import com.marko.kladionicajava.repository.MatchRepository;
 import com.marko.kladionicajava.repository.QuotaRepository;
+import com.marko.kladionicajava.tools.EmailSendService;
 import com.marko.kladionicajava.tools.WebDriverMono;
 import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.WebDriver;
@@ -27,6 +28,7 @@ public class QuotasService {
     private final WebDriverMono webDriverMono;
     private final AppConfigService appConfigService;
     private final LeagueRepository leagueRepository;
+    private final EmailSendService emailSendService;
     private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
     private WebDriver driver;
 
@@ -117,24 +119,25 @@ public class QuotasService {
     }
 
     private void filtersQuotas(Quotas quotas, Float minimumQuota, Float minimumBet, Float minimumProfit) {
+        emailSendService.sentQuotas(quotas);
         if (quotas.getProfitOne() > minimumProfit) {
             if (quotas.getDifferenceOne() > minimumQuota) {
                 if (quotas.getBetOne() > minimumBet) {
-                    sentQuotas(quotas);
+                    emailSendService.sentQuotas(quotas);
                 }
             }
 
         } else if (quotas.getProfitTwo() > minimumProfit) {
             if (quotas.getDifferenceTwo() > minimumQuota) {
                 if (quotas.getBetTwo() > minimumBet) {
-                    sentQuotas(quotas);
+                    emailSendService.sentQuotas(quotas);
                 }
             }
 
         } else if (quotas.getProfitX() > minimumProfit) {
             if (quotas.getDifferenceX() > minimumQuota) {
                 if (quotas.getBetX() > minimumBet) {
-                    sentQuotas(quotas);
+                    emailSendService.sentQuotas(quotas);
                 }
             }
         }
