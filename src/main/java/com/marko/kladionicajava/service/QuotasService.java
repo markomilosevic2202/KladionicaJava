@@ -83,6 +83,9 @@ public class QuotasService {
             driver = webDriverMono.open();
             MozzartPage mozzartPage = new MozzartPage(driver);
             ForeignPage foreignPage = new ForeignPage(driver);
+            Float minimumQuota = appConfigService.getMinimumQuota();
+            Float minimumBet = appConfigService.getBet();
+            Float minimumProfit = appConfigService.getMinimumProfit();
             List<Match> listMatchMozzartBase = matchRepository.findAllByBettingShop(NameBetting.MOZZART);
             List<QuotaHomeDTO> listQuotasMozzartPage = mozzartPage.getAllQuotas(appConfigService.getAddressMozzart(), appConfigService.getTimeReviewMozzart(), leagueRepository.findAll());
             if (listQuotasMozzartPage.size() != 0) {
@@ -94,7 +97,9 @@ public class QuotasService {
                         if (match.getReview() && match.getLinkForeign() != null) {
                             QuotaForeignDTO quotaForeignDTO = foreignPage.getQuotaForeign(match.getLinkForeign());
                             if (match != null && quotaHomeDTO != null && quotaForeignDTO != null) {
-                                quotaRepository.save(setQuotas(quotaForeignDTO, quotaHomeDTO, match, timeView, bet));
+                                Quotas quotas = setQuotas(quotaForeignDTO, quotaHomeDTO, match, timeView, bet);
+                                quotaRepository.save(quotas);
+                                filtersQuotas(quotas, minimumQuota, minimumBet, minimumProfit);
                             }
                         }
                     } catch (Exception e) {
@@ -110,6 +115,35 @@ public class QuotasService {
 
 
     }
+
+    private void filtersQuotas(Quotas quotas, Float minimumQuota, Float minimumBet, Float minimumProfit) {
+        if (quotas.getProfitOne() > minimumProfit) {
+            if (quotas.getDifferenceOne() > minimumQuota) {
+                if (quotas.getBetOne() > minimumBet) {
+                    sentQuotas(quotas);
+                }
+            }
+
+        } else if (quotas.getProfitTwo() > minimumProfit) {
+            if (quotas.getDifferenceTwo() > minimumQuota) {
+                if (quotas.getBetTwo() > minimumBet) {
+                    sentQuotas(quotas);
+                }
+            }
+
+        } else if (quotas.getProfitX() > minimumProfit) {
+            if (quotas.getDifferenceX() > minimumQuota) {
+                if (quotas.getBetX() > minimumBet) {
+                    sentQuotas(quotas);
+                }
+            }
+        }
+    }
+
+    private void sentQuotas(Quotas quotas) {
+        System.out.println("**************************************************************************************");
+    }
+
 
     public static QuotaHomeDTO findMatchByNameMatch(List<QuotaHomeDTO> listMatchMozzartBase, String searchNameMatch) {
         for (QuotaHomeDTO quotaHomeDTO : listMatchMozzartBase) {

@@ -42,9 +42,12 @@ app:
   addressMozzart: 'https://www.mozzartbet.com/sr/kladjenje-2018#/?sid=1'
   bet: 100
   timeRefreshMatches: 360
-  timeRefreshQuotas: 6
-  minimumQuota: 3.0
+  timeRefreshQuotas: 12
+  minimumQuota: 1.5
   minimumPayment: 50
   minimumProfit: 4.0
+  host: 'mail.lumenspei.com'
+  username: 'marko.milosevic@lumenspei.com'
+  password: 'Donjev.018'
 
 
