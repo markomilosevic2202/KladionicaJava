@@ -33,7 +33,7 @@ public class QuotasService {
     private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
     private WebDriver driver;
 
-    public List<Quotas> getAllQuotasLastView(String timeView) {
+    public List<Quotas> getAllQuotasLastView(Date timeView) {
 
         try {
             return quotaRepository.findAllByNumber(timeView);
@@ -45,7 +45,7 @@ public class QuotasService {
         }
     }
 
-    public Quotas setQuotas(QuotaForeignDTO quotaForeignDTO, QuotaHomeDTO quotaHomeDTO, Match match, String timeView, Float bet) {
+    public Quotas setQuotas(QuotaForeignDTO quotaForeignDTO, QuotaHomeDTO quotaHomeDTO, Match match, Date timeView, Float bet) {
         Quotas quotas = new Quotas();
         try {
             quotas.setMatches(match);
@@ -81,8 +81,7 @@ public class QuotasService {
             quotaRepository.deleteAllQuotasWhereMatchHaveStarted();
             matchRepository.deleteMatchStarted();
             Date currentDate = new Date();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM. HH:mm");
-            String timeView = dateFormat.format(currentDate);
+            Date timeView = currentDate;
             driver = webDriverMono.open();
             MozzartPage mozzartPage = new MozzartPage(driver);
             ForeignPage foreignPage = new ForeignPage(driver);
@@ -145,7 +144,7 @@ public class QuotasService {
 
     private void sendNotifications(Quotas quotas) {
         emailSendService.sentQuotas(quotas);
-        matchService.openLeague(quotas.getMatches().getLeague());
+      //  matchService.openLeague(quotas.getMatches().getLeague());
     }
 
     public static QuotaHomeDTO findMatchByNameMatch(List<QuotaHomeDTO> listMatchMozzartBase, String searchNameMatch) {

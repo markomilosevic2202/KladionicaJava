@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -52,7 +52,7 @@
 
         }
          .timovi {
-            width: 280px;
+            width: 380px;
 
         }
         .table .shaded-column {
@@ -62,10 +62,17 @@
  </style>
 
 
-    <title>Matches</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Matches</title>
+    </head>
+
 
 <body>
+
+<!--<div th:replace="fragments/header :: header"></div>-->
+<div th:replace="fragments/headerFragment :: header"></div>
 
 <h1 class="title">Aktuelni Mecevi</h1>
 
@@ -84,15 +91,12 @@
        class="btn btn-primary btn-sm mb-3">
         Refrešuj Kvote
     </a>
-
-
     <form id="myForm" action="#" th:object="${time}" th:action="@{/matches/show-set-time}">
         <select id="myDropdown" name="myDropdown">
-
             <option th:each="item : ${optionalViews}" th:value="${item}" th:text="${item}" th:selected="${item == views}"></option>
         </select>
     </form>
-
+<!--//th:text="${#dates.format(item, 'HH:mm dd.MM.')}"-->
     <script>
 
     const form = document.getElementById('myForm');
@@ -109,10 +113,10 @@
         <thead class="table-dark">
         <tr>
             <th>Broj</th>
-            <th class="liga">Liga</th>
+            <th class="timovi">Timovi</th>
             <th>Datum</th>
             <th>Vreme</th>
-            <th class="timovi">Timovi</th>
+            <th class="liga">Liga</th>
             <th>1 </th>
             <th>X-2 </th>
             <th>Ulog</th>
@@ -135,20 +139,19 @@
         <tr th:each="quota, index : ${quotas}">
             <td th:text="${index.index + 1}"/></td>
             <td>
-                <a th:href="@{/matches/open-league(league=${quota.matches.league})}">
-                    <span th:text="${quota.matches.league}"></span>
+                <a th:href="@{/matches/individual-display-match(matchId=${quota.matches.id})}">
+                    <span th:text="${quota.matches.nameHome}"></span>
                 </a>
             </td>
             <td>
-                <span th:text="${#dates.format(quota.matches.dateMatch, 'dd.MM.yyyy.')}"></span>
+                <span th:text="${#dates.format(quota.matches.dateMatch, 'dd.MM.')}"></span>
             </td>
             <td>
                 <span th:text="${#dates.format(quota.matches.dateMatch, 'HH:mm')}"></span>
             </td>
-            <td>
-                <a th:href="@{/matches/individual-display-match(matchId=${quota.matches.id})}">
-                    <span th:text="${quota.matches.nameHome}"></span>
-                </a>
+
+            <td><a th:href="@{/matches/open-league(league=${quota.matches.league})}">
+                <span th:text="${quota.matches.league}"></span></a>
             </td>
             <td th:text="${quota.quotaOne}"/>
             <td th:text="${quota.differenceOne}"/>

@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -37,11 +39,12 @@ public class MatchController {
 
     @GetMapping()
     public String showMatches(Model model) {
-        List<String> optionalView = matchService.getOptionalView();
+        List<Date> optionalView = matchService.getOptionalView();
         if (optionalView.isEmpty()) {
-            optionalView.add(" - ");
+            Date currentDate = new Date();
+            optionalView.add(currentDate);
         }
-        String timeView = optionalView.get(0);
+        Date timeView = optionalView.get(0);
         List<Quotas> listMatch = quotasService.getAllQuotasLastView(timeView);
         sortService.sortQuota(listMatch);
         model.addAttribute("optionalViews", optionalView);
@@ -51,15 +54,22 @@ public class MatchController {
     }
 
     @RequestMapping("/show-set-time")
-    public String handleFormSubmission(@RequestParam("myDropdown") String selectedValue, Model model) {
-        List<Quotas> listMatch = quotasService.getAllQuotasLastView(selectedValue);
+    public String handleFormSubmission(@RequestParam("myDropdown") String selectedValue, Model model){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        List<Quotas> listMatch = null;
+        try {
+            listMatch = quotasService.getAllQuotasLastView(sdf.parse(selectedValue));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         sortService.sortQuota(listMatch);
         model.addAttribute("quotas", listMatch);
-        List<String> optionalView = matchService.getOptionalView();
+        List<Date> optionalView = matchService.getOptionalView();
         model.addAttribute("optionalViews", optionalView);
         model.addAttribute("views", selectedValue);
         return "matches";
     }
+    //@RequestParam("myDropdown") String selectedValue,
 
     @GetMapping("/refresh-match")
    // @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshMatches * 60000}")

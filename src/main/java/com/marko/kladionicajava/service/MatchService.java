@@ -10,6 +10,7 @@ import com.marko.kladionicajava.repository.QuotaRepository;
 import com.marko.kladionicajava.tools.WebDriverMono;
 import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -25,7 +26,7 @@ public class MatchService {
     private final WebDriverMono webDriverMono;
     private final AppConfigService appConfigService;
     private final LeagueRepository leagueRepository;
-
+    private static List<WebDriver> webDrivers = new ArrayList<>();
 
     private WebDriver driver;
 
@@ -157,7 +158,7 @@ public class MatchService {
     }
 
 
-    public List<String> getOptionalView() {
+    public List<Date> getOptionalView() {
 
         return quotaRepository.findAllDistinctByNumberOfView();
     }
@@ -224,6 +225,6 @@ public class MatchService {
             e.printStackTrace();
             driver.quit();
         }
-
     }
+
 }

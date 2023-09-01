@@ -108,7 +108,10 @@
         <tbody>
 
         <tr th:each="quota, index : ${match.quotas}">
-            <td th:text="${quota.timeView}"/>
+<!--            <td th:text="${#dates.format(quota.timeView, 'dd.MM. HH:mm')}"/>-->
+            <td><span th:text="${#dates.format(quota.timeView, 'HH:mm')}"></span>
+                <span th:text="${#dates.format(quota.timeView, 'dd.MM.')}"></span>
+            </td>
             <td th:text="${quota.quotaOne}"/>
             <td th:text="${quota.differenceOne}"/>
             <td th:text="${quota.betOne}"/>

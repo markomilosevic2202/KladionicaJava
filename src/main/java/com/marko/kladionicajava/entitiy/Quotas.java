@@ -24,7 +24,7 @@ public class Quotas {
     @Column(name = "id", nullable = false)
     private String id;
     @Column(name = "time_view", nullable = false)
-    private String timeView;
+    private Date timeView;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "matches_id")
     @JsonBackReference
