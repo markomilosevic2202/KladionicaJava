@@ -54,7 +54,7 @@ public class MatchController {
     }
 
     @RequestMapping("/show-set-time")
-    public String handleFormSubmission(@RequestParam("myDropdown") String selectedValue, Model model){
+    public String handleFormSubmission(@RequestParam("myDropdown") String selectedValue, Model model) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         List<Quotas> listMatch = null;
         try {
@@ -66,7 +66,7 @@ public class MatchController {
         model.addAttribute("quotas", listMatch);
         List<Date> optionalView = matchService.getOptionalView();
         model.addAttribute("optionalViews", optionalView);
-        model.addAttribute("views", selectedValue);
+        model.addAttribute("views", sdf.parse(selectedValue));
         return "matches";
     }
     //@RequestParam("myDropdown") String selectedValue,
