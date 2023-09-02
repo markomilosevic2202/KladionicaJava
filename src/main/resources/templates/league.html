@@ -39,14 +39,19 @@
 
             height: 30px;
             font-size: 40px;
-            margin-left: 15%;
+            margin-left: 7%;
            margin-bottom: 65px;
+            margin-top: 15px;
 
         }
+         .button3 {
+         margin-left: 7%;
+    }
 
 
         .table {
-            margin-top: 20px;
+           width: 84%;
+             margin-left: 7%;
 
         }
         .id-input {
@@ -56,35 +61,42 @@
     transform: scale(2.5);
     }
 
-    #container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-     height:50px;
+
+       .ppp {
+         margin-left: 1%;
+    }
+    .ppp1 {
+         font-size: 45px;
+    }
+     .ppp2 {
+         margin-left: 7%;
+    }
+     .nav1 {
+         margin-top: 25px;
+    }
+     .button2 {
+         margin-left: 3px;
+    }
+    .review {
+    transform: scale(2.5);
+    }
 
 
 }
 
 </style>
 
-
-    <title>Matches</title>
+<head>
+    <title>Pregled Liga</title>
 </head>
 
 <body>
+<div th:replace="fragments/header :: header"></div>
 
 <h1 class="title">Aktuelni Mecevi</h1>
 
+<span class = "button3"> <a th:href="@{/league/add-league}" class="btn btn-primary btn-sm mb-3">Dodaj Ligu</a></span>
 
-<div class="container">
-
-    <a th:href="@{/}" class="btn btn-primary btn-sm mb-3">Back</a>
-    <hr>
-    <a th:href="@{/league/add-league}" class="btn btn-primary btn-sm mb-3">Dodaj Ligu</a>
-    <a th:href="@{/matches/refresh-match}"
-       class="btn btn-primary btn-sm mb-3" onclick="if (!(confirm('Da li sigurno želite da refrešujete mečeve?'))) return false ">
-        Refrešuj Mečev
-    </a>
 
     <table class="table table-bordered table-striped">
         <thead class="table-dark">
@@ -137,6 +149,6 @@
             return confirm('Are you sure you want to delete this league?');
         }
     </script>
-</div>
+
 </body>
 </html>

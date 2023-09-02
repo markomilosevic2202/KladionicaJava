@@ -19,68 +19,56 @@
       font-family: Arial, sans-serif;
     }
 
-        .padajuca-lista {
-            width: 50%;
-            height: 30px;
-            font-size: 14px;
-            display: inline-block;
-            margin-right: 10px;
-            width: 100px;
-        }
-
-
-        .btn-info {
-            background-color: #17a2b8;
-            border-color: #17a2b8;
-            height: 30px;
-            font-size: 14px;
-             margin-left: 5%;
-        }
 
         .title {
 
             height: 30px;
             font-size: 40px;
-            margin-left: 5%;
-            margin-bottom: 65px;
+            margin-left: 7%;
+           margin-bottom: 65px;
+            margin-top: 15px;
 
         }
          .select {
+           width: 50%;
             height: 40px;
-            margin-left: 5%;
-            margin-bottom: 1%
+            font-size: 14px;
+            display: inline-block;
+            margin-bottom: 10px;
+            width: 100px;
+            margin-left: 7%;
 
          }
         .table {
-           width: 90%; /* Postavljamo širinu tabele na 80% ekrana (udaljeno 10% od leve i 10% od desne margine) */
-           margin: 0 auto; /* Postavljamo automatski margin sa obe strane da bi je centrirali na ekranu */
+           width: 84%;
+             margin-left: 7%;
 }
+       .ppp {
+         margin-left: 1%;
+    }
+    .ppp1 {
+         font-size: 45px;
+    }
+     .ppp2 {
+         margin-left: 7%;
+    }
+     .nav1 {
+         margin-top: 25px;
+    }
+     .button2 {
+         margin-left: 3px;
+    }
 
-
-
-
-
-    </style>
-
-
-    <title>Matches</title>
+</style>
+    <title>Dodavanje Imena</title>
 </head>
 
 <body>
 
+<div th:replace="fragments/header :: header"></div>
+
 <h1 class="title">Imena</h1>
 
-
-<a th:href="@{/}"
-   class="btn btn-primary btn-sm mb-3 btn-info">
-    Back
-</a>
-</button>
-
-
-
-
-<hr>
 
 
 <form id="myForm1" action="#"  th:action="@{/addNames/setPreview}">
@@ -103,11 +91,6 @@
         form.submit(); // This will submit the form to the specified action URL
     });
     </script>
-
-<a th:href="@{/matches/refresh-match}"
-   class="btn btn-primary btn-sm mb-3 select" onclick="if (!(confirm('Da li sigurno želite da refrešujete mečeve?'))) return false ">
-    Refrešuj Mečev
-</a>
 
 
 <table class="table">

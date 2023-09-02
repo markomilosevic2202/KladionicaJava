@@ -39,8 +39,8 @@
 
             height: 30px;
             font-size: 40px;
-            margin-left: 15%;
-            margin-bottom: 65px;
+            margin-left: 16%;
+            margin-bottom: 15px;
 
         }
         .titleh3 {
@@ -56,26 +56,34 @@
          .filters {
            width: 75px
         }
+            .ppp {
+         margin-left: 1%;
+    }
+    .ppp1 {
+         font-size: 45px;
+    }
+     .ppp2 {
+         margin-left: 15%;
+    }
+     .nav1 {
+         margin-top: 25px;
+    }
 
 
     </style>
 
 
-    <title>Settings</title>
+    <title>Podesavanja</title>
 </head>
 
 <body>
+<div th:replace="fragments/header :: header"></div>
 
 <h1 class="title">Settings</h1>
 
 
 
 <div class="container">
-
-    <a th:href="@{/}"
-       class="btn btn-primary btn-sm mb-3">
-        Back
-    </a>
 
     <h3>Email</h3>
     <hr>

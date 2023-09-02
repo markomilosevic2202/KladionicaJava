@@ -1,16 +1,16 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <style>
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+<style>
 
     body {
       background-image: url("http://localhost:9910/footbal.jpg");
@@ -18,41 +18,64 @@
       background-opacity: 0.1;
     }
 
-        .padajuca-lista {
+        .myDropdown {
             width: 50%;
-            height: 30px;
+            height: 40px;
             font-size: 14px;
             display: inline-block;
-            margin-right: 10px;
+            margin-bottom: 10px;
             width: 100px;
+            margin-left: 7%;
         }
+            .button3 {
+         margin-left: 7%;
+    }
 
 
-        .btn-info {
-            background-color: #17a2b8;
-            border-color: #17a2b8;
-            height: 30px;
-            font-size: 14px;
-        }
+
 
         .title {
 
             height: 30px;
             font-size: 40px;
-            margin-left: 15%;
+            margin-left: 7%;
            margin-bottom: 65px;
+            margin-top: 15px;
 
         }
-
-
-        .table {
-            margin-top: 20px;
+         .table {
+             width: 84%;
+             margin-left: 7%;
 
         }
-        .id-input {
-        width: 550px;
+          .liga {
+            width: 170px;
+
+        }
+         .timovi {
+            width: 380px;
+
+        }
+        .table .shaded-column {
+        background-color: #f2f2f2;
     }
-    #review {
+
+       .ppp {
+         margin-left: 1%;
+    }
+    .ppp1 {
+         font-size: 45px;
+    }
+     .ppp2 {
+         margin-left: 7%;
+    }
+     .nav1 {
+         margin-top: 25px;
+    }
+     .button2 {
+         margin-left: 3px;
+    }
+    .review {
     transform: scale(2.5);
     }
 
@@ -67,30 +90,26 @@
 
 
 
+ </style>
 
 
-
-    </style>
-
-
-    <title>Matches</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregled Meceva</title>
 </head>
+
 
 <body>
 
+<body>
+<div th:replace="fragments/header :: header"></div>
 <h1 class="title">Aktuelni Mecevi</h1>
 
-<div class="container">
-
-    <a th:href="@{/}"
-       class="btn btn-primary btn-sm mb-3">
-        Back
-    </a>
-    <hr>
-    <a th:href="@{/withoutLink/showAllMatches}"
+<span class = "button3"> <a th:href="@{/withoutLink/showAllMatches}"
        class="btn btn-primary btn-sm mb-3">
         Show all matches
-    </a>
+</a></span>
 
 
     <table class="table table-bordered table-striped">
@@ -114,12 +133,12 @@
 
             <form action="/review/updateReviewStatus" th:object='${match}' method="post">
                 <td th:text="${index.index + 1}"/></td>
-                <td th:text="${match.bettingShop.name().substring(0)}"/>
+                <td th:text="${match.bettingShop.name().substring(0)}"/></td>
                 <td><span th:text="${#dates.format(match.dateMatch, 'dd.MM.yyyy.')}"></span></td>
                 <td><span th:text="${#dates.format(match.dateMatch, 'HH:mm')}"></span></td>
                 <td th:text="${match.nameHome}"/>
                                 <td><a th:href="${match.linkForeign}" target="_blank" th:text="Link"></a></td>
-                <td id="container"><input type="checkbox" id="review" name="review" th:checked="${match.review}"/></td>
+                <td id="container"><input type="checkbox" id="review" name="review" class="review" th:checked="${match.review}"/></td>
                 <td>
                     <button type="submit">Save</button>
                 </td>

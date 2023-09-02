@@ -23,8 +23,9 @@
             height: 40px;
             font-size: 14px;
             display: inline-block;
-            margin-right: 10px;
+            margin-bottom: 10px;
             width: 100px;
+            margin-left: 7%;
         }
 
 
@@ -34,13 +35,14 @@
 
             height: 30px;
             font-size: 40px;
-            margin-left: 16%;
+            margin-left: 7%;
            margin-bottom: 65px;
             margin-top: 15px;
 
         }
          .table {
-            margin-top: 20px;
+             width: 84%;
+             margin-left: 7%;
 
         }
           .liga {
@@ -61,7 +63,7 @@
          font-size: 45px;
     }
      .ppp2 {
-         margin-left: 15%;
+         margin-left: 7%;
     }
      .nav1 {
          margin-top: 25px;
@@ -69,6 +71,19 @@
      .button2 {
          margin-left: 3px;
     }
+     .pf {
+          margin-left: 78%;
+          margin-top: 25px;
+          }
+
+           .p4 {
+          margin-left: 40%;
+           width: 1380px;
+          }
+            .abc {
+
+           width: 380px;
+          }
 
 
 
@@ -78,27 +93,19 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Matches</title>
+        <title>Mecevi</title>
     </head>
 
 
 <body>
-<header>
 
-
-
-</header>
 
 <div th:replace="fragments/header :: header"></div>
 
 <h1 class="title">Aktuelni Mecevi</h1>
 
-<div class="container">
 
-
-
-
-    <form id="myForm" action="#" th:object="${time}" th:action="@{/matches/show-set-time}">
+<form id="myForm" action="#" th:object="${time}" th:action="@{/matches/show-set-time}">
         <select id="myDropdown" name="myDropdown" class="myDropdown">
             <option th:each="item : ${optionalViews}" th:value="${item}" th:text="${#dates.format({item} , 'dd.MM. HH.mm')}" th:selected="${item == views}"></option>
 
@@ -201,11 +208,24 @@
         xhr.send(formData);
     }
 
+
    </script>
+<span class="p4"><a id="scrollToTopButton" class="btn btn-primary btn-sm mb-3 abc"><img src="http://localhost:9910/up-arrow.svg" alt="Slika" width="20" height="20"><span class="button2">Vrati Se Na Vrh Stranice</span><img src="http://localhost:9910/up-arrow.svg" alt="Slika" width="20" height="20"></a></span>
 
 
-</div>
+<div th:replace="fragments/footer :: footer"></div>
+<script>
+// Funkcija za vraćanje na vrh stranice
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth' // Dodaje glatki animirani efekat
+  });
+}
 
+// Dodelite funkciju klik događaju dugmeta
+document.getElementById("scrollToTopButton").addEventListener("click", scrollToTop);
+</script>
 
 </body>
 </html>
