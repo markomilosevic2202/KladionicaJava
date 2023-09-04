@@ -40,14 +40,15 @@ app:
   addressMaxBet: 'https://www.maxbet.rs/ibet-web-client/#/home#top'
   addressForeign: 'https://www.orbitxch.com/customer/inplay/highlights?search='
   addressMozzart: 'https://www.mozzartbet.com/sr/kladjenje-2018#/?sid=1'
-  bet: 100
+  stakeForCalculation: 100
   timeRefreshMatches: 360
   timeRefreshQuotas: 12
   minimumQuota: 1.5
   minimumPayment: 50
-  minimumProfit: 3.0
+  minimumProfit: 3.5
   host: 'mail.lumenspei.com'
   username: 'marko.milosevic@lumenspei.com'
   password: 'Donjev.018'
+
 
 

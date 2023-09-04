@@ -86,12 +86,12 @@ public class QuotasService {
             MozzartPage mozzartPage = new MozzartPage(driver);
             ForeignPage foreignPage = new ForeignPage(driver);
             Float minimumQuota = appConfigService.getMinimumQuota();
-            Float minimumBet = appConfigService.getBet();
+            Float minimumBet = appConfigService.getMinimumPayment();
             Float minimumProfit = appConfigService.getMinimumProfit();
             List<Match> listMatchMozzartBase = matchRepository.findAllByBettingShop(NameBetting.MOZZART);
             List<QuotaHomeDTO> listQuotasMozzartPage = mozzartPage.getAllQuotas(appConfigService.getAddressMozzart(), appConfigService.getTimeReviewMozzart(), leagueRepository.findAll());
             if (listQuotasMozzartPage.size() != 0) {
-                Float bet = appConfigService.getBet();
+                Float bet = appConfigService.getStakeForCalculation();
                 for (int i = 0; i < listMatchMozzartBase.size(); i++) {
                     Match match = listMatchMozzartBase.get(i);
                     try {

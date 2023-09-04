@@ -23,7 +23,7 @@ public class AppConfigService {
     private String timeReviewMaxbet;
     private String addressMaxBet;
     private String addressForeign;
-    private Float bet;
+    private Float stakeForCalculation;
     @Value("${app.timeRefreshMatches}")
     private Integer timeRefreshMatches;
     @Value("${app.timeRefreshQuotas}")

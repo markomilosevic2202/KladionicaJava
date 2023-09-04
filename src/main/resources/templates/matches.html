@@ -71,9 +71,13 @@
      .button2 {
          margin-left: 3px;
     }
-     .pf {
+     .pf2 {
           margin-left: 78%;
           margin-top: 25px;
+          }
+     .pf1 {
+          margin-left: 67%;
+
           }
 
            .p4 {
@@ -93,14 +97,18 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="refresh" content="60">
         <title>Mecevi</title>
     </head>
+    <header>
+        <div th:replace="fragments/header :: header"></div>
+    </header>
 
 
 <body>
 
 
-<div th:replace="fragments/header :: header"></div>
+
 
 <h1 class="title">Aktuelni Mecevi</h1>
 
@@ -210,22 +218,23 @@
 
 
    </script>
-<span class="p4"><a id="scrollToTopButton" class="btn btn-primary btn-sm mb-3 abc"><img src="http://localhost:9910/up-arrow.svg" alt="Slika" width="20" height="20"><span class="button2">Vrati Se Na Vrh Stranice</span><img src="http://localhost:9910/up-arrow.svg" alt="Slika" width="20" height="20"></a></span>
+<span class="p4"><a id="scrollToTopButton" class="btn btn-primary btn-sm mb-3 abc"><img src="http://192.168.0.104:9910/up-arrow.svg" alt="Slika" width="20" height="20"><span class="button2">Vrati Se Na Vrh Stranice</span><img src="http://localhost:9910/up-arrow.svg" alt="Slika" width="20" height="20"></a></span>
 
 
-<div th:replace="fragments/footer :: footer"></div>
+
 <script>
-// Funkcija za vraćanje na vrh stranice
+
 function scrollToTop() {
   window.scrollTo({
     top: 0,
-    behavior: 'smooth' // Dodaje glatki animirani efekat
+    behavior: 'smooth'
   });
 }
-
-// Dodelite funkciju klik događaju dugmeta
 document.getElementById("scrollToTopButton").addEventListener("click", scrollToTop);
 </script>
 
 </body>
+<footer>
+    <div th:replace="fragments/footer :: footer"></div>
+</footer>
 </html>
