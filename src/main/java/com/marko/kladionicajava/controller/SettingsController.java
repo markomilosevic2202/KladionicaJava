@@ -34,6 +34,7 @@ public class SettingsController {
         model.addAttribute("minimumQuota", appConfig.getMinimumQuota());
         model.addAttribute("minimumPayment", appConfig.getMinimumPayment());
         model.addAttribute("minimumProfit", appConfig.getMinimumProfit());
+        model.addAttribute("stakeForCalculation", appConfig.getStakeForCalculation());
         return "settings";
 
     }
@@ -85,5 +86,11 @@ public class SettingsController {
         appConfig.setMinimumPayment(Float.parseFloat(minimumPayment));
 
         return "redirect:/settings";
+    }
+    @PostMapping("/save-stake-for-calculation")
+    public String saveStakeForCalculation(@RequestParam("stakeForCalculation") String stakeForCalculation) {
+       appConfig.setStakeForCalculation(Float.parseFloat(stakeForCalculation));
+
+       return "redirect:/settings";
     }
 }

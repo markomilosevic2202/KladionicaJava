@@ -170,6 +170,15 @@
         <button type="submit">Zapamti</button>
     </form>
 
+    <hr>
+    <h3 class="titleh3" >Ulog za kalkulaciju</h3>
+
+    <form action="/settings/save-stake-for-calculation" method="post">
+        <label for="timeReview">Vreme refresovanja kvot:</label>
+        <input type="text" id="stakeForCalculation" name="stakeForCalculation" th:value="${stakeForCalculation}"/> minuta
+        <button type="submit">Zapamti</button>
+    </form>
+
 
 
     <script>
