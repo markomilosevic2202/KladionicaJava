@@ -71,22 +71,22 @@ public class MatchController {
     }
     //@RequestParam("myDropdown") String selectedValue,
 
-    @GetMapping("/refresh-match")
-   // @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshMatches * 60000}")
-    public String refreshMatches() {
-        System.out.println("////////////////////////////// Refresh Match ////////////////////////////////// ");
-        matchService.refreshShow();
-        return "redirect:/matches";
-    }
-
-
-    @GetMapping("/refresh-quota")
-    @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshQuotas * 60000}")
-    public String refreshQuota() {
-        System.out.println("////////////////////////////// Refresh Quotas ////////////////////////////////// ");
-        quotasService.refreshQuotas();
-        return "redirect:/matches";
-    }
+//    @GetMapping("/refresh-match")
+//   // @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshMatches * 60000}")
+//    public String refreshMatches() {
+//        System.out.println("////////////////////////////// Refresh Match ////////////////////////////////// ");
+//        matchService.refreshShow();
+//        return "redirect:/matches";
+//    }
+//
+//
+//    @GetMapping("/refresh-quota")
+//    @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshQuotas * 60000}")
+//    public String refreshQuota() {
+//        System.out.println("////////////////////////////// Refresh Quotas ////////////////////////////////// ");
+//        quotasService.refreshQuotas();
+//        return "redirect:/matches";
+//    }
 
     @GetMapping("/individual-display-match")
     public String individualDisplayMatch(@RequestParam("matchId") String matchId, Model model) {

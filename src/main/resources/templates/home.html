@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Mecevi</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <style>
+        body {
+            background-image: url("http://192.168.0.104:9910/b.jpg");
+            background-size: cover;
+            opacity: 0.85;
+        }
+
+        .square-container {
+            display: flex;
+            flex-direction: column; /* Podešavanje vertikalnog rasporeda */
+            align-items: center; /* Centriranje po horizontali */
+            justify-content: center; /* Centriranje po vertikali */
+            height: 70vh; /* Postavlja visinu kontejnera na visinu ekrana */
+        }
+
+        .square {
+            width: 700px;
+            height: 80px;
+            background-color: #3498db;
+            color: #ffffff;
+            font-size: 20px;
+            display: flex; /* Postavljamo da bude fleksibilan kontejner */
+            justify-content: space-between; /* Raspored teksta i animacije */
+            align-items: center; /* Centriranje po vertikali */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            padding: 10px; /* Dodajemo malo prostora oko sadržaja */
+            text-decoration: none;
+        }
+
+        .square img {
+            width: 70px;
+            height: 70px;
+            margin-right: 10px; /* Odvojimo animaciju od teksta */
+        }
+
+        .square:hover {
+            background-color: #2980b9;
+        }
+         .square p {
+            flex-grow: 1;
+            margin: 0;
+            display: flex;
+             justify-content: center;
+             font-size: 35px
+        }
+              .ppp {
+         margin-left: 1%;
+    }
+    .ppp1 {
+         font-size: 45px;
+        }
+     .ppp2 {
+         margin-left: 7%;
+    }
+     .nav1 {
+         margin-top: 25px;
+    }
+     .button2 {
+         margin-left: 3px;
+    }
+     .pf2 {
+          margin-left: 15%;
+          margin-top: 25px;
+          margin-bottom: 25px;
+          }
+
+           .p4 {
+          margin-left: 40%;
+           width: 1380px;
+          }
+            .abc {
+
+           width: 380px;
+          }
+
+          .btn-primary {
+            background-color: #3498db;
+            color: #ffffff;
+             cursor: pointer;
+            transition: background-color 0.3s ease;
+            padding: 10px;
+
+
+    </style>
+</head>
+
+<header>
+    <div th:replace="fragments/header :: header"></div>
+</header>
+<body>
+<div class="square-container">
+    <a class="square" th:href="@{/matches}">
+        <img class="ppp2 ccc" src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Soccer_ball_animated.svg"
+             alt="Slika" width="70" height="70">
+        <p>Mečevi</p>
+    </a>
+    <br>
+    <a class="square" th:href="@{/addNames}">
+        <img class="ppp2 ccc" src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Soccer_ball_animated.svg"
+             alt="Slika" width="70" height="70">
+        <p>Dodavanje Imena</p>
+    </a>
+    <br>
+    <a class="square" th:href="@{/withoutLink}">
+        <img class="ppp2 ccc" src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Soccer_ball_animated.svg"
+             alt="Slika" width="70" height="70">
+        <p>Dodavanje Linka</p>
+    </a>
+    <br>
+    <a class="square" th:href="@{/review}">
+        <img class="ppp2 ccc" src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Soccer_ball_animated.svg"
+             alt="Slika" width="70" height="70">
+        <p>Pregled Utakmica</p>
+    </a>
+    <br>
+    <a class="square" th:href="@{/league}">
+        <img class="ppp2 ccc" src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Soccer_ball_animated.svg"
+             alt="Slika" width="70" height="70">
+        <p>Pregled Liga</p>
+    </a>
+    <br>
+    <a class="square" th:href="@{/settings}">
+        <img class="ppp2 ccc" src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Soccer_ball_animated.svg"
+             alt="Slika" width="70" height="70">
+        <p>Podešavanje</p>
+    </a>
+</div>
+</body>
+
+<footer>
+    <div th:replace="fragments/footer :: footer"></div>
+</footer>
+</html>
