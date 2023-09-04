@@ -20,15 +20,36 @@
 <header h1>
 
 <nav class="nav1">
-    <a href="http://192.168.0.104:9910/">
-    <img class="ppp2 ccc" src="http://192.168.0.104:9910/ball.png" alt="Slika" width="70" height="70">  </a>
+    <a href="/">
+    <img class="ppp2 ccc" src="ball.png" alt="Slika" width="70" height="70">  </a>
     <span class="ppp1 ccc">Welcome to Kladionica</span>
 
     <span class="ppp ccc"> <a th:href="@{/}"
                               class="btn btn-primary btn-sm mb-3"> <img src="back.webp" alt="Slika" width="20" height="20">Back</a></span>
     <span class="ppp ccc"><a th:href="@{/matches/refresh-match}" class="btn btn-primary btn-sm mb-3"><img src="refresh.png" alt="Slika" width="20" height="20"><span class="button2">Refrešuj Mečev</span> </a></span>
     <span class="ppp ccc"><a th:href="@{/matches/refresh-quota}" class="btn btn-primary btn-sm mb-3"><img src="refresh.png" alt="Slika" width="20" height="20"><span class="button2">Refrešuj Kvote</span></a></span>
-</nav>
+
+    <span class="ppp ccc">
+    <a href="javascript:void(0);" class="btn btn-primary btn-sm mb-3" onclick="document.getElementById('logoutForm').submit();">
+        <img src="back.webp" alt="Slika" width="20" height="20">
+        <span class="button2">Log Out</span></a>
+    <span class="ppp ccc">User: <span sec:authentication="principal.username"></span></span></span>
+    <span class="ppp ccc">User: <span sec:authentication="principal.authorities"></span></span></span>
+
+
+
+
+
+
+
+
+    <form action="#" th:action="@{/logout}" method="post" id="logoutForm">
+        <!-- Dodajte skriveni input za CSRF token ako je potreban -->
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+    </form>
+
+
+    </a></nav>
     <hr>
 
 

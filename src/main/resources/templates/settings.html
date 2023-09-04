@@ -97,12 +97,6 @@
 
     <h3>Email</h3>
     <hr>
-    <a th:href="@{/settings/add-email}"
-       class="btn btn-primary btn-sm mb-3">
-        Add Email
-    </a>
-
-
 
     <table class="table table-bordered table-striped">
         <thead class="table-dark">
@@ -129,6 +123,10 @@
         </tr>
         </tbody>
     </table>
+    <a th:href="@{/settings/add-email}"
+       class="btn btn-primary btn-sm mb-3">
+        Dodaj Email
+    </a>
     <hr>
     <h3 class="titleh3">Vreme Pregleda Meceva</h3>
     <form action="/settings/save-time-review" method="post">

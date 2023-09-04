@@ -15,9 +15,9 @@ public class HomeController {
     }
 
     @GetMapping("/showMyLoginPage")
-    public String showMyLoginPage(Model theModel){
+    public String showMyLoginPage(Model theModel){return "fancy-login";}
 
-        return "fancy-login";
-    }
+    @GetMapping("/access-denied")
+    public String accessDenied(Model theModel){return "fancy-login";}
 }
 //krondyom
