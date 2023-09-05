@@ -13,18 +13,13 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-public class DemoSecurityConfig {
+public class SecurityConfig {
 
-     //add support fot JDBC . . . no more hardcoded
+
     @Bean
     public UserDetailsManager userDetailsManager(DataSource dataSource) {
 
-
-
         return new JdbcUserDetailsManager(dataSource);
-
-   //     return new JdbcUserDetailsManager(dataSource);
-
     }
 
     @Bean
@@ -48,27 +43,5 @@ public class DemoSecurityConfig {
                 );
         return http.build();
     }
-//    @Bean
-//    public InMemoryUserDetailsManager userDetailsManager() {
-//        UserDetails john = User.builder()
-//                .username("john")
-//                .password("{noop}test123")
-//                .roles("EMPLOYEE")
-//                .build();
-//
-//        UserDetails mary = User.builder()
-//                .username("mary")
-//                .password("{noop}test123")
-//                .roles("EMPLOYEE", "MANAGER")
-//                .build();
-//
-//        UserDetails susan = User.builder()
-//                .username("susan")
-//                .password("{noop}test123")
-//                .roles("EMPLOYEE", "MANAGER", "ADMIN")
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(john, mary, susan);
-//    }
 
 }

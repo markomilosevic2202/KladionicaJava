@@ -9,10 +9,9 @@ spring:
     initialization: true
 
 
-
-logging:
-  level:
-    org.springframework.jdbc.core: TRACE
+#logging:
+#  level:
+#    org.springframework.jdbc.core: TRACE
 
 
 
@@ -21,7 +20,7 @@ logging:
     database-platform: org.hibernate.dialect.MariaDB103Dialect
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
   mvc:
 
     static-locations: classpath:/static/
@@ -45,7 +44,7 @@ app:
   addressMozzart: 'https://www.mozzartbet.com/sr/kladjenje-2018#/?sid=1'
   stakeForCalculation: 100
   timeRefreshMatches: 360
-  timeRefreshQuotas: 12
+  timeRefreshQuotas: 5
   minimumQuota: 1.5
   minimumPayment: 50
   minimumProfit: 3.5

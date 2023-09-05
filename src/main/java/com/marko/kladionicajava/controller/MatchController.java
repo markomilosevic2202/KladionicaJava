@@ -1,31 +1,20 @@
 package com.marko.kladionicajava.controller;
 
 
-import com.marko.kladionicajava.entitiy.Email;
+
 import com.marko.kladionicajava.entitiy.Match;
 import com.marko.kladionicajava.entitiy.Quotas;
-import com.marko.kladionicajava.service.AppConfigService;
-import com.marko.kladionicajava.service.EmailService;
 import com.marko.kladionicajava.service.MatchService;
 import com.marko.kladionicajava.service.QuotasService;
 import com.marko.kladionicajava.tools.SortService;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.swing.*;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-
 
 @Controller
 @RequestMapping("/matches")
@@ -71,22 +60,18 @@ public class MatchController {
     }
 
 
-//    @GetMapping("/refresh-match")
-//   // @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshMatches * 60000}")
-//    public String refreshMatches() {
-//        System.out.println("////////////////////////////// Refresh Match ////////////////////////////////// ");
-//        matchService.refreshShow();
-//        return "redirect:/matches";
-//    }
-//
-//
-//    @GetMapping("/refresh-quota")
-//    @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshQuotas * 60000}")
-//    public String refreshQuota() {
-//        System.out.println("////////////////////////////// Refresh Quotas ////////////////////////////////// ");
-//        quotasService.refreshQuotas();
-//        return "redirect:/matches";
-//    }
+    @GetMapping("/refresh-match")
+    public String refreshMatches() {
+        matchService.refreshShow();
+        return "redirect:/matches";
+    }
+
+
+    @GetMapping("/refresh-quota")
+    public String refreshQuota() {
+        quotasService.refreshQuotas();
+        return "redirect:/matches";
+    }
 
     @GetMapping("/individual-display-match")
     public String individualDisplayMatch(@RequestParam("matchId") String matchId, Model model) {

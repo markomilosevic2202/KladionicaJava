@@ -1,6 +1,19 @@
 INSERT INTO emails (email, id) VALUES('marko71@mailinator.com', '18251640-45b8-4720-8daa-a0c5d3f26008');
 
+INSERT INTO users (username, password, enabled) VALUES('john', '{noop}test123', 1);
+INSERT INTO users (username, password, enabled) VALUES('mary', '{noop}test123', 1);
+INSERT INTO users (username, password, enabled) VALUES('susan', '{noop}test123', 1);
+INSERT INTO users (username, password, enabled) VALUES('marko', '{noop}1', 1);
+
+INSERT INTO authorities (id, username, authority) VALUES('11c4bf00-87c6-4667-b420-a7ed4cdad13c','john', 'ROLE_EMPLOYEE');
+INSERT INTO authorities (id, username, authority) VALUES('13c4bf00-87c6-4667-b420-a7ed4cdad13c','mary', 'ROLE_MANAGER');
+INSERT INTO authorities (id, username, authority) VALUES('16c4bf00-87c6-4667-b420-a7ed4cdad13c','marko', 'ROLE_MANAGER');
+INSERT INTO authorities (id, username, authority) VALUES('18c4bf00-87c6-4667-b420-a7ed4cdad13c','marko', 'ROLE_EMPLOYEE');
+
+
+
 INSERT INTO league (review, id, name_league) VALUES(1, '063ae810-ff3b-4211-948c-eda36d15d277', 'BRAZIL  2');
+INSERT INTO league (review, id, name_league) VALUES(1, '12c4bf00-87c6-4667-b420-a7ed4cdad13c', 'JAPAN  -  LIGA  KUP');
 INSERT INTO league (review, id, name_league) VALUES(1, '15084f25-d313-4ad8-873b-cb9f580b8822', 'DANSKA  2');
 INSERT INTO league (review, id, name_league) VALUES(1, '16a399b8-0dbb-4f32-acf1-d6903d7da48c', 'TURSKA  1');
 INSERT INTO league (review, id, name_league) VALUES(1, '4129632a-15e6-412d-8fef-e15b1e05b575', 'FRANCUSKA  2');
@@ -11,11 +24,17 @@ INSERT INTO league (review, id, name_league) VALUES(1, '726f02d3-53d0-4dc0-bd0f-
 INSERT INTO league (review, id, name_league) VALUES(1, '761bcb4a-e7a4-4fea-93f7-3a22db64ab72', 'KVALIFIKACIJE  ZA  LE');
 INSERT INTO league (review, id, name_league) VALUES(1, '78e97b7a-5059-4e43-8045-034bcb14ece6', 'PORTUGALIJA  1');
 INSERT INTO league (review, id, name_league) VALUES(1, '911a0a95-8e2d-4c30-aa28-10cfa3366406', 'KVALIFIKACIJE  ZA  LŠ');
+INSERT INTO league (review, id, name_league) VALUES(1, '99ac5092-3f0f-404f-bd87-4eb35d1f7617', 'DANSKA  -  KUP');
 INSERT INTO league (review, id, name_league) VALUES(1, 'a09d1d89-d040-4b17-a4da-e3b495a7ee85', 'NEMAČKA  2');
+INSERT INTO league (review, id, name_league) VALUES(1, 'b98ff311-7251-40f1-a970-f4e17c4592d4', 'ENGLESKA  3');
 INSERT INTO league (review, id, name_league) VALUES(1, 'c64551c6-a182-4d7c-8cca-fcc42d5233a0', 'ENGLESKA  2');
+INSERT INTO league (review, id, name_league) VALUES(1, 'd306311c-7fcc-4663-b529-262880f3a68e', 'SRBIJA 1 MozzartBet Superliga');
 INSERT INTO league (review, id, name_league) VALUES(1, 'e679dd2d-94d3-4cfe-acce-d864707ba26e', 'ARGENTINA  -  KUP');
 INSERT INTO league (review, id, name_league) VALUES(1, 'e916155b-3a6a-44bc-8a47-0b5c8b25aebd', 'ŠPANIJA  1');
 INSERT INTO league (review, id, name_league) VALUES(1, 'ec92f3e9-ef60-4489-9d5d-97286b51dee8', 'ENGLESKA  1');
+INSERT INTO league (review, id, name_league) VALUES(1, 'f29263e0-69fa-43e2-be06-573d07067293', 'IZRAEL  1');
+INSERT INTO league (review, id, name_league) VALUES(1, 'fe36c37f-6c9f-4982-8de5-372bf01d169d', 'RUMUNIJA  1');
+
 
 
 INSERT INTO club_names (created_at, updated_at, foreign_name, id, match_name, maxbet_name, meridian_name, mozzart_name) VALUES('2023-09-04 12:21:32.279', '2023-09-04 12:22:29.216', 'FC Ashdod', '00219da5-8437-458c-81bc-0ae116d586c3', 'MS Ashdod - Beitar J.', NULL, NULL, 'MS Ashdod');
