@@ -135,11 +135,13 @@
         <p>Podešavanje</p>
     </a>
     <br>
+    <div sec:authorize="hasRole('ADMIN')">
     <a class="square" th:href="@{/administrator}">
         <img class="ppp2 ccc" src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Soccer_ball_animated.svg"
              alt="Slika" width="70" height="70">
         <p>Administrator</p>
     </a>
+    </div>
 </div>
 </body>
 

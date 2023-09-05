@@ -23,5 +23,7 @@ public class Users {
     private String password;
     @Column(name = "enabled")
     private Boolean enabled;
+    @Column(name = "email")
+    private String email;
 
 }

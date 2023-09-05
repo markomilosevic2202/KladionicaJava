@@ -1,14 +1,14 @@
 INSERT INTO emails (email, id) VALUES('marko71@mailinator.com', '18251640-45b8-4720-8daa-a0c5d3f26008');
 
-INSERT INTO users (username, password, enabled) VALUES('john', '{noop}test123', 1);
-INSERT INTO users (username, password, enabled) VALUES('mary', '{noop}test123', 1);
-INSERT INTO users (username, password, enabled) VALUES('susan', '{noop}test123', 1);
-INSERT INTO users (username, password, enabled) VALUES('marko', '{noop}1', 1);
+INSERT INTO users (username, password, enabled, email) VALUES('john', '{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q', 1, "marko72@mailinator.com");
+INSERT INTO users (username, password, enabled, email) VALUES('mary', '{noop}test123', 1, "marko73@mailinator.com");
+INSERT INTO users (username, password, enabled, email) VALUES('susan', '{noop}test123', 1, "marko74@mailinator.com");
+INSERT INTO users (username, password, enabled, email) VALUES('marko', '{noop}1', 1, "marko75@mailinator.com");
 
-INSERT INTO authorities (id, username, authority) VALUES('11c4bf00-87c6-4667-b420-a7ed4cdad13c','john', 'ROLE_EMPLOYEE');
-INSERT INTO authorities (id, username, authority) VALUES('13c4bf00-87c6-4667-b420-a7ed4cdad13c','mary', 'ROLE_MANAGER');
-INSERT INTO authorities (id, username, authority) VALUES('16c4bf00-87c6-4667-b420-a7ed4cdad13c','marko', 'ROLE_MANAGER');
-INSERT INTO authorities (id, username, authority) VALUES('18c4bf00-87c6-4667-b420-a7ed4cdad13c','marko', 'ROLE_EMPLOYEE');
+INSERT INTO authorities (id, username, authority) VALUES('11c4bf00-87c6-4667-b420-a7ed4cdad13c','john', 'ROLE_USER');
+INSERT INTO authorities (id, username, authority) VALUES('13c4bf00-87c6-4667-b420-a7ed4cdad13c','mary', 'ROLE_USER');
+INSERT INTO authorities (id, username, authority) VALUES('16c4bf00-87c6-4667-b420-a7ed4cdad13c','marko', 'ROLE_USER');
+INSERT INTO authorities (id, username, authority) VALUES('18c4bf00-87c6-4667-b420-a7ed4cdad13c','marko', 'ROLE_ADMIN');
 
 
 
