@@ -2,8 +2,10 @@ package com.marko.kladionicajava.security;
 
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,8 +15,9 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import javax.sql.DataSource;
 
-//@Configuration
-//@EnableWebSecurity
+@Configuration
+@EnableWebSecurity
+
 public class SecurityConfig {
 
     private UserDetailsService userDetailsService;
@@ -29,10 +32,10 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(configurer ->
                         configurer
-                                .requestMatchers("/").hasRole("USER")
-                                .requestMatchers("/administrator/**").hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.POST,"/register/save-user").permitAll()
-                                .requestMatchers(HttpMethod.GET,"/register/**").permitAll()
+
+                                .requestMatchers(HttpMethod.POST).hasRole("USER")
+//                                .requestMatchers("/administrator/**").hasRole("ADMIN")
+//                                .requestMatchers(HttpMethod.POST).permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(form ->
                         form
@@ -42,8 +45,11 @@ public class SecurityConfig {
                 .logout(logout -> logout.permitAll()
                 )
                 .exceptionHandling(cofigurer ->
-                        cofigurer.accessDeniedPage("/access-denied")
-                );
+                        cofigurer
+                                .accessDeniedPage("/access-denied")
+
+                )
+        ;
         return http.build();
     }
 

@@ -9,6 +9,9 @@ spring:
     initialization: true
 
 
+
+
+
 #logging:
 #  level:
 #    org.springframework.jdbc.core: TRACE
