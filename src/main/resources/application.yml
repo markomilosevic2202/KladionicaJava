@@ -1,4 +1,6 @@
 debug: false
+file:
+  upload-dir: src/main/resources/static/images
 spring:
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
@@ -15,29 +17,25 @@ spring:
 #logging:
 #  level:
 #    org.springframework.jdbc.core: TRACE
-
-
-
   jpa:
     defer-datasource-initialization: true
     database-platform: org.hibernate.dialect.MariaDB103Dialect
     show-sql: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
   mvc:
 
     static-locations: classpath:/static/
   web:
     resources:
       static-locations: file:src/main/resources/static/
-#
+
 
 
 #
 server:
   port: '9910'
-file:
-  upload-dir: src/main/resources/static/
+
 
 app:
   timeReviewMaxbet: 12
@@ -54,6 +52,7 @@ app:
   host: 'mail.lumenspei.com'
   username: 'marko.milosevic@lumenspei.com'
   password: 'Donjev.018'
+
 
 
 

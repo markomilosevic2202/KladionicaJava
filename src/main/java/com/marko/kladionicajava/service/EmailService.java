@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
+
 public class EmailService {
 
     private final EmailRepository emailRepository;
