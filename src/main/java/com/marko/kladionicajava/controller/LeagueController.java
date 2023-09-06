@@ -1,18 +1,12 @@
 package com.marko.kladionicajava.controller;
 
-import com.marko.kladionicajava.entitiy.Email;
+
 import com.marko.kladionicajava.entitiy.League;
-import com.marko.kladionicajava.entitiy.Match;
 import com.marko.kladionicajava.service.LeagueService;
-import com.marko.kladionicajava.service.MatchService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
 import java.util.List;
 
 

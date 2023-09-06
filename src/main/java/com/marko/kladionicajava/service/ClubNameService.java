@@ -5,7 +5,6 @@ import com.marko.kladionicajava.entitiy.ClubName;
 import com.marko.kladionicajava.repository.ClubNamesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 

@@ -114,8 +114,6 @@ public class QuotasService {
             e.printStackTrace();
             driver.quit();
         }
-
-
     }
 
     private void filtersQuotas(Quotas quotas, Float minimumQuota, Float minimumBet, Float minimumProfit) {

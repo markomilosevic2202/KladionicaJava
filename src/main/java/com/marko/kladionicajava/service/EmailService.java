@@ -28,8 +28,6 @@ public class EmailService {
             e.printStackTrace();
             return new ArrayList<>();
         }
-
-
     }
 
     public void createEmail(Email email) {
@@ -55,6 +53,4 @@ public class EmailService {
             e.printStackTrace();
         }
     }
-
-    ;
 }

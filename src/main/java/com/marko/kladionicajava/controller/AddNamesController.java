@@ -2,9 +2,7 @@ package com.marko.kladionicajava.controller;
 
 
 import com.marko.kladionicajava.entitiy.ClubName;
-import com.marko.kladionicajava.entitiy.Email;
 import com.marko.kladionicajava.service.ClubNameService;
-import com.marko.kladionicajava.service.MatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,7 +50,6 @@ public class AddNamesController {
     public String updateClub(@ModelAttribute("club") ClubName clubName) {
 
         clubNameService.updateClubName(clubName);
-
         return "redirect:/addNames";
     }
 

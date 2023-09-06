@@ -27,8 +27,6 @@ public class LeagueService {
             e.printStackTrace();
             return new ArrayList<>();
         }
-
-
     }
 
     public void createLeague(League league) {

@@ -3,10 +3,9 @@ package com.marko.kladionicajava.entitiy;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
+
 
 @Entity
 @Table(name = "matchs")
