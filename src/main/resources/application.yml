@@ -1,6 +1,6 @@
 debug: false
 file:
-  upload-dir: src/main/resources/static/images
+  upload-dir: src/main/resources/static
 spring:
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration

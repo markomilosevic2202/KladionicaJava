@@ -57,41 +57,38 @@ public class FileService {
             if (!originalFileType.toLowerCase().contains("jpg") || originalFileType.toLowerCase().contains("jpeg")) {
                 throw new IllegalArgumentException("File type is not PDF, please upload PDF file!!!");
             }
-            Optional<Users> optionalAppUser = userRepository.findByUsername(username);
-            if (optionalAppUser.isEmpty()) {
-                throw new IllegalArgumentException("User not found!!!");
-            }
-            FileDescription fileDescription = new FileDescription();
-            fileDescription.setFileType(file.getContentType());
-            fileDescription.setOriginalFileName(file.getOriginalFilename());
-            fileDescription.setFileName(UUID.randomUUID() + "." + originalFileType);
-            fileDescription.setUserID(optionalAppUser.get().getUsername());
+//            Optional<Users> optionalAppUser = userRepository.findByUsername(username);
+//            if (optionalAppUser.isEmpty()) {
+//                throw new IllegalArgumentException("User not found!!!");
+//            }
+//            FileDescription fileDescription = new FileDescription();
+//            fileDescription.setFileType(file.getContentType());
+//            fileDescription.setOriginalFileName(file.getOriginalFilename());
+//            fileDescription.setFileName(UUID.randomUUID() + "." + originalFileType);
+//            fileDescription.setUserID("ddfdcdcdc");//optionalAppUser.get().getUsername()
             Path targetLocation = fileStorageLocation
-                    .resolve("images/" + fileDescription.getFileName());
-            fileDescription.setLocation("/static/images/" + fileDescription.getFileName());
+                    .resolve("images/" + UUID.randomUUID() + "." + originalFileType);
+//            fileDescription.setLocation("/static/images/" + fileDescription.getFileName());
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            fileDescription = fileDescriptionRepository.save(fileDescription);
+//            fileDescription = fileDescriptionRepository.save(fileDescription);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public ResponseEntity<Resource> retrieveImage(String fileName) {
+    public String retrieveImage(String fileName) {
         try {
             fileName = "images/" + fileName;
             Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists()) {
-                return ResponseEntity.ok()
-                        .contentType(MediaType.parseMediaType("application/octet-stream"))
-                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                        .body(resource);
+                return resource.toString();
             } else {
-                return new ResponseEntity<>(resource, HttpStatus.NOT_FOUND);
+                return "";
             }
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return "";
         }
     }
 }

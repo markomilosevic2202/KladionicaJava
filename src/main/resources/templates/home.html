@@ -13,6 +13,17 @@
             background-size: cover;
             opacity: 0.85;
         }
+        #popup {
+     position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    display: none;
+    z-index: 999;
+}
 
         .square-container {
             display: flex;
@@ -21,6 +32,7 @@
             justify-content: center; /* Centriranje po vertikali */
 <!--            height: 70vh; /* Postavlja visinu kontejnera na visinu ekrana */-->
         }
+
 
         .square {
             width: 700px;
@@ -84,11 +96,63 @@
           }
 
           .btn-primary {
-            background-color: #3498db;
+            background-color: #2980b9;
             color: #ffffff;
              cursor: pointer;
             transition: background-color 0.3s ease;
-            padding: 10px;
+            padding: 10px;}
+         .profile-circle {
+            width: 50px;
+            height: 50px;
+     border-radius: 50%; /* Postavlja sličnost na 50% za kružni oblik */
+    overflow: hidden; /* Skriva delove slike koji prelaze okvire */
+    margin-bottom: 15px; /* Pomeramo sliku 10px prema gore */
+    border: 2px solid  #3498db; /* Dodajemo okvir oko slike */
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); /* Dodajemo senku oko slike */
+}
+
+              .profile-container {
+               position: relative;
+    display: inline-block;
+}
+
+.dropdown {
+    position: absolute;
+    z-index: 1;
+    display: none; /* Početno stanje: skriveno */
+}
+
+.dropdown-button {
+    background-color: #f1f1f1;
+    border: none;
+    color: #333;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-content a {
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    color: #333;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+/* Prikazi padajući meni kada je hover nad profil slikom */
+.profile-container:hover .dropdown {
+    display: block;
+}
 
 
     </style>
@@ -98,6 +162,12 @@
     <div th:replace="fragments/header :: header"></div>
 </header>
 <body>
+
+<div id="popup" th:if="${popupMessage}">
+    <p th:text="${popupMessage}"></p>
+</div>
+
+
 <div class="square-container">
     <a class="square" th:href="@{/matches}">
         <img class="ppp2 ccc" src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Soccer_ball_animated.svg"
