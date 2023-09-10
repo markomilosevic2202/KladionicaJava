@@ -27,6 +27,8 @@ public class Users {
     private Boolean enabled;
     @Column(name = "email")
     private String email;
+    @Column(name = "image")
+    private String image;
 //    @Column(nullable = false)
 //    private Date createdAt;
 //    @Column(nullable = false)

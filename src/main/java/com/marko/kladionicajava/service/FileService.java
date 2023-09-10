@@ -1,18 +1,10 @@
 package com.marko.kladionicajava.service;
 
-import com.marko.kladionicajava.entitiy.FileDescription;
-import com.marko.kladionicajava.entitiy.Users;
-import com.marko.kladionicajava.repository.FileDescriptionRepository;
 import com.marko.kladionicajava.repository.UserRepository;
 import com.marko.kladionicajava.tools.FileStorageProperties;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Files;
@@ -20,7 +12,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
 
@@ -30,13 +21,13 @@ public class FileService {
 
     private final Path fileStorageLocation;
     private final UserRepository userRepository;
-    private final FileDescriptionRepository fileDescriptionRepository;
 
 
-    public FileService(FileStorageProperties fileStorageProperties, FileDescriptionRepository fileDescriptionRepository, UserRepository userRepository) {
+
+    public FileService(FileStorageProperties fileStorageProperties,  UserRepository userRepository) {
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
                 .toAbsolutePath().normalize();
-        this.fileDescriptionRepository = fileDescriptionRepository;
+
         this.userRepository = userRepository;
 
         try {
@@ -57,15 +48,7 @@ public class FileService {
             if (!originalFileType.toLowerCase().contains("jpg") || originalFileType.toLowerCase().contains("jpeg")) {
                 throw new IllegalArgumentException("File type is not PDF, please upload PDF file!!!");
             }
-//            Optional<Users> optionalAppUser = userRepository.findByUsername(username);
-//            if (optionalAppUser.isEmpty()) {
-//                throw new IllegalArgumentException("User not found!!!");
-//            }
-//            FileDescription fileDescription = new FileDescription();
-//            fileDescription.setFileType(file.getContentType());
-//            fileDescription.setOriginalFileName(file.getOriginalFilename());
-//            fileDescription.setFileName(UUID.randomUUID() + "." + originalFileType);
-//            fileDescription.setUserID("ddfdcdcdc");//optionalAppUser.get().getUsername()
+
             Path targetLocation = fileStorageLocation
                     .resolve("images/" + UUID.randomUUID() + "." + originalFileType);
 //            fileDescription.setLocation("/static/images/" + fileDescription.getFileName());

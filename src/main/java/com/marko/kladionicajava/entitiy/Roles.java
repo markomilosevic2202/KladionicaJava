@@ -7,26 +7,20 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "authorities")
+@Table(name = "roles")
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-
-public class Authorities {
-
-
+public class Roles {
     @Id
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "username")
+    @JoinColumn(name = "user_id")
     @JsonBackReference
-    private Users username;
+    private Members user_id;
     @Id
-    @Column(name = "authority")
-    private String authority;
-
-
+    @Column(name = "role")
+    private String role;
 }

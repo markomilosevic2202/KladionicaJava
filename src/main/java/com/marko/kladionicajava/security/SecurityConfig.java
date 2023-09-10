@@ -12,19 +12,25 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.ui.Model;
 
 import javax.sql.DataSource;
 
-//@Configuration
-//@EnableWebSecurity
+@Configuration
+@EnableWebSecurity
 
 public class SecurityConfig {
 
     private UserDetailsService userDetailsService;
     @Bean
-    public UserDetailsManager userDetailsManager(DataSource dataSource) {
+    public UserDetailsManager userDetailsManager(DataSource dataSource, Model model) {
 
-        return new JdbcUserDetailsManager(dataSource);
+
+        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
+        jdbcUserDetailsManager.setUsersByUsernameQuery("select user_id, pw, active from members where user_id=?");
+        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("select user_id, role from roles where user_id=?");
+
+        return jdbcUserDetailsManager;
     }
 
     @Bean
