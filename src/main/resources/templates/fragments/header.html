@@ -42,15 +42,13 @@
                 <span class="button2">Log Out</span>
             </a>
         </span>
-    <span class="ppp ccc">Dobro došli: <span sec:authentication="principal.username"></span></span></span>
-<!--        <span class="ppp ccc">Dobro došli: <span sec:authentication="principal.active"></span></span></span>-->
-<!--        <span class="ppp ccc">Dobro došli: <span sec:authentication="principal.image"></span></span></span>-->
-<!--    <span class="ppp ccc">User: <span sec:authentication="principal.authorities"></span></span></span>-->
+    <span class="ppp ccc">Dobro došli: <span th:text="${user.username}"></span></span></span>
+
 
   <span class="ppp ccc">
     <div class="profile-container">
         <a type="button" class="hidden-button" onclick="toggleDropdown()">
-            <img class="profile-circle" src="/marko-milosevic.jpeg" alt="Slika profila" width="40" height="40" id="profile-image">
+            <img class="profile-circle" th:src="@{${user.image}}" alt="Slika profila" width="40" height="40" id="profile-image">
         </a>
         <div class="dropdown" id="profile-dropdown">
             <div class="dropdown-content" id="dropdown-content">

@@ -17,9 +17,9 @@ import lombok.ToString;
 public class Roles {
     @Id
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "username")
     @JsonBackReference
-    private Members user_id;
+    private Users username;
     @Id
     @Column(name = "role")
     private String role;

@@ -15,22 +15,22 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileController {
 
     private final FileService fileService;
-    @PostMapping("/upload")
-    public String uploadImage(@RequestParam("file") MultipartFile file, Model model) {
-        try {
-            fileService.uploadImage(file, "email");
-            model.addAttribute("popupMessage", "Fajl uspešno otpremljen.");
-        } catch (Exception e) {
-            model.addAttribute("popupMessage", "Došlo je do greške prilikom otpremanja fajla: " + e.getMessage());
-        }
-        return "home";
-    }
+//    @PostMapping("/upload")
+//    public String uploadImage(@RequestParam("file") MultipartFile file, Model model) {
+//        try {
+//            fileService.uploadImage(file, "email");
+//            model.addAttribute("popupMessage", "Fajl uspešno otpremljen.");
+//        } catch (Exception e) {
+//            model.addAttribute("popupMessage", "Došlo je do greške prilikom otpremanja fajla: " + e.getMessage());
+//        }
+//        return "home";
+//    }
 
 
-    @GetMapping("/show")
-    public String showImage(Model model) {
-        model.addAttribute("imageUrl",fileService.retrieveImage("9c99e298-1ed4-40c9-abfe-dfe8c10ae5bc.jpg"));
-
-        return "show-image";
-        }
+//    @GetMapping("/show")
+//    public String showImage(Model model) {
+//        model.addAttribute("imageUrl",fileService.retrieveImage("9c99e298-1ed4-40c9-abfe-dfe8c10ae5bc.jpg"));
+//
+//        return "show-image";
+//        }
 }

@@ -1,13 +1,14 @@
 INSERT INTO emails (email, id) VALUES('marko71@mailinator.com', '18251640-45b8-4720-8daa-a0c5d3f26008');
 
-INSERT INTO members (user_id, pw, active) VALUES('john', '{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q', 1);
-INSERT INTO members (user_id, pw, active) VALUES('marko', '{noop}1', 1);
+INSERT INTO users (username, password, active) VALUES('john', '{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q', 1);
+INSERT INTO users (username, password, active, image) VALUES('marko', '{noop}1', 1, "/marko-milosevic.jpeg");
 --INSERT INTO members (memberid, username, password, enabled, email, image) VALUES('12121640-45b8-4720-8daa-a0c5d3f26008','mary', '{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q', 1, "marko73@mailinator.com", "/marko-milosevic.jpeg");
 --INSERT INTO members (memberid, username, password, enabled, email, image) VALUES('13333640-45b8-4720-8daa-a0c5d3f26008','susan', '{noop}test123', 1, "marko74@mailinator.com", "/marko-milosevic.jpeg");
 --INSERT INTO members (memberid, username, password, enabled, email, image) VALUES('1677640-45b8-4720-8daa-a0c5d3f26008','marko', '{noop}1', 1, "marko75@mailinator.com", "/marko-milosevic.jpeg");
 
-INSERT INTO roles ( user_id, role) VALUES('john', 'ROLE_USER');
-INSERT INTO roles ( user_id, role) VALUES('marko', 'ROLE_USER');
+INSERT INTO roles ( username, role) VALUES('john', 'ROLE_USER');
+INSERT INTO roles ( username, role) VALUES('marko', 'ROLE_USER');
+INSERT INTO roles ( username, role) VALUES('marko', 'ROLE_ADMIN');
 --INSERT INTO roles ( memberid, role) VALUES('13351640-45b8-4720-8daa-a0c5d3f26008', 'ROLE_USER');
 --INSERT INTO roles ( memberid, role) VALUES('12121640-45b8-4720-8daa-a0c5d3f26008', 'ROLE_USER');
 --INSERT INTO roles ( memberid, role) VALUES('1677640-45b8-4720-8daa-a0c5d3f26008', 'ROLE_USER');

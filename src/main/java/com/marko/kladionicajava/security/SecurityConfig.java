@@ -1,6 +1,8 @@
 package com.marko.kladionicajava.security;
 
 
+import com.marko.kladionicajava.controller.HomeController;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -19,16 +21,22 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 
+
 public class SecurityConfig {
 
-    private UserDetailsService userDetailsService;
+
+
+    public SecurityConfig() {
+    }
+
     @Bean
-    public UserDetailsManager userDetailsManager(DataSource dataSource, Model model) {
+    public UserDetailsManager userDetailsManager(DataSource dataSource) {
 
 
         JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-        jdbcUserDetailsManager.setUsersByUsernameQuery("select user_id, pw, active from members where user_id=?");
-        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("select user_id, role from roles where user_id=?");
+        jdbcUserDetailsManager.setUsersByUsernameQuery("select username, password, active from users where username=?");
+        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("select username, role from roles where username=?");
+
 
         return jdbcUserDetailsManager;
     }

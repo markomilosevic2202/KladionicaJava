@@ -1,7 +1,5 @@
 package com.marko.kladionicajava.controller;
 
-import com.marko.kladionicajava.entitiy.Users;
-import com.marko.kladionicajava.repository.UserRepository;
 import com.marko.kladionicajava.service.UserService;
 import lombok.RequiredArgsConstructor;
 

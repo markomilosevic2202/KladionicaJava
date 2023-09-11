@@ -3,6 +3,7 @@ package com.marko.kladionicajava.controller;
 
 import com.marko.kladionicajava.entitiy.ClubName;
 import com.marko.kladionicajava.service.ClubNameService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +21,7 @@ public class AddNamesController {
 
 
     @GetMapping("/setPreview")
-    public String setPreview(@RequestParam("myDropdown1") String selectedValue, Model model) {
+    public String setPreview(@RequestParam("myDropdown1") String selectedValue, Model model, HttpSession session) {
         List<ClubName> listClubName = new ArrayList<>();
         if (selectedValue.equals("maxbet")) {
             listClubName = clubNameService.getAllWithoutMaxbetName();
@@ -39,7 +40,7 @@ public class AddNamesController {
     }
 
     @GetMapping()
-    public String showSettingsDefault(Model model) {
+    public String showSettingsDefault(Model model, HttpSession session) {
         List<ClubName> listClubName = clubNameService.getAllWithoutForeignName();
         model.addAttribute("clubNameWithoutForeignName", listClubName);
         return "add-names";

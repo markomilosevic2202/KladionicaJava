@@ -22,7 +22,7 @@ spring:
     database-platform: org.hibernate.dialect.MariaDB103Dialect
     show-sql: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   mvc:
 
     static-locations: classpath:/static/

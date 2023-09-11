@@ -4,9 +4,11 @@ package com.marko.kladionicajava.controller;
 
 import com.marko.kladionicajava.entitiy.Match;
 import com.marko.kladionicajava.entitiy.Quotas;
+import com.marko.kladionicajava.entitiy.Users;
 import com.marko.kladionicajava.service.MatchService;
 import com.marko.kladionicajava.service.QuotasService;
 import com.marko.kladionicajava.tools.SortService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +29,7 @@ public class MatchController {
 
 
     @GetMapping()
-    public String showMatches(Model model) {
+    public String showMatches(Model model, HttpSession session) {
         List<Date> optionalView = matchService.getOptionalView();
         if (optionalView.isEmpty()) {
             Date currentDate = new Date();
@@ -36,6 +38,7 @@ public class MatchController {
         Date timeView = optionalView.get(0);
         List<Quotas> listMatch = quotasService.getAllQuotasLastView(timeView);
         sortService.sortQuota(listMatch);
+        model.addAttribute("user", (Users) session.getAttribute("userCurrent"));
         model.addAttribute("optionalViews", optionalView);
         model.addAttribute("quotas", listMatch);
 
@@ -43,7 +46,7 @@ public class MatchController {
     }
 
     @RequestMapping("/show-set-time")
-    public String handleFormSubmission(@RequestParam("myDropdown") String selectedValue, Model model) throws ParseException {
+    public String handleFormSubmission(@RequestParam("myDropdown") String selectedValue, Model model, HttpSession session) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         List<Quotas> listMatch = null;
         try {
@@ -54,6 +57,7 @@ public class MatchController {
         sortService.sortQuota(listMatch);
         model.addAttribute("quotas", listMatch);
         List<Date> optionalView = matchService.getOptionalView();
+        model.addAttribute("user", (Users) session.getAttribute("userCurrent"));
         model.addAttribute("optionalViews", optionalView);
         model.addAttribute("views", sdf.parse(selectedValue));
         return "matches";

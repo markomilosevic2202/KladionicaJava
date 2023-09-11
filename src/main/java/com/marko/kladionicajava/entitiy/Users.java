@@ -1,14 +1,14 @@
 package com.marko.kladionicajava.entitiy;
 
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
-
-import java.util.Date;
 
 @Entity
 @Table(name = "users")
@@ -17,29 +17,17 @@ import java.util.Date;
 @ToString
 @RequiredArgsConstructor
 public class Users {
-
     @Id
     @Column(name = "username", nullable = false)
     private String username;
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
-    @Column(name = "enabled")
-    private Boolean enabled;
-    @Column(name = "email")
-    private String email;
+//    @Column(name = "pw")
+//    private String password;
+    @Column(name = "active")
+    private Boolean active;
+//    @Column(name = "email")
+//    private String email;
     @Column(name = "image")
     private String image;
-//    @Column(nullable = false)
-//    private Date createdAt;
-//    @Column(nullable = false)
-//    private Date updatedAt;
-
-
-//    @PrePersist
-//    private void prePersist() {
-//        Date date = new Date();
-//        this.createdAt = date;
-//        this.updatedAt = date;
-//    }
-
 }

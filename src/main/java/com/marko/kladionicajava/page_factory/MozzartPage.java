@@ -161,7 +161,7 @@ public class MozzartPage {
         try {
             goAddress(addressMozzart);
             this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-            btnX.click();
+           // btnX.click();
             btnSacuvaj.click();
             btnCancel.click();
             this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
@@ -178,7 +178,7 @@ public class MozzartPage {
         try {
             goAddress(addressMozzart);
             this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-            btnX.click();
+//            btnX.click();
             btnSacuvaj.click();
             btnCancel.click();
             this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
