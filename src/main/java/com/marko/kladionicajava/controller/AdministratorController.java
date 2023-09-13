@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdministratorController {
 
     @GetMapping()
-    public String showMyLoginPage(Model theModel){
+    public String showMyLoginPage(){
 
         return "settings";
     }

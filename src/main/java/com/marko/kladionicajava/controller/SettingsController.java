@@ -2,12 +2,16 @@ package com.marko.kladionicajava.controller;
 
 
 import com.marko.kladionicajava.entitiy.Email;
+import com.marko.kladionicajava.entitiy.Users;
 import com.marko.kladionicajava.service.AppConfigService;
 import com.marko.kladionicajava.service.EmailService;
+
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.security.Principal;
 import java.util.List;
@@ -24,7 +28,7 @@ public class SettingsController {
 
 
     @GetMapping()
-    public String showSettings(Model model) {
+    public String showSettings(Model model, HttpSession session) {
         List<Email> listReports = emailService.getEmails();
         String timeReview = appConfig.getTimeReviewMaxbet();
         model.addAttribute("emails", listReports);
@@ -35,6 +39,7 @@ public class SettingsController {
         model.addAttribute("minimumPayment", appConfig.getMinimumPayment());
         model.addAttribute("minimumProfit", appConfig.getMinimumProfit());
         model.addAttribute("stakeForCalculation", appConfig.getStakeForCalculation());
+        model.addAttribute("user", (Users) session.getAttribute("userCurrent"));
         return "settings";
 
     }

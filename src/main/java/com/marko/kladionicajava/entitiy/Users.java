@@ -26,8 +26,8 @@ public class Users {
 //    private String password;
     @Column(name = "active")
     private Boolean active;
-//    @Column(name = "email")
-//    private String email;
+    @Column(name = "email")
+    private String email;
     @Column(name = "image")
     private String image;
 }

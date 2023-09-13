@@ -2,8 +2,8 @@ debug: false
 file:
   upload-dir: src/main/resources/static
 spring:
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+#  autoconfigure:
+#    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
   datasource:
     url: jdbc:mariadb://localhost:3306/kladionica_java
     username: root
@@ -22,7 +22,7 @@ spring:
     database-platform: org.hibernate.dialect.MariaDB103Dialect
     show-sql: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
   mvc:
 
     static-locations: classpath:/static/

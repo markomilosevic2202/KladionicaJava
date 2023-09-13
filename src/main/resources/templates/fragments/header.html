@@ -36,23 +36,23 @@
 
 
 
-     <span class="ppp ccc">
-            <a href="javascript:void(0);" class="btn btn-primary btn-sm mb-3" onclick="document.getElementById('logoutForm').submit();">
-                <img src="/back.webp" alt="Slika" width="20" height="20">
-                <span class="button2">Log Out</span>
-            </a>
-        </span>
-    <span class="ppp ccc">Dobro došli: <span th:text="${user.username}"></span></span></span>
+<!--     <span class="ppp ccc aaa">-->
+<!--            <a href="javascript:void(0);" class="btn btn-primary btn-sm mb-3" onclick="document.getElementById('logoutForm').submit();">-->
+<!--                <img src="/back.webp" alt="Slika" width="20" height="20">-->
+<!--                <span class="button2">Log Out</span>-->
+<!--            </a>-->
+<!--        </span>-->
+    <span class="ppp ccc aaa">Dobro došli: <span th:text="${user.username}"></span></span></span>
 
 
-  <span class="ppp ccc">
+  <span class="ppp ccc ">
     <div class="profile-container">
         <a type="button" class="hidden-button" onclick="toggleDropdown()">
             <img class="profile-circle" th:src="@{${user.image}}" alt="Slika profila" width="40" height="40" id="profile-image">
         </a>
         <div class="dropdown" id="profile-dropdown">
             <div class="dropdown-content" id="dropdown-content">
-                <a class="btn-primary " href="#">Izmeni Profil</a>
+                <a class="btn-primary " th:href="@{/image/show-edit-profile}">Izmeni Profil</a>
                 <a href="javascript:void(0);" class="btn-primary" onclick="document.getElementById('logoutForm').submit();">Logout</a>
             </div>
         </div>

@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.ui.Model;
+
 
 import javax.sql.DataSource;
 
@@ -44,13 +44,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.authorizeHttpRequests(configurer ->
-                        configurer
-
-                                .requestMatchers(HttpMethod.POST).hasRole("USER")
-//                                .requestMatchers("/administrator/**").hasRole("ADMIN")
-//                                .requestMatchers(HttpMethod.POST).permitAll()
-                                .anyRequest().authenticated())
+        http
+                .authorizeRequests(authorizeRequests ->
+                        authorizeRequests
+                                //.antMatchers(HttpMethod.POST).permitAll() // Dozvolite POST metode bez autentifikacije
+                                .anyRequest().authenticated()
+                )
                 .formLogin(form ->
                         form
                                 .loginPage("/showMyLoginPage")

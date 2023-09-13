@@ -2,12 +2,15 @@ package com.marko.kladionicajava.controller;
 
 
 import com.marko.kladionicajava.entitiy.ClubName;
+import com.marko.kladionicajava.entitiy.Users;
 import com.marko.kladionicajava.service.ClubNameService;
+
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +38,7 @@ public class AddNamesController {
              listClubName = clubNameService.getAllClubName();
         }
         model.addAttribute("clubNameWithoutForeignName", listClubName);
+        model.addAttribute("user", (Users) session.getAttribute("userCurrent"));
         return "add-names";
 
     }
@@ -43,20 +47,21 @@ public class AddNamesController {
     public String showSettingsDefault(Model model, HttpSession session) {
         List<ClubName> listClubName = clubNameService.getAllWithoutForeignName();
         model.addAttribute("clubNameWithoutForeignName", listClubName);
+        model.addAttribute("user", (Users) session.getAttribute("userCurrent"));
         return "add-names";
 
     }
 
     @PostMapping("/updateClubName")
-    public String updateClub(@ModelAttribute("club") ClubName clubName) {
-
+    public String updateClub(Model model, @ModelAttribute("club") ClubName clubName, HttpSession session) {
+        model.addAttribute("user", (Users) session.getAttribute("userCurrent"));
         clubNameService.updateClubName(clubName);
         return "redirect:/addNames";
     }
 
     @GetMapping("/deleteClubName")
-    public String deleteClub(@RequestParam("idClub") String idClub) {
-
+    public String deleteClub(@RequestParam("idClub") String idClub, Model model, HttpSession session) {
+        model.addAttribute("user", (Users) session.getAttribute("userCurrent"));
         clubNameService.deleteClubName(idClub);
 
         return "redirect:/addNames";

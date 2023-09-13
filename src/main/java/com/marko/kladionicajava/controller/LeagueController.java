@@ -2,11 +2,16 @@ package com.marko.kladionicajava.controller;
 
 
 import com.marko.kladionicajava.entitiy.League;
+import com.marko.kladionicajava.entitiy.Users;
 import com.marko.kladionicajava.service.LeagueService;
+
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+
 import java.util.List;
 
 
@@ -18,9 +23,10 @@ public class LeagueController {
     private final LeagueService leagueService;
 
     @GetMapping()
-    public String showLeague(Model model) {
+    public String showLeague(Model model, HttpSession session) {
         List<League> listLeague = leagueService.getAllLeague();
         model.addAttribute("leagues", listLeague);
+        model.addAttribute("user", (Users) session.getAttribute("userCurrent"));
         return "league";
 
     }

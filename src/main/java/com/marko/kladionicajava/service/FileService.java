@@ -19,59 +19,59 @@ import java.util.UUID;
 @Service
 public class FileService {
 
-//    private final Path fileStorageLocation;
-//    private final UserRepository userRepository;
-//
-//
-//
-//    public FileService(FileStorageProperties fileStorageProperties,  UserRepository userRepository) {
-//        this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
-//                .toAbsolutePath().normalize();
-//
-//        this.userRepository = userRepository;
-//
-//        try {
-//            Files.createDirectories(this.fileStorageLocation);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void uploadImage(MultipartFile file, String username) {
-//
-//        try {
-//            String[] originalFilenameSplit = Objects.requireNonNull(file.getOriginalFilename()).split("\\.");
-//            if (originalFilenameSplit.length > 2) {
-//                throw new IllegalArgumentException("Not supported file name. Please make sure to remove all dots from name of the file!!!");
-//            }
-//            String originalFileType = originalFilenameSplit[originalFilenameSplit.length - 1];
-//            if (!originalFileType.toLowerCase().contains("jpg") || originalFileType.toLowerCase().contains("jpeg")) {
-//                throw new IllegalArgumentException("File type is not PDF, please upload PDF file!!!");
-//            }
-//
-//            Path targetLocation = fileStorageLocation
-//                    .resolve("images/" + UUID.randomUUID() + "." + originalFileType);
-////            fileDescription.setLocation("/static/images/" + fileDescription.getFileName());
-//            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-////            fileDescription = fileDescriptionRepository.save(fileDescription);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public String retrieveImage(String fileName) {
-//        try {
-//            fileName = "images/" + fileName;
-//            Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
-//            Resource resource = new UrlResource(filePath.toUri());
-//            if (resource.exists()) {
-//                return resource.toString();
-//            } else {
-//                return "";
-//            }
-//        } catch (Exception e) {
-//            return "";
-//        }
-//    }
+    private final Path fileStorageLocation;
+    private final UserRepository userRepository;
+
+
+
+    public FileService(FileStorageProperties fileStorageProperties,  UserRepository userRepository) {
+        this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
+                .toAbsolutePath().normalize();
+
+        this.userRepository = userRepository;
+
+        try {
+            Files.createDirectories(this.fileStorageLocation);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void uploadImage(MultipartFile file, String username) {
+
+        try {
+            String[] originalFilenameSplit = Objects.requireNonNull(file.getOriginalFilename()).split("\\.");
+            if (originalFilenameSplit.length > 2) {
+                throw new IllegalArgumentException("Not supported file name. Please make sure to remove all dots from name of the file!!!");
+            }
+            String originalFileType = originalFilenameSplit[originalFilenameSplit.length - 1];
+            if (!originalFileType.toLowerCase().contains("jpg") || originalFileType.toLowerCase().contains("jpeg")) {
+                throw new IllegalArgumentException("File type is not PDF, please upload PDF file!!!");
+            }
+
+            Path targetLocation = fileStorageLocation
+                    .resolve("images/" + UUID.randomUUID() + "." + originalFileType);
+//            fileDescription.setLocation("/static/images/" + fileDescription.getFileName());
+            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+//            fileDescription = fileDescriptionRepository.save(fileDescription);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String retrieveImage(String fileName) {
+        try {
+            fileName = "images/" + fileName;
+            Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+            if (resource.exists()) {
+                return resource.toString();
+            } else {
+                return "";
+            }
+        } catch (Exception e) {
+            return "";
+        }
+    }
 }
