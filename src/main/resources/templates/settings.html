@@ -199,8 +199,8 @@
     <form action="/settings/save-time-review" method="post">
         <label for="timeReview">Vreme pregleda:</label>
         <select id="timeReview" name="timeReview">
-            <option value="1" th:selected="${timeReviewModel == '1'}">1 Dana</option>
-            <option value="3" th:selected="${timeReviewModel == '3'}">3 Dana</option>
+            <option value="1" th:selected="${settings.timeReviewMozzart == '1'}">1 Dana</option>
+            <option value="3" th:selected="${settings.timeReviewMozzart == '3'}">3 Dana</option>
 
         </select>
         <button type="submit">Zapamti</button>
@@ -210,7 +210,7 @@
 
     <form action="/settings/save-time-refresh-matchs" method="post">
         <label for="timeReview">Vreme refresovanja meca:</label>
-        <input type="text" id="timeMatchRefresh" name="timeMatchRefresh" th:value="${timeRefreshMatch}"/> minuta
+        <input type="text" id="timeMatchRefresh" name="timeMatchRefresh" th:value="${settings.timeRefreshMatches}"/> minuta
         <button type="submit">Zapamti</button>
     </form>
 
@@ -219,7 +219,7 @@
 
     <form action="/settings/save-time-refresh-quotas" method="post">
         <label for="timeReview">Vreme refresovanja kvot:</label>
-        <input type="text" id="timeQuotaRefresh" name="timeQuotaRefresh" th:value="${timeRefreshQuotas}"/> minuta
+        <input type="text" id="timeQuotaRefresh" name="timeQuotaRefresh" th:value="${settings.timeRefreshQuotas}"/> minuta
         <button type="submit">Zapamti</button>
     </form>
     <hr>
@@ -227,11 +227,11 @@
 
     <form action="/settings/save-filters" method="post">
         <label for="timeReview">Minimalna kvota:</label>
-        <input type="text" id="minimumQuota" name="minimumQuota" th:value="${minimumQuota}" class = "filters"/>
+        <input type="text" id="minimumQuota" name="minimumQuota" th:value="${settings.minimumQuota}" class = "filters"/>
         <label for="timeReview">Minimalna kvota:</label>
-        <input type="text" id="minimumPayment" name="minimumPayment" th:value="${minimumPayment}" class = "filters"/>
+        <input type="text" id="minimumPayment" name="minimumPayment" th:value="${settings.minimumPayment}" class = "filters"/>
         <label for="timeReview">Minimalna kvota:</label>
-        <input type="text" id="minimumProfit" name="minimumProfit" th:value="${minimumProfit}" class = "filters"/>
+        <input type="text" id="minimumProfit" name="minimumProfit" th:value="${settings.minimumProfit}" class = "filters"/>
         <button type="submit">Zapamti</button>
     </form>
 
@@ -240,7 +240,7 @@
 
     <form action="/settings/save-stake-for-calculation" method="post">
         <label for="timeReview">Vreme refresovanja kvot:</label>
-        <input type="text" id="stakeForCalculation" name="stakeForCalculation" th:value="${stakeForCalculation}"/> minuta
+        <input type="text" id="stakeForCalculation" name="stakeForCalculation" th:value="${settings.stakeForCalculation}"/> minuta
         <button type="submit">Zapamti</button>
     </form>
 

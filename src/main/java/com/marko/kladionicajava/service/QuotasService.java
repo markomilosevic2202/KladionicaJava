@@ -1,6 +1,7 @@
 package com.marko.kladionicajava.service;
 
 
+import com.marko.kladionicajava.controller.SettingsController;
 import com.marko.kladionicajava.entitiy.*;
 import com.marko.kladionicajava.page_factory.ForeignPage;
 import com.marko.kladionicajava.page_factory.MozzartPage;
@@ -8,6 +9,7 @@ import com.marko.kladionicajava.repository.LeagueRepository;
 import com.marko.kladionicajava.repository.MatchRepository;
 import com.marko.kladionicajava.repository.QuotaRepository;
 import com.marko.kladionicajava.tools.EmailSendService;
+import com.marko.kladionicajava.tools.JsonService;
 import com.marko.kladionicajava.tools.WebDriverMono;
 import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.WebDriver;
@@ -30,8 +32,10 @@ public class QuotasService {
     private final LeagueRepository leagueRepository;
     private final EmailSendService emailSendService;
     private final MatchService matchService;
+    private final SettingsController settingsController;
     private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
     private WebDriver driver;
+
 
     public List<Quotas> getAllQuotasLastView(Date timeView) {
 
@@ -85,13 +89,13 @@ public class QuotasService {
             driver = webDriverMono.open();
             MozzartPage mozzartPage = new MozzartPage(driver);
             ForeignPage foreignPage = new ForeignPage(driver);
-            Float minimumQuota = appConfigService.getMinimumQuota();
-            Float minimumBet = appConfigService.getMinimumPayment();
-            Float minimumProfit = appConfigService.getMinimumProfit();
+            Float minimumQuota = settingsController.getSettings().getMinimumQuota();
+            Float minimumBet = settingsController.getSettings().getMinimumPayment();
+            Float minimumProfit = settingsController.getSettings().getMinimumProfit();
             List<Match> listMatchMozzartBase = matchRepository.findAllByBettingShop(NameBetting.MOZZART);
-            List<QuotaHomeDTO> listQuotasMozzartPage = mozzartPage.getAllQuotas(appConfigService.getAddressMozzart(), appConfigService.getTimeReviewMozzart(), leagueRepository.findAll());
+            List<QuotaHomeDTO> listQuotasMozzartPage = mozzartPage.getAllQuotas(appConfigService.getAddressMozzart(), settingsController.getSettings().getTimeReviewMozzart(), leagueRepository.findAll());
             if (listQuotasMozzartPage.size() != 0) {
-                Float bet = appConfigService.getStakeForCalculation();
+                Float bet = settingsController.getSettings().getStakeForCalculation();
                 for (int i = 0; i < listMatchMozzartBase.size(); i++) {
                     Match match = listMatchMozzartBase.get(i);
                     try {

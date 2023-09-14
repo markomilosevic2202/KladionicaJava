@@ -13,12 +13,12 @@ public class TimeController {
 
     private final MatchController quotasService;
 
-//    @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshQuotas * 60000}")
+//    @Scheduled(fixedRateString = "#{settings.getTimeRefreshQuotas * 60000}")
 //    private void scheduleRefreshQuotas() {
 //        quotasService.refreshQuota();
 //    }
-
-//    @Scheduled(fixedRateString = "#{appConfigService.getTimeRefreshMatches * 60000}")
+//
+//    @Scheduled(fixedRateString = "#{settings.getTimeRefreshMatches * 60000}")
 //    private void scheduleRefreshMatches() {
 //        quotasService.refreshMatches();
 //    }

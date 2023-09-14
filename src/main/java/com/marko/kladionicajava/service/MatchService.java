@@ -1,5 +1,6 @@
 package com.marko.kladionicajava.service;
 
+import com.marko.kladionicajava.controller.SettingsController;
 import com.marko.kladionicajava.entitiy.*;
 import com.marko.kladionicajava.page_factory.ForeignPage;
 import com.marko.kladionicajava.page_factory.MozzartPage;
@@ -7,6 +8,7 @@ import com.marko.kladionicajava.repository.ClubNamesRepository;
 import com.marko.kladionicajava.repository.LeagueRepository;
 import com.marko.kladionicajava.repository.MatchRepository;
 import com.marko.kladionicajava.repository.QuotaRepository;
+import com.marko.kladionicajava.tools.JsonService;
 import com.marko.kladionicajava.tools.WebDriverMono;
 import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.WebDriver;
@@ -26,9 +28,11 @@ public class MatchService {
     private final WebDriverMono webDriverMono;
     private final AppConfigService appConfigService;
     private final LeagueRepository leagueRepository;
+    private final SettingsController settingsController;
     private static List<WebDriver> webDrivers = new ArrayList<>();
 
     private WebDriver driver;
+
 
 
     public void refreshShow() {
@@ -45,7 +49,7 @@ public class MatchService {
         try {
             driver = webDriverMono.open();
             MozzartPage mozzartPage = new MozzartPage(driver);
-            listMatchPage = mozzartPage.getAllMatches(appConfigService.getAddressMozzart(), appConfigService.getTimeReviewMozzart(), leagueRepository.findAll());
+            listMatchPage = mozzartPage.getAllMatches(appConfigService.getAddressMozzart(), settingsController.getSettings().getTimeReviewMozzart(), leagueRepository.findAll());
             driver.quit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -219,7 +223,7 @@ public class MatchService {
         try {
             driver = webDriverMono.open();
             MozzartPage mozzartPage = new MozzartPage(driver);
-            mozzartPage.setPageSingleLeague(appConfigService.getAddressMozzart(), appConfigService.getTimeReviewMozzart(), leagues);
+            mozzartPage.setPageSingleLeague(appConfigService.getAddressMozzart(), settingsController.getSettings().getTimeReviewMozzart(), leagues);
            // driver.quit();
         } catch (Exception e) {
             e.printStackTrace();

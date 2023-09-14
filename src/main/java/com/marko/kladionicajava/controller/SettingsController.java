@@ -2,17 +2,24 @@ package com.marko.kladionicajava.controller;
 
 
 import com.marko.kladionicajava.entitiy.Email;
+import com.marko.kladionicajava.entitiy.Settings;
 import com.marko.kladionicajava.entitiy.Users;
 import com.marko.kladionicajava.service.AppConfigService;
 import com.marko.kladionicajava.service.EmailService;
 
+import com.marko.kladionicajava.tools.JsonService;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpSession;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.io.File;
 import java.security.Principal;
 import java.util.List;
 
@@ -20,25 +27,29 @@ import java.util.List;
 @Controller
 @RequestMapping("/settings")
 @RequiredArgsConstructor
+@Getter
+@Setter
+@ToString
+
 public class SettingsController {
 
     private final EmailService emailService;
     private final AppConfigService appConfig;
+    private final JsonService jsonService;
+    public Settings settings;
 
-
+    @PostConstruct
+    public void initialize() {
+        settings = jsonService.readJsonFileSettings();
+        System.out.println();
+    }
 
     @GetMapping()
     public String showSettings(Model model, HttpSession session) {
         List<Email> listReports = emailService.getEmails();
-        String timeReview = appConfig.getTimeReviewMaxbet();
+        settings = jsonService.readJsonFileSettings();
         model.addAttribute("emails", listReports);
-        model.addAttribute("timeReviewModel", timeReview);
-        model.addAttribute("timeRefreshMatch", appConfig.getTimeRefreshMatches());
-        model.addAttribute("timeRefreshQuotas", appConfig.getTimeRefreshQuotas());
-        model.addAttribute("minimumQuota", appConfig.getMinimumQuota());
-        model.addAttribute("minimumPayment", appConfig.getMinimumPayment());
-        model.addAttribute("minimumProfit", appConfig.getMinimumProfit());
-        model.addAttribute("stakeForCalculation", appConfig.getStakeForCalculation());
+        model.addAttribute("settings", settings);
         model.addAttribute("user", (Users) session.getAttribute("userCurrent"));
         return "settings";
 
@@ -55,6 +66,7 @@ public class SettingsController {
         emailService.createEmail(email);
         return "redirect:/settings";
     }
+
     @GetMapping("/delete")
     public String deleteReports(@RequestParam("emailId") String emailId) {
 
@@ -64,38 +76,39 @@ public class SettingsController {
 
     @PostMapping("/save-time-review")
     public String saveTimeReview(@RequestParam("timeReview") String timeReview) {
-       appConfig.setTimeReviewMaxbet(timeReview);
-
+        settings.setTimeReviewMozzart(timeReview);
+        jsonService.writeJsonFileSettings(settings);
         return "redirect:/settings";
     }
 
     @PostMapping("/save-time-refresh-matchs")
     public String saveTimeRefreshMatchs(@RequestParam("timeMatchRefresh") String timeMatchRefresh) {
-        appConfig.setTimeRefreshMatches(Integer.parseInt(timeMatchRefresh));
-
+        settings.setTimeRefreshMatches(Integer.valueOf(timeMatchRefresh));
+        jsonService.writeJsonFileSettings(settings);
         return "redirect:/settings";
     }
 
     @PostMapping("/save-time-refresh-quotas")
     public String saveTimeRefreshQuotas(@RequestParam("timeQuotaRefresh") String timeQuotasRefresh) {
-        appConfig.setTimeRefreshQuotas(Integer.parseInt(timeQuotasRefresh));
-
+        settings.setTimeRefreshQuotas(Integer.parseInt(timeQuotasRefresh));
+        jsonService.writeJsonFileSettings(settings);
         return "redirect:/settings";
     }
 
     @PostMapping("/save-filters")
     public String saveFilters(@RequestParam("minimumQuota") String minimumQuota, @RequestParam("minimumProfit") String minimumProfit,
                               @RequestParam("minimumPayment") String minimumPayment) {
-        appConfig.setMinimumQuota(Float.parseFloat(minimumQuota));
-        appConfig.setMinimumProfit(Float.parseFloat(minimumProfit));
-        appConfig.setMinimumPayment(Float.parseFloat(minimumPayment));
-
+        settings.setMinimumQuota(Float.parseFloat(minimumQuota));
+        settings.setMinimumProfit(Float.parseFloat(minimumProfit));
+        settings.setMinimumPayment(Float.parseFloat(minimumPayment));
+        jsonService.writeJsonFileSettings(settings);
         return "redirect:/settings";
     }
+
     @PostMapping("/save-stake-for-calculation")
     public String saveStakeForCalculation(@RequestParam("stakeForCalculation") String stakeForCalculation) {
-       appConfig.setStakeForCalculation(Float.parseFloat(stakeForCalculation));
-
-       return "redirect:/settings";
+        settings.setStakeForCalculation(Float.parseFloat(stakeForCalculation));
+        jsonService.writeJsonFileSettings(settings);
+        return "redirect:/settings";
     }
 }

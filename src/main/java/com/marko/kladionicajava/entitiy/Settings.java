@@ -1,6 +1,4 @@
-package com.marko.kladionicajava.service;
-
-
+package com.marko.kladionicajava.entitiy;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -18,16 +16,18 @@ import org.springframework.stereotype.Service;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class AppConfigService {
+public class Settings {
 
-
-    private String addressMaxBet;
-    private String addressForeign;
-    private String addressMozzart;
-    private String host;
-    private String username;
-    private String password;
+    @Value("${app.timeRefreshMatches}")
+    private Integer timeRefreshMatches;
+    @Value("${app.timeRefreshQuotas}")
+    private Integer timeRefreshQuotas;
+    private Integer timeReviewMaxbet;
+    private Float stakeForCalculation;
+    private String timeReviewMozzart;
+    private Float minimumQuota;
+    private Float minimumPayment;
+    private Float minimumProfit;
 
 
 }
-
