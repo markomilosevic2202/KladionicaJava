@@ -23,7 +23,8 @@ public class WebDriverMono {
             chromeOptions.addArguments("--disable-extensions"); // disabling extensions
             chromeOptions.addArguments("--disable-gpu"); // applicable to windows os only
             chromeOptions.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
-            chromeOptions.addArguments("--no-sandbox"); // Bypass OS security model
+            chromeOptions.addArguments("--no-sandbox");
+            //chromeOptions.addArguments("--headless");// Bypass OS security model
             this.driver = new ChromeDriver(chromeOptions);
             this.driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
             this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));

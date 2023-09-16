@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import java.security.Principal;
 
 @Controller
-@SessionAttributes("mile")
+@SessionAttributes("user")
 @RequiredArgsConstructor
 
 public class HomeController {

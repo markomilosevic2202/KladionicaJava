@@ -7,6 +7,7 @@ import com.marko.kladionicajava.entitiy.Users;
 import com.marko.kladionicajava.service.AppConfigService;
 import com.marko.kladionicajava.service.EmailService;
 
+import com.marko.kladionicajava.service.SettingsService;
 import com.marko.kladionicajava.tools.JsonService;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpSession;
@@ -27,29 +28,25 @@ import java.util.List;
 @Controller
 @RequestMapping("/settings")
 @RequiredArgsConstructor
-@Getter
-@Setter
-@ToString
+
 
 public class SettingsController {
 
     private final EmailService emailService;
-    private final AppConfigService appConfig;
+    private final SettingsService settingsService;
     private final JsonService jsonService;
-    public Settings settings;
+
 
     @PostConstruct
     public void initialize() {
-        settings = jsonService.readJsonFileSettings();
-        System.out.println();
+        settingsService.readJsonSettings();
     }
 
     @GetMapping()
     public String showSettings(Model model, HttpSession session) {
         List<Email> listReports = emailService.getEmails();
-        settings = jsonService.readJsonFileSettings();
         model.addAttribute("emails", listReports);
-        model.addAttribute("settings", settings);
+        model.addAttribute("settings", settingsService.getSettings());
         model.addAttribute("user", (Users) session.getAttribute("userCurrent"));
         return "settings";
 
@@ -57,7 +54,6 @@ public class SettingsController {
 
     @GetMapping("/add-email")
     public String showAddEmail() {
-
         return "add-email";
     }
 
@@ -69,46 +65,45 @@ public class SettingsController {
 
     @GetMapping("/delete")
     public String deleteReports(@RequestParam("emailId") String emailId) {
-
         emailService.deleteEmail(emailId);
         return "redirect:/settings";
     }
 
     @PostMapping("/save-time-review")
     public String saveTimeReview(@RequestParam("timeReview") String timeReview) {
-        settings.setTimeReviewMozzart(timeReview);
-        jsonService.writeJsonFileSettings(settings);
+        settingsService.settings.setTimeReviewMozzart(timeReview);
+        jsonService.writeJsonFileSettings(settingsService.settings);
         return "redirect:/settings";
     }
 
     @PostMapping("/save-time-refresh-matchs")
     public String saveTimeRefreshMatchs(@RequestParam("timeMatchRefresh") String timeMatchRefresh) {
-        settings.setTimeRefreshMatches(Integer.valueOf(timeMatchRefresh));
-        jsonService.writeJsonFileSettings(settings);
+        settingsService.settings.setTimeRefreshMatches(Integer.valueOf(timeMatchRefresh));
+        jsonService.writeJsonFileSettings(settingsService.settings);
         return "redirect:/settings";
     }
 
     @PostMapping("/save-time-refresh-quotas")
     public String saveTimeRefreshQuotas(@RequestParam("timeQuotaRefresh") String timeQuotasRefresh) {
-        settings.setTimeRefreshQuotas(Integer.parseInt(timeQuotasRefresh));
-        jsonService.writeJsonFileSettings(settings);
+        settingsService.settings.setTimeRefreshQuotas(Integer.parseInt(timeQuotasRefresh));
+        jsonService.writeJsonFileSettings(settingsService.settings);
         return "redirect:/settings";
     }
 
     @PostMapping("/save-filters")
     public String saveFilters(@RequestParam("minimumQuota") String minimumQuota, @RequestParam("minimumProfit") String minimumProfit,
                               @RequestParam("minimumPayment") String minimumPayment) {
-        settings.setMinimumQuota(Float.parseFloat(minimumQuota));
-        settings.setMinimumProfit(Float.parseFloat(minimumProfit));
-        settings.setMinimumPayment(Float.parseFloat(minimumPayment));
-        jsonService.writeJsonFileSettings(settings);
+        settingsService.settings.setMinimumQuota(Float.parseFloat(minimumQuota));
+        settingsService.settings.setMinimumProfit(Float.parseFloat(minimumProfit));
+        settingsService.settings.setMinimumPayment(Float.parseFloat(minimumPayment));
+        jsonService.writeJsonFileSettings(settingsService.settings);
         return "redirect:/settings";
     }
 
     @PostMapping("/save-stake-for-calculation")
     public String saveStakeForCalculation(@RequestParam("stakeForCalculation") String stakeForCalculation) {
-        settings.setStakeForCalculation(Float.parseFloat(stakeForCalculation));
-        jsonService.writeJsonFileSettings(settings);
+        settingsService.settings.setStakeForCalculation(Float.parseFloat(stakeForCalculation));
+        jsonService.writeJsonFileSettings(settingsService.settings);
         return "redirect:/settings";
     }
 }

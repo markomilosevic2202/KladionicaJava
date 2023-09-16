@@ -28,7 +28,7 @@ public class MatchService {
     private final WebDriverMono webDriverMono;
     private final AppConfigService appConfigService;
     private final LeagueRepository leagueRepository;
-    private final SettingsController settingsController;
+    private final SettingsService settingsService;
     private static List<WebDriver> webDrivers = new ArrayList<>();
 
     private WebDriver driver;
@@ -49,7 +49,7 @@ public class MatchService {
         try {
             driver = webDriverMono.open();
             MozzartPage mozzartPage = new MozzartPage(driver);
-            listMatchPage = mozzartPage.getAllMatches(appConfigService.getAddressMozzart(), settingsController.getSettings().getTimeReviewMozzart(), leagueRepository.findAll());
+            listMatchPage = mozzartPage.getAllMatches(appConfigService.getAddressMozzart(), settingsService.getSettings().getTimeReviewMozzart(), leagueRepository.findAll());
             driver.quit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -223,7 +223,7 @@ public class MatchService {
         try {
             driver = webDriverMono.open();
             MozzartPage mozzartPage = new MozzartPage(driver);
-            mozzartPage.setPageSingleLeague(appConfigService.getAddressMozzart(), settingsController.getSettings().getTimeReviewMozzart(), leagues);
+            mozzartPage.setPageSingleLeague(appConfigService.getAddressMozzart(), settingsService.getSettings().getTimeReviewMozzart(), leagues);
            // driver.quit();
         } catch (Exception e) {
             e.printStackTrace();

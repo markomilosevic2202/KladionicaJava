@@ -31,8 +31,7 @@ public class QuotasService {
     private final AppConfigService appConfigService;
     private final LeagueRepository leagueRepository;
     private final EmailSendService emailSendService;
-    private final MatchService matchService;
-    private final SettingsController settingsController;
+    private final SettingsService settingsService;
     private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
     private WebDriver driver;
 
@@ -61,7 +60,7 @@ public class QuotasService {
             quotas.setDifferenceX(Float.valueOf(decimalFormat.format(quotaForeignDTO.getOneTwoQuota())));
             quotas.setBetOne(Float.valueOf(decimalFormat.format(quotaForeignDTO.getTwoXBet())));
             quotas.setBetTwo(Float.valueOf(decimalFormat.format(quotaForeignDTO.getOneXBet())));
-            quotas.setBetX(Float.valueOf(decimalFormat.format(quotaForeignDTO.getOneTwoQuota())));
+            quotas.setBetX(Float.valueOf(decimalFormat.format(quotaForeignDTO.getOneTwoBet())));
             quotas.setProfitOne(Float.valueOf(decimalFormat.format(recalculateProfit(quotas.getQuotaOne(), quotas.getDifferenceOne(), bet))));
             quotas.setProfitTwo(Float.valueOf(decimalFormat.format(recalculateProfit(quotas.getQuotaTwo(), quotas.getDifferenceTwo(), bet))));
             quotas.setProfitX(Float.valueOf(decimalFormat.format(recalculateProfit(quotas.getQuotaX(), quotas.getDifferenceX(), bet))));
@@ -89,13 +88,13 @@ public class QuotasService {
             driver = webDriverMono.open();
             MozzartPage mozzartPage = new MozzartPage(driver);
             ForeignPage foreignPage = new ForeignPage(driver);
-            Float minimumQuota = settingsController.getSettings().getMinimumQuota();
-            Float minimumBet = settingsController.getSettings().getMinimumPayment();
-            Float minimumProfit = settingsController.getSettings().getMinimumProfit();
+            Float minimumQuota = settingsService.getSettings().getMinimumQuota();
+            Float minimumBet = settingsService.getSettings().getMinimumPayment();
+            Float minimumProfit = settingsService.getSettings().getMinimumProfit();
             List<Match> listMatchMozzartBase = matchRepository.findAllByBettingShop(NameBetting.MOZZART);
-            List<QuotaHomeDTO> listQuotasMozzartPage = mozzartPage.getAllQuotas(appConfigService.getAddressMozzart(), settingsController.getSettings().getTimeReviewMozzart(), leagueRepository.findAll());
+            List<QuotaHomeDTO> listQuotasMozzartPage = mozzartPage.getAllQuotas(appConfigService.getAddressMozzart(), settingsService.getSettings().getTimeReviewMozzart(), leagueRepository.findAll());
             if (listQuotasMozzartPage.size() != 0) {
-                Float bet = settingsController.getSettings().getStakeForCalculation();
+                Float bet = settingsService.getSettings().getStakeForCalculation();
                 for (int i = 0; i < listMatchMozzartBase.size(); i++) {
                     Match match = listMatchMozzartBase.get(i);
                     try {

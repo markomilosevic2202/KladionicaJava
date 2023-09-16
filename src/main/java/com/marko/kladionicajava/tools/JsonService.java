@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.marko.kladionicajava.entitiy.Settings;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -16,7 +17,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JsonService {
     public void writeJsonFileSettings(Settings settings) {
-       // settings = setSettingsInJson();
+       // Settings settings = setSettingsInJson();
         Gson gson = new Gson();
         String json = gson.toJson(settings);
         try (FileWriter fileWriter = new FileWriter("src/main/resources/json/settings.json")) {

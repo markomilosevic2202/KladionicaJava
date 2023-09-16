@@ -1,5 +1,6 @@
 package com.marko.kladionicajava.entitiy;
 
+import com.marko.kladionicajava.tools.JsonService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class Settings {
 
+
     @Value("${app.timeRefreshMatches}")
     private Integer timeRefreshMatches;
     @Value("${app.timeRefreshQuotas}")
@@ -28,6 +30,7 @@ public class Settings {
     private Float minimumQuota;
     private Float minimumPayment;
     private Float minimumProfit;
+
 
 
 }
