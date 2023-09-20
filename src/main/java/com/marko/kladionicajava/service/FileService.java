@@ -46,7 +46,7 @@ public class FileService {
             }
             String originalFileType = originalFilenameSplit[originalFilenameSplit.length - 1];
             if (!originalFileType.toLowerCase().contains("jpg") || originalFileType.toLowerCase().contains("jpeg")) {
-                throw new IllegalArgumentException("File type is not PDF, please upload PDF file!!!");
+                throw new IllegalArgumentException("File type is not picture format, please upload picture format!!!");
             }
 
             Path targetLocation = fileStorageLocation

@@ -39,4 +39,14 @@ public class UserService {
         }
         return new Users();
     }
+
+    public void editProfile(Users user) {
+        Optional<Users> optionalUsers = userRepository.findByUsername(user.getUsername());
+        if (!optionalUsers.isEmpty()) {
+            Users usersData = optionalUsers.get();
+            if (!usersData.getUsername().equals(user.getUsername()) || !usersData.getEmail().equals(user.getEmail())){
+                userRepository.save(user);
+            }
+        }
+    }
 }

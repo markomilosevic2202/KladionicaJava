@@ -42,6 +42,12 @@ public class FileController {
     public String showEditProfile(Model model, Principal principal) {
         Users user = userService.getUser(principal);
         model.addAttribute("user", user);
-        return "file";
+        return "edit-profile";
+    }
+
+    @PostMapping("/save-profile")
+    public String saveProfile(@RequestParam("user")Users user) {
+        userService.editProfile(user);
+        return "home";
     }
 }

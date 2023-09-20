@@ -72,7 +72,7 @@ public class MozzartPage {
         WebElement scrollBar = driver.findElement(By.xpath("//*[contains(@class, 'bar-bar vb vb-visible')]")).findElement(By.xpath("div[1]"));
         Actions actions = new Actions(driver);
         btnFootball1.click();
-        for (int i = 0; i < 310; i++) {
+        for (int i = 0; i < 200; i++) {
             actions.moveToElement(scrollBar);
             actions.sendKeys(org.openqa.selenium.Keys.ARROW_DOWN);
             actions.perform();
